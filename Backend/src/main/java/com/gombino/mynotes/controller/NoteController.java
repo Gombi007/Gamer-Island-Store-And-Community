@@ -1,14 +1,12 @@
 package com.gombino.mynotes.controller;
 
+import com.gombino.mynotes.models.Note;
 import com.gombino.mynotes.repositories.NoteRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/notes")
@@ -34,6 +32,25 @@ public class NoteController {
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(noteRepository.findAll());
         }
+    }
+
+    @PostMapping()
+    public ResponseEntity<Object> createNote(@RequestBody Note note) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(noteRepository.save(note));
+    }
+
+    @PutMapping()
+    public ResponseEntity<Object> modifyNote(@RequestBody Note note, @RequestParam(required = true) String id) {
+        Note modifiedNote = noteRepository.findById(id).get();
+        modifiedNote.setText(note.getText());
+        modifiedNote.setIsUrgent(note.getIsUrgent());
+        return ResponseEntity.status(HttpStatus.CREATED).body(noteRepository.save(modifiedNote));
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<Object> removeNoteById(@RequestParam(required = true) String id) {
+        noteRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }
