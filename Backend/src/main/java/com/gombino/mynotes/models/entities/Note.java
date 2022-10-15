@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
+
 @Document("note")
 @Data
 @NoArgsConstructor
@@ -17,4 +19,6 @@ public class Note {
     private String id;
     private String text;
     private Boolean isUrgent;
+    private Instant created;
+    private Instant lastModified;
 }
