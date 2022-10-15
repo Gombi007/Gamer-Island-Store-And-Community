@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,7 +32,7 @@ public class NoteServiceImpl implements NoteService {
             try {
                 isUrgentBoolean = Boolean.parseBoolean(isUrgent);
             } catch (Exception exception) {
-                log.warn(exception.getMessage());
+                throw new IllegalArgumentException("Only true or false accepted");
             }
             return noteRepository.findAllUrgentNotes(isUrgentBoolean).stream()
                     .map(this::convertToDto)
@@ -45,20 +46,30 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public NoteDto createNote(NoteDto noteDto) {
-        return null;
+        Note savedNote = noteRepository.save(convertToEntity(noteDto));
+        return convertToDto(savedNote);
     }
 
     @Override
     public NoteDto modifyNote(NoteDto noteDto, String id) {
-        return null;
+        Note originalNote = noteRepository.findById(id).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
+        originalNote.setText(noteDto.getText());
+        originalNote.setIsUrgent(noteDto.getIsUrgent());
+        Note modifiedNote = noteRepository.save(originalNote);
+        return convertToDto(modifiedNote);
     }
 
     @Override
     public void removeNoteById(String id) {
-
+        Note note = noteRepository.findById(id).orElseThrow(() -> new NoSuchElementException("There is no note with this id"));
+        noteRepository.delete(note);
     }
 
     private NoteDto convertToDto(Note note) {
         return modelMapper.map(note, NoteDto.class);
+    }
+
+    private Note convertToEntity(NoteDto noteDto) {
+        return modelMapper.map(noteDto, Note.class);
     }
 }
