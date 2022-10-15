@@ -1,10 +1,11 @@
-<h2>My notes App</h2>
-<button (click)="showNotes()">push</button>
-<div class="notes" *ngFor="let note of notes">
-    <div class="note">
-        <p>{{note.text}}</p>
-        <p>{{note.text2}}</p>
-        <img src="{{note.imgUrl}}" alt="pic" style="max-width: 200px;">
-        <p>Created: {{note.created}}</p>
+<div class="container">
+    <div class="notes" *ngFor="let note of notes">
+        <div class="note">
+            <h3 class="title">{{note.text}}</h3>
+            <p>{{note.text2}}</p>
+            <img src="{{note.imgUrl}}" alt="pic">
+            <p class="created">Created: {{note.created}}</p>
+            <mat-divider style="width:25vw;min-width: 36rem; margin-top:2rem;margin-bottom: 2rem;"></mat-divider>
+        </div>
     </div>
 </div>

@@ -15,3 +15,30 @@
   top: 0;
   z-index: 1;
 }
+
+.mobile-above-menu {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
+.logo-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.hamburger .mat-icon {
+  font-size: 2rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.active-link {
+  color: chocolate;
+}

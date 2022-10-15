@@ -12,13 +12,13 @@ export class MainComponent implements OnInit {
   constructor(private service: ConfigService) { }
 
   ngOnInit(): void {
+    this.showNotes();
   }
-
 
   showNotes() {
     this.service.getNotes('').subscribe((data: noteDto[]) => {
       this.notes = data;
-    });
+    })
   }
 
 }

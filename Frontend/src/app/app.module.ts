@@ -13,12 +13,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { CreateComponent } from './notes/create/create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    NavigationComponent
+    NavigationComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
