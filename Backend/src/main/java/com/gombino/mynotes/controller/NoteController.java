@@ -1,6 +1,6 @@
 package com.gombino.mynotes.controller;
 
-import com.gombino.mynotes.models.Note;
+import com.gombino.mynotes.models.entities.Note;
 import com.gombino.mynotes.repositories.NoteRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

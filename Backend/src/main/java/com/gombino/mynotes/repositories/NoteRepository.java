@@ -1,11 +1,13 @@
 package com.gombino.mynotes.repositories;
 
-import com.gombino.mynotes.models.Note;
+import com.gombino.mynotes.models.entities.Note;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface NoteRepository extends MongoRepository<Note, String> {
 
 
