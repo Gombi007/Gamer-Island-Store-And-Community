@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class NoteDto {
     private String text;
     private Boolean isUrgent;
+
+
 }

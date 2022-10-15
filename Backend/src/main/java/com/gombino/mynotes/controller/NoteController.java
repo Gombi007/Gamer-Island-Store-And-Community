@@ -2,6 +2,7 @@ package com.gombino.mynotes.controller;
 
 import com.gombino.mynotes.models.entities.Note;
 import com.gombino.mynotes.repositories.NoteRepository;
+import com.gombino.mynotes.services.NoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,24 +15,17 @@ import org.springframework.web.bind.annotation.*;
 public class NoteController {
     @Autowired
     NoteRepository noteRepository;
+    @Autowired
+    NoteService noteService;
 
-    public NoteController(NoteRepository noteRepository) {
+    public NoteController(NoteRepository noteRepository, NoteService noteService) {
         this.noteRepository = noteRepository;
+        this.noteService = noteService;
     }
 
     @GetMapping()
     public ResponseEntity<Object> getNotesByUrgentOrNotOrAll(@RequestParam(required = false) String isUrgent) {
-        if (isUrgent != null && !isUrgent.isEmpty()) {
-            Boolean isUrgentBoolean = false;
-            try {
-                isUrgentBoolean = Boolean.parseBoolean(isUrgent);
-            } catch (Exception exception) {
-                log.warn(exception.getMessage());
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(noteRepository.findAllUrgentNotes(isUrgentBoolean));
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body(noteRepository.findAll());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.getNotesByUrgentOrNotOrAll(isUrgent));
     }
 
     @PostMapping()
