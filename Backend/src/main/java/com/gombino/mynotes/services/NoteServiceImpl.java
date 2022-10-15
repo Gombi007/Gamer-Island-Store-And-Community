@@ -28,12 +28,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public List<NoteDto> getNotesByUrgentOrNotOrAll(String isUrgent) {
         if (isUrgent != null && !isUrgent.isEmpty()) {
-            boolean isUrgentBoolean = false;
-            try {
-                isUrgentBoolean = Boolean.parseBoolean(isUrgent);
-            } catch (Exception exception) {
-                throw new IllegalArgumentException("Only true or false accepted");
-            }
+            boolean isUrgentBoolean = Boolean.parseBoolean(isUrgent);
             return noteRepository.findAllUrgentNotes(isUrgentBoolean).stream()
                     .map(this::convertToDto)
                     .collect(Collectors.toList());
