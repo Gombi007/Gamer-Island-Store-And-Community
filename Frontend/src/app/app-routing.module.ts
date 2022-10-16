@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateComponent } from './notes/create/create.component';
-import { MainComponent } from './notes/main/main.component';
+import { CreateNotesComponent } from './notes/create-notes/create-notes.component';
+import { ShowNotesComponent } from './notes/show-notes/show-notes.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: '',
-        component: MainComponent
+        path: '', redirectTo: 'notes/show/all', pathMatch: 'full'
       },
       {
-        path: 'createNote',
-        component: CreateComponent
+        path: 'notes/show/:urgent',
+        component: ShowNotesComponent
+      },
+      {
+        path: 'notes/add/create-note',
+        component: CreateNotesComponent
       },
       {
         path: '**',

@@ -16,7 +16,7 @@
   z-index: 1;
 }
 
-.mobile-above-menu {
+.top-desktop-menu {
   width: 100%;
   display: flex;
   justify-content: space-between;

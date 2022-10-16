@@ -3,22 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MainComponent } from './notes/main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { CreateComponent } from './notes/create/create.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './angular-material.module';
-import { NavigationBottomComponent } from './navigation-bottom/navigation-bottom.component';
+import { ShowNotesComponent } from './notes/show-notes/show-notes.component';
+import { CreateNotesComponent } from './notes/create-notes/create-notes.component';
+import { NavigationMobileNotesComponent } from './notes/navigation-mobile-notes/navigation-mobile-notes.component';
+import { NavigationDesktopNotesComponent } from './notes/navigation-desktop-notes/navigation-desktop-notes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
     NavigationComponent,
-    CreateComponent,
-    NavigationBottomComponent
+    ShowNotesComponent,
+    CreateNotesComponent,
+    NavigationMobileNotesComponent,
+    NavigationDesktopNotesComponent
   ],
   imports: [
     BrowserModule,

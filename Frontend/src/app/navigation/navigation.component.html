@@ -8,7 +8,6 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/" (click)="drawer.toggle()" routerLinkActive="active-link"
         [routerLinkActiveOptions]="{exact:true}">Notes</a>
-      <a mat-list-item routerLink="/createNote" (click)="drawer.toggle()" routerLinkActive="active-link">Add Note</a>
     </mat-nav-list>
 
   </mat-sidenav>
@@ -21,7 +20,7 @@
         <img src="/assets/img/logo.png" alt="logo" style="width: 3.5rem;">
       </div>
 
-      <div class="mobile-above-menu">
+      <div class="top-desktop-menu">
         <div class="select-urgent-view">
         </div>
         <button class="hamburger" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
@@ -31,12 +30,10 @@
         <div [class.hidden]="isHandset$ | async">
           <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
             Notes</a>
-          <a mat-button routerLink="/createNote" routerLinkActive="active-link">Add Note</a>
         </div>
       </div>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>
-    <app-navigation-bottom *ngIf=" isHandset$ | async"></app-navigation-bottom>
   </mat-sidenav-content>
 </mat-sidenav-container>
