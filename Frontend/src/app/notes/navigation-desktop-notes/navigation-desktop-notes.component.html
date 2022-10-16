@@ -1,1 +1,19 @@
-<button>push</button>
+<div class="navigation">
+
+    <a routerLink="/notes/show/all" routerLinkActive="active-link-icon" [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon aria-hidden="false" fontIcon="description"></mat-icon>
+        <p>All Note</p>
+    </a>
+    <a routerLink="/notes/show/urgent" routerLinkActive="active-link-icon">
+        <mat-icon aria-hidden="false" fontIcon="star_rate"></mat-icon>
+        <p>Urgent</p>
+    </a>
+    <a routerLink="/notes/show/non-urgent" routerLinkActive="active-link-icon">
+        <mat-icon aria-hidden="false" fontIcon="article"></mat-icon>
+        <p>Non-Urgent</p>
+    </a>
+    <a routerLink="/notes/add/create-note" routerLinkActive="active-link-icon">
+        <mat-icon aria-hidden="false" fontIcon="create"></mat-icon>
+        <p>Create</p>
+    </a>
+</div>

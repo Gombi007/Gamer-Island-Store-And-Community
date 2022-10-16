@@ -2,34 +2,34 @@
 
   <mat-sidenav position="end" #drawer class="sidenav" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'">
-
     <mat-toolbar>Menu</mat-toolbar>
-
     <mat-nav-list>
       <a mat-list-item routerLink="/" (click)="drawer.toggle()" routerLinkActive="active-link"
         [routerLinkActiveOptions]="{exact:true}">Notes</a>
     </mat-nav-list>
-
   </mat-sidenav>
 
   <mat-sidenav-content>
-
     <mat-toolbar color="primary">
+      <div class="menu">
 
-      <div class="logo-container">
-        <img src="/assets/img/logo.png" alt="logo" style="width: 3.5rem;">
-      </div>
-
-      <div class="top-desktop-menu">
-        <div class="select-urgent-view">
+        <div class="desktop-left-side">
+          <app-navigation-desktop-notes [class.hidden]="isHandset$ | async"></app-navigation-desktop-notes>
         </div>
-        <button class="hamburger" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-          *ngIf="isHandset$ | async">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-        <div [class.hidden]="isHandset$ | async">
-          <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
-            Notes</a>
+
+        <div class="desktop-center">
+          <img src="/assets/img/logo.png" alt="logo" style="width: 3.4rem;">
+        </div>
+
+        <div class="desktop-right-side">
+          <button class="hamburger" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+            *ngIf="isHandset$ | async">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+          <div [class.hidden]="isHandset$ | async">
+            <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+              Notes</a>
+          </div>
         </div>
       </div>
     </mat-toolbar>

@@ -1,12 +1,10 @@
 <div class="container">
-    <div class="notes">
-        <div class="note" *ngFor="let note of notes">
-            <h3 class="title">{{note.text}}</h3>
-            <p>{{note.text2}}</p>
-            <img src="{{note.imgUrl}}" alt="pic">
-            <p class="created">Created: {{note.created}}</p>
-            <mat-divider style="width:25vw;min-width: 20rem; margin-top:2rem;margin-bottom: 2rem;"></mat-divider>
-        </div>
+    <div class="note" *ngFor="let note of notes">
+        <h3 class="title">{{note.text}}</h3>
+        <p>{{note.text2}}</p>
+        <img src="{{note.imgUrl}}" alt="pic">
+        <p class="created">Created: {{note.created}}</p>
+        <mat-divider></mat-divider>
     </div>
 </div>
 <app-navigation-mobile-notes></app-navigation-mobile-notes>
