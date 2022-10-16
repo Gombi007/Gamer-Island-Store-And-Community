@@ -1,4 +1,6 @@
 <div class="container">
+    <mat-slide-toggle [checked]="false" (change)="showOnlyUrgentNotes($event)"> Show Urgent notes only!
+    </mat-slide-toggle>
     <div class="notes" *ngFor="let note of notes">
         <div class="note">
             <h3 class="title">{{note.text}}</h3>

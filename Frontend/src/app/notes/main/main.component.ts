@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfigService } from 'src/app/config/config.service';
-import { noteDto } from 'src/app/config/dtos';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { NoteService } from 'src/app/notes/config/note.service';
+import { noteDto } from 'src/app/notes/config/note.model';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-main',
@@ -9,16 +10,30 @@ import { noteDto } from 'src/app/config/dtos';
 })
 export class MainComponent implements OnInit {
   notes: noteDto[] = [];
-  constructor(private service: ConfigService) { }
+
+  constructor(private noteService: NoteService) { }
 
   ngOnInit(): void {
     this.showNotes();
   }
 
-  showNotes() {
-    this.service.getNotes('').subscribe((data: noteDto[]) => {
-      this.notes = data;
-    })
+  showNotes(isUrgent: string = '') {
+    if (isUrgent === 'true' || isUrgent === 'false') {
+      this.noteService.getNotesWithIsUrgentParam(isUrgent).subscribe({
+        next: (data) => this.notes = data
+      });
+    } else {
+      this.noteService.getNotes().subscribe({
+        next: (data) => this.notes = data
+      });
+    }
   }
 
+  showOnlyUrgentNotes(event: MatSlideToggleChange) {
+    if (event.checked) {
+      this.showNotes('true')
+    } else {
+      this.showNotes();
+    }
+  }
 }

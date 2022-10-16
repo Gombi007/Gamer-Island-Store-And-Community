@@ -93,9 +93,9 @@ $light-bg-darker-10:  darken($light-background, 10%);
 $light-bg-darker-20:  darken($light-background, 20%);
 $light-bg-darker-30:  darken($light-background, 30%);
 $light-bg-lighter-5:  lighten($light-background, 5%);
-$dark-bg-tooltip:     lighten(#252525, 20%);
-$dark-bg-alpha-4:     rgba(#252525, 0.04);
-$dark-bg-alpha-12:    rgba(#252525, 0.12);
+$dark-bg-tooltip:     lighten(#181818, 20%);
+$dark-bg-alpha-4:     rgba(#181818, 0.04);
+$dark-bg-alpha-12:    rgba(#181818, 0.12);
 
 $mat-light-theme-background: (
   background:               $light-background,
@@ -121,8 +121,8 @@ $dark-bg-lighter-5:   lighten($dark-background, 5%);
 $dark-bg-lighter-10:  lighten($dark-background, 10%);
 $dark-bg-lighter-20:  lighten($dark-background, 20%);
 $dark-bg-lighter-30:  lighten($dark-background, 30%);
-$light-bg-alpha-4:    rgba(#252525, 0.04);
-$light-bg-alpha-12:   rgba(#252525, 0.12);
+$light-bg-alpha-4:    rgba(#181818, 0.04);
+$light-bg-alpha-12:   rgba(#181818, 0.12);
 
 // Background palette for dark themes.
 $mat-dark-theme-background: (

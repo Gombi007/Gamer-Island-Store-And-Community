@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { ConfigService } from './config/config.service';
-import { noteDto } from './config/dtos';
 
 @Component({
   selector: 'app-root',
