@@ -10,13 +10,15 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { CreateComponent } from './notes/create/create.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './angular-material.module';
+import { NavigationBottomComponent } from './navigation-bottom/navigation-bottom.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     NavigationComponent,
-    CreateComponent
+    CreateComponent,
+    NavigationBottomComponent
   ],
   imports: [
     BrowserModule,

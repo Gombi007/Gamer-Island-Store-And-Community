@@ -28,12 +28,4 @@ export class MainComponent implements OnInit {
       });
     }
   }
-
-  showOnlyUrgentNotes(event: MatSlideToggleChange) {
-    if (event.checked) {
-      this.showNotes('true')
-    } else {
-      this.showNotes();
-    }
-  }
 }

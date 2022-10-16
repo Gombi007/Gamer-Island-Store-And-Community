@@ -22,6 +22,8 @@
       </div>
 
       <div class="mobile-above-menu">
+        <div class="select-urgent-view">
+        </div>
         <button class="hamburger" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
           *ngIf="isHandset$ | async">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -35,5 +37,6 @@
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>
+    <app-navigation-bottom *ngIf=" isHandset$ | async"></app-navigation-bottom>
   </mat-sidenav-content>
 </mat-sidenav-container>

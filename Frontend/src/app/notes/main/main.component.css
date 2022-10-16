@@ -1,11 +1,22 @@
 .container {
     width: 100%;
-    padding-top: 1rem;
     padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+}
+
+.mat-toolbar {
+
+    padding: 0.3rem;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.notes {
+    margin-top: 3rem;
 }
 
 .note {

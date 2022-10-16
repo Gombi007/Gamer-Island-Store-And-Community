@@ -1,0 +1,18 @@
+<mat-card>
+    <a routerLink="/" routerLinkActive="active-link-icon" [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon aria-hidden="false" fontIcon="description"></mat-icon>
+        <p>All Note</p>
+    </a>
+    <a routerLink="/note/all" routerLinkActive="active-link-icon">
+        <mat-icon aria-hidden="false" fontIcon="star_rate"></mat-icon>
+        <p>Urgent</p>
+    </a>
+    <a routerLink="/note/urgent" routerLinkActive="active-link-icon" [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon aria-hidden="false" fontIcon="article"></mat-icon>
+        <p>Non-Urgent</p>
+    </a>
+    <a routerLink="/createNote" routerLinkActive="active-link-icon" [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon aria-hidden="false" fontIcon="create"></mat-icon>
+        <p>Create</p>
+    </a>
+</mat-card>
