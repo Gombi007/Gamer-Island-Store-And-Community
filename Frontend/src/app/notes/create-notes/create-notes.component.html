@@ -45,8 +45,12 @@
 
     </form>
 </div>
-<div class="pending">
-    <mat-spinner color="accent" diameter="50" *ngIf="isPending"></mat-spinner>
+<div class="pending-or-success">
+    <mat-spinner diameter="50" color="accent" *ngIf="isPending"></mat-spinner>
+    <ng-container *ngIf="!isPending && isSuccess">
+        <mat-icon aria-hidden="false" fontIcon="done"></mat-icon>
+        <p>The note was created!</p>
+    </ng-container>
 </div>
 
 <app-navigation-mobile-notes></app-navigation-mobile-notes>

@@ -24,9 +24,17 @@ input,label{
     margin: 1rem;
 }
 
-.pending{
+.pending-or-success{
+    color: var(--color-accent);   
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 2rem;
+    gap: 1rem;   
 }
+.pending-or-success .mat-icon{
+    color: var(--color-success);   
+    font-size: 1.5rem;
+ 
+}
+

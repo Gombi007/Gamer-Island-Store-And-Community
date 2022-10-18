@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { map, tap } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { tap, timer } from 'rxjs';
 import { noteDtoToPost } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 
@@ -12,6 +12,7 @@ import { NoteService } from '../config/note.service';
 export class CreateNotesComponent implements OnInit {
 
   isPending = false;
+  isSuccess = false;
   createNoteForm: FormGroup;
 
   constructor(private noteService: NoteService) { }
@@ -42,14 +43,21 @@ export class CreateNotesComponent implements OnInit {
 
       this.noteService.createNote(note)
         .pipe(
-          tap(() => this.isPending = true))
+          tap(() => {
+            this.isPending = true
+            this.isSuccess = true
+          }))
         .subscribe(
           {
             next: () => {
               this.isPending = false;
+              this.createNoteForm.reset();
+              timer(2000).subscribe(
+                () => this.isSuccess = false
+              );
             }
           });
-      this.createNoteForm.reset();
+
     }
   }
 
