@@ -15,7 +15,7 @@ export class CreateNotesComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.submitForm);
+    this.submitForm.reset();
 
   }
 
