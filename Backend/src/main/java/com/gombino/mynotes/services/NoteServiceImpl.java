@@ -56,7 +56,9 @@ public class NoteServiceImpl implements NoteService {
     public NoteDto modifyNote(NoteDto noteDto, String id) {
         Note originalNote = noteRepository.findById(id).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
         originalNote.setText(noteDto.getText());
+        originalNote.setText2(noteDto.getText2());
         originalNote.setIsUrgent(noteDto.getIsUrgent());
+        originalNote.setImgUrl(noteDto.getImgUrl());
         originalNote.setLastModified(Instant.now());
         Note modifiedNote = noteRepository.save(originalNote);
         return convertToNoteDto(modifiedNote);
