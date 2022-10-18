@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
@@ -9,16 +9,18 @@ import { NoteService } from '../config/note.service';
   styleUrls: ['./show-notes.component.scss']
 })
 export class ShowNotesComponent implements OnInit {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
+  currentlyRoute = '';
   notes: noteDto[] = [];
 
   constructor(private noteService: NoteService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.showNotes();
     this.route.params.subscribe(
       (param: Params) => {
-        this.showNotes(param['urgent']);
+        this.currentlyRoute = param['urgent'];
+        this.showNotes(this.currentlyRoute);
       }
     );
   }
@@ -40,6 +42,15 @@ export class ShowNotesComponent implements OnInit {
         next: (data) => this.notes = data
       });
     }
+  }
+
+  removeNote(noteId: string) {
+    this.noteService.removeNote(noteId).subscribe({
+      next: () => {
+        this.showNotes(this.currentlyRoute);
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+      }
+    });
   }
 
 }

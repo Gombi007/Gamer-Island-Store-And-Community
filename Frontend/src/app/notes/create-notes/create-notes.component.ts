@@ -26,7 +26,7 @@ export class CreateNotesComponent implements OnInit {
       'title': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
       'text': new FormControl(null, [Validators.required, Validators.maxLength(160)]),
       'imageUrl': new FormControl(null),
-      'isUrgent': new FormControl(null),
+      'isUrgent': new FormControl(false),
     });
   }
 
