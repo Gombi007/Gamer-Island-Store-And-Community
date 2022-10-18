@@ -1,0 +1,16 @@
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.mat-form-field {
+    width: min(97%, 400px);
+}
+
+.mat-label {
+    color: aqua;
+    background-color: antiquewhite;
+}

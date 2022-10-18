@@ -6,7 +6,7 @@ import { NoteService } from '../config/note.service';
 @Component({
   selector: 'app-show-notes',
   templateUrl: './show-notes.component.html',
-  styleUrls: ['./show-notes.component.css']
+  styleUrls: ['./show-notes.component.scss']
 })
 export class ShowNotesComponent implements OnInit {
 

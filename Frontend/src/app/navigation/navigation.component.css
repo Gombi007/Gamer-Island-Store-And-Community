@@ -50,6 +50,10 @@
   display: none;
 }
 
+.mat-list-item {
+  color: var(--color-accent);
+}
+
 .active-link {
-  color: chocolate;
+  color: var(--color-success)
 }

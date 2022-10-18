@@ -3,7 +3,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 @Component({
   selector: 'app-navigation-mobile-notes',
   templateUrl: './navigation-mobile-notes.component.html',
-  styleUrls: ['./navigation-mobile-notes.component.css']
+  styleUrls: ['./navigation-mobile-notes.component.scss']
 })
 export class NavigationMobileNotesComponent implements OnInit {
   deviceHeight = 0;

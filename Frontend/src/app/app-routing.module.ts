@@ -20,7 +20,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: ''
+        redirectTo: 'notes/show/all'
       }
     ]
   }
