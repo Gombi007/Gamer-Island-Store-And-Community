@@ -8,6 +8,7 @@ import { noteDto, noteDtoToPost } from "./note.model";
 })
 export class NoteService {
     constructor(private http: HttpClient) { }
+    noteToModify?: noteDto = undefined;
 
     getNotes() {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_GET_NOTES);
@@ -20,6 +21,10 @@ export class NoteService {
     createNote(note: noteDtoToPost) {
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_POST_NOTE, JSON.stringify(note), { headers: headers });
+    }
+    modifyNote(note: noteDtoToPost, noteId: string) {
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_PUT_NOTE + noteId, JSON.stringify(note), { headers: headers });
     }
 
     removeNote(noteId: string) {

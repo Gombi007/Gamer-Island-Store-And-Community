@@ -6,6 +6,9 @@
                 <div (click)="removeNote(note.id)">
                     <mat-icon aria-hidden="false" fontIcon="delete_forever" color="accent"></mat-icon>
                 </div>
+                <div class="edit-note" (click)="editNote(note)">
+                    <mat-icon aria-hidden="false" fontIcon="edit" color="accent"></mat-icon>
+                </div>
             </div>
             <div class="center">
                 <h3 class="title">{{note.text}}</h3>

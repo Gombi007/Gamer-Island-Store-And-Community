@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 
@@ -14,7 +14,7 @@ export class ShowNotesComponent implements OnInit {
   currentlyRoute = '';
   notes: noteDto[] = [];
 
-  constructor(private noteService: NoteService, private route: ActivatedRoute) { }
+  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -51,6 +51,11 @@ export class ShowNotesComponent implements OnInit {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
       }
     });
+  }
+
+  editNote(note: noteDto) {
+    this.noteService.noteToModify = note;
+    this.router.navigate(['/notes/add/create-note'])
   }
 
 }

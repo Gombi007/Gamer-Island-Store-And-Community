@@ -17,7 +17,7 @@
     align-items: center;
     border-radius: 1rem;
     background-color: var(--color-primary);
-    color: var(--color-accent);;
+    color: var(--color-accent); 
 
 }
 
@@ -51,15 +51,26 @@
 .title-row-container{
     width: 100%;
     display: flex; 
-    padding-top: 0.5rem;   
+    padding-top: 0.5rem;  
+   
 }
 
 .left,.right{
-    width: 10%;
+    width: 20%;
     text-align: center;
+    display: flex;
+    justify-content: space-between; 
+}
+.left{
+    padding-left: 0.3rem;
+
+}
+.right{
+    justify-content: flex-end;
+    padding-right: 0.3rem;
 }
 
 .center{
-width: 80%;
+width: 60%;
 text-align: center;
 }

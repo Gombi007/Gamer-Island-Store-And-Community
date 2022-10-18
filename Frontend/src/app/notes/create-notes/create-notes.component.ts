@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { tap, timer } from 'rxjs';
-import { noteDtoToPost } from '../config/note.model';
+import { noteDto, noteDtoToPost } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 
 @Component({
@@ -13,12 +13,18 @@ export class CreateNotesComponent implements OnInit {
 
   isPending = false;
   isSuccess = false;
+  isModifySuccess = false;
+  buttonLabel = 'Submit';
   createNoteForm: FormGroup;
 
   constructor(private noteService: NoteService) { }
 
   ngOnInit(): void {
     this.createTheForm();
+    if (this.noteService.noteToModify !== undefined) {
+      this.buttonLabel = 'Modify';
+      this.modifyNoteFormSetter(this.noteService.noteToModify, this.createNoteForm)
+    }
 
   }
 
@@ -31,17 +37,29 @@ export class CreateNotesComponent implements OnInit {
     });
   }
 
+  modifyNoteFormSetter(modifyNote: noteDto, form: FormGroup) {
+    form.setValue({
+      'title': modifyNote.text,
+      'text': modifyNote.text2,
+      'imageUrl': modifyNote.imgUrl,
+      'isUrgent': modifyNote.isUrgent,
+    });
+  }
+
+  collectDataFromForm(): noteDtoToPost {
+    return new noteDtoToPost(
+      this.createNoteForm.get('title')?.value,
+      this.createNoteForm.get('text')?.value,
+      this.createNoteForm.get('isUrgent')?.value,
+      this.createNoteForm.get('imageUrl')?.value,
+    );
+
+  }
+
   onSubmit() {
-    if (this.createNoteForm.valid) {
-
-      let note: noteDtoToPost = new noteDtoToPost(
-        this.createNoteForm.get('title')?.value,
-        this.createNoteForm.get('text')?.value,
-        this.createNoteForm.get('isUrgent')?.value,
-        this.createNoteForm.get('imageUrl')?.value,
-      );
-
-      this.noteService.createNote(note)
+    let collectedFormData = this.collectDataFromForm();
+    if (this.createNoteForm.valid && this.noteService.noteToModify === undefined) {
+      this.noteService.createNote(collectedFormData)
         .pipe(
           tap(() => {
             this.isPending = true
@@ -57,8 +75,28 @@ export class CreateNotesComponent implements OnInit {
               );
             }
           });
+    }
+    if (this.createNoteForm.valid && this.noteService.noteToModify !== undefined) {
+      this.noteService.modifyNote(collectedFormData, this.noteService.noteToModify.id)
+        .pipe(
+          tap(() => {
+            this.isPending = true
+            this.isModifySuccess = true
+          }))
+        .subscribe(
+          {
+            next: () => {
+              this.isPending = false;
+              this.createNoteForm.reset();
+              this.noteService.noteToModify = undefined;
+              timer(2000).subscribe(
+                () => this.isModifySuccess = false
+              );
+            }
+          });
 
     }
+
   }
 
 }
