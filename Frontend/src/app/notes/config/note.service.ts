@@ -9,6 +9,7 @@ import { noteDto, noteDtoToPost } from "./note.model";
 export class NoteService {
     constructor(private http: HttpClient) { }
     noteToModify?: noteDto = undefined;
+    cancelModifyOrSubmitAndGoBack = '';
 
     getNotes() {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_GET_NOTES);

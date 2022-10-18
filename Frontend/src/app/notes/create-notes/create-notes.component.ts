@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { tap, timer } from 'rxjs';
 import { noteDto, noteDtoToPost } from '../config/note.model';
 import { NoteService } from '../config/note.service';
@@ -17,7 +18,7 @@ export class CreateNotesComponent implements OnInit {
   buttonLabel = 'Submit';
   createNoteForm: FormGroup;
 
-  constructor(private noteService: NoteService) { }
+  constructor(private noteService: NoteService, private router: Router) { }
 
   ngOnInit(): void {
     this.createTheForm();
@@ -53,7 +54,10 @@ export class CreateNotesComponent implements OnInit {
       this.createNoteForm.get('isUrgent')?.value,
       this.createNoteForm.get('imageUrl')?.value,
     );
+  }
 
+  cancelModifyAndBack() {
+    this.router.navigate([this.noteService.cancelModifyOrSubmitAndGoBack]);
   }
 
   onSubmit() {

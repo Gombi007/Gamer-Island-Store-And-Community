@@ -11,7 +11,7 @@ import { NoteService } from '../config/note.service';
 export class ShowNotesComponent implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
-  currentlyRoute = '';
+  currentlyRouteAfterUrgentTag = '';
   notes: noteDto[] = [];
 
   constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router) { }
@@ -19,8 +19,9 @@ export class ShowNotesComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(
       (param: Params) => {
-        this.currentlyRoute = param['urgent'];
-        this.showNotes(this.currentlyRoute);
+        this.noteService.cancelModifyOrSubmitAndGoBack = this.router.url;
+        this.currentlyRouteAfterUrgentTag = param['urgent'];
+        this.showNotes(this.currentlyRouteAfterUrgentTag);
       }
     );
   }
@@ -47,7 +48,7 @@ export class ShowNotesComponent implements OnInit {
   removeNote(noteId: string) {
     this.noteService.removeNote(noteId).subscribe({
       next: () => {
-        this.showNotes(this.currentlyRoute);
+        this.showNotes(this.currentlyRouteAfterUrgentTag);
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
       }
     });
