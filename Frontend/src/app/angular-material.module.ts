@@ -11,6 +11,7 @@ import { MatChipsModule } from '@angular/material/chips'
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 const MaterialComponents = [
@@ -25,7 +26,8 @@ const MaterialComponents = [
     MatChipsModule,
     MatDividerModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatRadioModule
 ];
 
 @NgModule({

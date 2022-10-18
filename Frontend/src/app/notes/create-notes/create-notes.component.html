@@ -1,7 +1,26 @@
 <div class="form">
-    <mat-form-field appearance="standard">
-        <mat-label>Username</mat-label>
-        <input matInput placeholder="Placeholder">
-        <mat-hint>Hint</mat-hint>
-    </mat-form-field>
+    <form (ngSubmit)="onSubmit()" #f="ngForm">
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Placeholder" id="username" name="username" required ngModel>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Placeholder" id="email" name="email" required ngModel>
+        </mat-form-field>
+
+        <mat-radio-group aria-label="Select an option" ngModel name="gender" required>
+            <div *ngFor="let gender of genders">
+                <mat-radio-button value="{{gender}}">{{gender}}</mat-radio-button>
+            </div>
+        </mat-radio-group>
+
+        <div class="btn-area">
+            <button mat-raised-button type="submit" [disabled]="!f.valid">Submit</button>
+        </div>
+
+    </form>
 </div>
+
+<app-navigation-mobile-notes></app-navigation-mobile-notes>

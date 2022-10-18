@@ -5,12 +5,24 @@
     flex-direction: column;
     padding: 1rem;
 }
-
 .mat-form-field {
     width: min(97%, 400px);
 }
 
-.mat-label {
-    color: aqua;
-    background-color: antiquewhite;
+input,label{
+    color: var(--color-accent);  
+}   
+
+.mat-radio-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 }
+.btn-area{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   margin: 1rem;
+}
+

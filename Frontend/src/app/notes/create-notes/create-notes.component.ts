@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-create-notes',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-notes.component.scss']
 })
 export class CreateNotesComponent implements OnInit {
-
+  @ViewChild('f') submitForm: NgForm;
+  genders = ['male', 'female']
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit() {
+    console.log(this.submitForm);
+
   }
 
 }
