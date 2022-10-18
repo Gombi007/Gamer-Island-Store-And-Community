@@ -6,12 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './angular-material.module';
 import { ShowNotesComponent } from './notes/show-notes/show-notes.component';
 import { CreateNotesComponent } from './notes/create-notes/create-notes.component';
 import { NavigationMobileNotesComponent } from './notes/navigation-mobile-notes/navigation-mobile-notes.component';
 import { NavigationDesktopNotesComponent } from './notes/navigation-desktop-notes/navigation-desktop-notes.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,8 +28,8 @@ import { NavigationDesktopNotesComponent } from './notes/navigation-desktop-note
     HttpClientModule,
     BrowserAnimationsModule,
     LayoutModule,
-    FormsModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

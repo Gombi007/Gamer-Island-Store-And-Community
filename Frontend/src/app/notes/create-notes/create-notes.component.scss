@@ -11,14 +11,12 @@
 
 input,label{
     color: var(--color-accent);  
-}   
+}  
 
-.mat-radio-group{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-}
+.mat-hint{
+    color:var(--color-warn);
+  }
+
 .btn-area{
     display: flex;
     align-items: center;

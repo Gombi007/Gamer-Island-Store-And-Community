@@ -1,23 +1,45 @@
 <div class="form">
-    <form (ngSubmit)="onSubmit()" #f="ngForm">
+    <form [formGroup]="createPostForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="standard" color="accent">
-            <mat-label>Username</mat-label>
-            <input matInput placeholder="Placeholder" id="username" name="username" required ngModel>
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Write a title" id="title" name="title" formControlName="title">
+            <mat-hint class="mat-hint">
+                <p
+                    *ngIf="!createPostForm.get('title')?.valid && !createPostForm.get('title')?.errors?.['maxlength'] && createPostForm.get('title')?.touched ">
+                    Title is required
+                </p>
+                <p *ngIf="createPostForm.get('title')?.errors?.['maxlength']">
+                    Title max length is 30 character
+                </p>
+
+            </mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="standard" color="accent">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="Placeholder" id="email" name="email" required ngModel>
+            <mat-label>Text</mat-label>
+            <input matInput placeholder="Write some text" id="text" name="text" formControlName="text">
+            <mat-hint class="mat-hint">
+                <p
+                    *ngIf="!createPostForm.get('text')?.valid && createPostForm.get('text')?.errors?.['maxlength'] && createPostForm.get('text')?.touched">
+                    Please add some text
+                </p>
+                <p *ngIf="createPostForm.get('text')?.errors?.['maxlength']">
+                    Text max length is 160 character
+                </p>
+            </mat-hint>
         </mat-form-field>
 
-        <mat-radio-group aria-label="Select an option" ngModel name="gender" required>
-            <div *ngFor="let gender of genders">
-                <mat-radio-button value="{{gender}}">{{gender}}</mat-radio-button>
-            </div>
-        </mat-radio-group>
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Image Url</mat-label>
+            <input type="url" matInput placeholder="Add an image link if you want" id="imageUrl" name="imageUrl"
+                formControlName="imageUrl">
+        </mat-form-field>
+
+        <mat-checkbox class="example-margin" name="isUrgent" id="isUrgent" formControlName="isUrgent">Urgent
+        </mat-checkbox>
 
         <div class="btn-area">
-            <button mat-raised-button type="submit" [disabled]="!f.valid">Submit</button>
+            <button mat-raised-button type="submit" [disabled]="!createPostForm.valid">Submit</button>
         </div>
 
     </form>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-notes',
@@ -7,15 +7,31 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./create-notes.component.scss']
 })
 export class CreateNotesComponent implements OnInit {
-  @ViewChild('f') submitForm: NgForm;
-  genders = ['male', 'female']
+
+  isUrgent = [true, false]
+  createPostForm: FormGroup;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.createTheForm();
+
+  }
+
+  createTheForm() {
+    return this.createPostForm = new FormGroup({
+      'title': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
+      'text': new FormControl(null, [Validators.required, Validators.maxLength(160)]),
+      'imageUrl': new FormControl(null),
+      'isUrgent': new FormControl(null),
+    });
   }
 
   onSubmit() {
-    this.submitForm.reset();
+    if (this.createPostForm.valid) {
+      this.createPostForm.reset();
+    }
+
 
   }
 
