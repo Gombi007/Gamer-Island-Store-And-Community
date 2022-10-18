@@ -15,4 +15,7 @@ export class NoteService {
     getNotesWithIsUrgentParam(isUrgent: string) {
         return this.http.get<any>(STRINGS.API_GET_NOTES_WITH_ISURGENT + isUrgent);
     }
+    createNote() {
+
+    }
 }

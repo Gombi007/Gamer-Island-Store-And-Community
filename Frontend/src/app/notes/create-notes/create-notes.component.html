@@ -1,14 +1,14 @@
 <div class="form">
-    <form [formGroup]="createPostForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="createNoteForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="standard" color="accent">
             <mat-label>Title</mat-label>
             <input matInput placeholder="Write a title" id="title" name="title" formControlName="title">
             <mat-hint class="mat-hint">
                 <p
-                    *ngIf="!createPostForm.get('title')?.valid && !createPostForm.get('title')?.errors?.['maxlength'] && createPostForm.get('title')?.touched ">
+                    *ngIf="!createNoteForm.get('title')?.valid && !createNoteForm.get('title')?.errors?.['maxlength'] && createNoteForm.get('title')?.touched ">
                     Title is required
                 </p>
-                <p *ngIf="createPostForm.get('title')?.errors?.['maxlength']">
+                <p *ngIf="createNoteForm.get('title')?.errors?.['maxlength']">
                     Title max length is 30 character
                 </p>
 
@@ -20,10 +20,10 @@
             <input matInput placeholder="Write some text" id="text" name="text" formControlName="text">
             <mat-hint class="mat-hint">
                 <p
-                    *ngIf="!createPostForm.get('text')?.valid && createPostForm.get('text')?.errors?.['maxlength'] && createPostForm.get('text')?.touched">
+                    *ngIf="!createNoteForm.get('text')?.valid && !createNoteForm.get('text')?.errors?.['maxlength'] && createNoteForm.get('text')?.touched">
                     Please add some text
                 </p>
-                <p *ngIf="createPostForm.get('text')?.errors?.['maxlength']">
+                <p *ngIf="createNoteForm.get('text')?.errors?.['maxlength']">
                     Text max length is 160 character
                 </p>
             </mat-hint>
@@ -39,7 +39,7 @@
         </mat-checkbox>
 
         <div class="btn-area">
-            <button mat-raised-button type="submit" [disabled]="!createPostForm.valid">Submit</button>
+            <button mat-raised-button type="submit" [disabled]="!createNoteForm.valid">Submit</button>
         </div>
 
     </form>

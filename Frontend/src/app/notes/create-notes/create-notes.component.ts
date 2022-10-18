@@ -9,7 +9,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 export class CreateNotesComponent implements OnInit {
 
   isUrgent = [true, false]
-  createPostForm: FormGroup;
+  createNoteForm: FormGroup;
 
   constructor() { }
 
@@ -19,7 +19,7 @@ export class CreateNotesComponent implements OnInit {
   }
 
   createTheForm() {
-    return this.createPostForm = new FormGroup({
+    return this.createNoteForm = new FormGroup({
       'title': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
       'text': new FormControl(null, [Validators.required, Validators.maxLength(160)]),
       'imageUrl': new FormControl(null),
@@ -28,8 +28,8 @@ export class CreateNotesComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.createPostForm.valid) {
-      this.createPostForm.reset();
+    if (this.createNoteForm.valid) {
+      this.createNoteForm.reset();
     }
 
 
