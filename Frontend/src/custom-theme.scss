@@ -6,8 +6,7 @@ $accent: mat-palette($mat-lime,100);
 $warn: mat-palette($mat-deep-purple);
 $success: mat-palette($mat-lime);
 
-$my-custom-theme: mat-light-theme($primary, $accent, $warn);
-
+$my-custom-theme: mat-dark-theme($primary, $accent, $warn);
 
 @include angular-material-theme($my-custom-theme);
 
