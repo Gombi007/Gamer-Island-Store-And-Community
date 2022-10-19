@@ -13,11 +13,11 @@ Add an image your note if you want.
 
  <p align="center">  
 
-  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/development/Resources/pic001.JPG">
-  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/development/Resources/pic002.JPG"> 
-  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/development/Resources/pic003.JPG"> 
-  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/development/Resources/pic004.JPG"> 
-  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/development/Resources/pic005.JPG"> 
+  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic001.JPG">
+  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic002.JPG"> 
+  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic003.JPG"> 
+  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic004.JPG"> 
+  <img width="70%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic005.JPG"> 
 
      
 
