@@ -18,9 +18,13 @@
     border-radius: 1rem;
     background-color: var(--color-primary);
     color: var(--color-accent); 
-
 }
 
+.title-row{
+    width: 100%;
+    text-align: center;   
+    padding-top: 0.4rem;
+}
 
 .note p {
     margin-top: 0.7rem;
@@ -35,42 +39,16 @@
     max-width: 100%;
 }
 
-.note-link {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-}
 
 .mat-divider {
+    width: 95%;  
+}
+
+.edit-row{
     width: 95%;
-    margin-bottom: 2.5rem;
-}
-
-.title-row-container{
-    width: 100%;
-    display: flex; 
-    padding-top: 0.5rem;  
-   
-}
-
-.left,.right{
-    width: 20%;
     text-align: center;
     display: flex;
-    justify-content: space-between; 
-}
-.left{
-    padding-left: 0.3rem;
-
-}
-.right{
-    justify-content: flex-end;
-    padding-right: 0.3rem;
+    justify-content: space-between;  
+    padding: 0.4rem;
 }
 
-.center{
-width: 60%;
-text-align: center;
-}
