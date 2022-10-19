@@ -1,11 +1,7 @@
 <div class="container" #scrollMe>
     <div class="note" *ngFor="let note of notes">
-
-        <div class="title-row">
-            <h3 class="title">{{note.text}}</h3>
-        </div>
-
-        <p>{{note.text2}}</p>
+        <h3 class="title">{{note.text}}</h3>
+        <p class="note-text">{{note.text2}}</p>
         <img *ngIf="note.imgUrl !== null" src="{{note.imgUrl}}" alt="pic">
         <p class="created">Created: {{note.created}}</p>
         <mat-divider></mat-divider>
@@ -19,7 +15,8 @@
             </div>
             <div>
                 <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isUrgent"></mat-icon>
-                <mat-icon aria-hidden="false" fontIcon="star_outline" color="accent" *ngIf="!note.isUrgent"></mat-icon>
+                <mat-icon aria-hidden="false" class="non-urgent-icon" fontIcon="star_outline" *ngIf="!note.isUrgent">
+                </mat-icon>
             </div>
         </div>
     </div>

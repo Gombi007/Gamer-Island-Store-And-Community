@@ -20,11 +20,6 @@
     color: var(--color-accent); 
 }
 
-.title-row{
-    width: 100%;
-    text-align: center;   
-    padding-top: 0.4rem;
-}
 
 .note p {
     margin-top: 0.7rem;
@@ -39,16 +34,26 @@
     max-width: 100%;
 }
 
+.note-text,.title{
+    max-width: 100%;
+    margin: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    text-align: center;
+}
+
 
 .mat-divider {
     width: 95%;  
 }
 
 .edit-row{
-    width: 95%;
-    text-align: center;
+    width: 95%;  
     display: flex;
     justify-content: space-between;  
     padding: 0.4rem;
+}
+.non-urgent-icon{
+   color: var(--color-disabled);
 }
 

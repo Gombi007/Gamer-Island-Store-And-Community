@@ -4,7 +4,9 @@
 $primary: mat-palette($mat-grey,900);
 $accent: mat-palette($mat-lime,100);
 $warn: mat-palette($mat-red,500);
+
 $success: mat-palette($mat-lime);
+$disabled: mat-palette($mat-grey,700);
 
 $my-custom-theme: mat-dark-theme($primary, $accent, $warn);
 
@@ -15,4 +17,5 @@ $my-custom-theme: mat-dark-theme($primary, $accent, $warn);
     --color-accent: #{mat-color($accent)};
     --color-warn: #{mat-color($warn)};  
     --color-success: #{mat-color($success)};  
+    --color-disabled: #{mat-color($disabled)};  
   }

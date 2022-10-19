@@ -57,6 +57,7 @@ export class CreateNotesComponent implements OnInit {
   }
 
   cancelModifyAndBack() {
+    this.noteService.noteToModify = undefined;
     this.router.navigate([this.noteService.cancelModifyOrSubmitAndGoBack]);
   }
 

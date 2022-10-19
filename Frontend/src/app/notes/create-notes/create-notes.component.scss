@@ -1,9 +1,14 @@
 .form {
-    display: flex;
+    display: flex;  
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    padding: 1rem;
+    margin: 1rem;
+  
+}
+form{
+    width: min(97%, 400px);
+    
 }
 .mat-form-field {
     width: min(97%, 400px);
@@ -18,11 +23,12 @@ input,label{
   }
 
 .btn-area{
+    width: min(97%, 400px);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1rem;
-    gap: 1rem;
+    margin-top: 1rem;
+    gap: 1rem;   
 }
 
 .pending-or-success{
