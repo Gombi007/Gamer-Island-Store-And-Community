@@ -12,6 +12,7 @@ import { CreateNotesComponent } from './notes/create-notes/create-notes.componen
 import { NavigationMobileNotesComponent } from './notes/navigation-mobile-notes/navigation-mobile-notes.component';
 import { NavigationDesktopNotesComponent } from './notes/navigation-desktop-notes/navigation-desktop-notes.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PendingComponent } from './pending/pending.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ShowNotesComponent,
     CreateNotesComponent,
     NavigationMobileNotesComponent,
-    NavigationDesktopNotesComponent
+    NavigationDesktopNotesComponent,
+    PendingComponent
   ],
   imports: [
     BrowserModule,

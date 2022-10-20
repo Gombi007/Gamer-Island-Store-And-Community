@@ -19,6 +19,6 @@
             </div>
         </div>
     </div>
-    <mat-spinner diameter="50" color="accent" *ngIf="!isPending"></mat-spinner>
 </div>
+<app-pending *ngIf="isPending"></app-pending>
 <app-navigation-mobile-notes></app-navigation-mobile-notes>

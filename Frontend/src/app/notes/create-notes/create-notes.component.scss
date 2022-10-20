@@ -31,7 +31,7 @@ input,label{
     gap: 1rem;   
 }
 
-.pending-or-success{
+.success{
     color: var(--color-accent);   
     display: flex;
     flex-direction: column;
@@ -39,9 +39,8 @@ input,label{
     align-items: center;
     gap: 1rem;   
 }
-.pending-or-success .mat-icon{
+.success .mat-icon{
     color: var(--color-success);   
-    font-size: 1.5rem;
- 
+    font-size: 1.5rem; 
 }
 

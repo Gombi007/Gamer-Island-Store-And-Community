@@ -48,16 +48,14 @@
     </form>
 </div>
 
-<div class="pending-or-success">
-    <mat-spinner diameter="50" color="accent" *ngIf="isPending"></mat-spinner>
-    <ng-container *ngIf="!isPending && isSuccess">
+<div class="success">
+    <ng-container *ngIf="!isPending && (isSuccess || isModifySuccess)">
         <mat-icon aria-hidden="false" fontIcon="done"></mat-icon>
-        <p>The note was created successfully!</p>
-    </ng-container>
-    <ng-container *ngIf="!isPending && isModifySuccess">
-        <mat-icon aria-hidden="false" fontIcon="done"></mat-icon>
-        <p>The note was modified successfully!</p>
+        <ng-container>
+            <p *ngIf="!isPending && isSuccess">The note was created successfully!</p>
+            <p *ngIf="!isPending && isModifySuccess">The note was modified successfully!</p>
+        </ng-container>
     </ng-container>
 </div>
-
+<app-pending *ngIf="isPending"></app-pending>
 <app-navigation-mobile-notes></app-navigation-mobile-notes>
