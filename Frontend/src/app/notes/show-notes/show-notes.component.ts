@@ -9,8 +9,6 @@ import { NoteService } from '../config/note.service';
   styleUrls: ['./show-notes.component.scss']
 })
 export class ShowNotesComponent implements OnInit {
-  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-
   currentlyRouteAfterUrgentTag = '';
   notes: noteDto[] = [];
 
@@ -49,7 +47,6 @@ export class ShowNotesComponent implements OnInit {
     this.noteService.removeNote(noteId).subscribe({
       next: () => {
         this.showNotes(this.currentlyRouteAfterUrgentTag);
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
       }
     });
   }
@@ -64,7 +61,6 @@ export class ShowNotesComponent implements OnInit {
     this.noteService.modifyNote(note, noteId).subscribe({
       next: () => {
         this.showNotes(this.currentlyRouteAfterUrgentTag);
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
       }
     });
 
