@@ -5,7 +5,6 @@
         <img *ngIf="note.imgUrl !== null" src="{{note.imgUrl}}" alt="pic">
         <p class="created">Created: {{note.created}}</p>
         <mat-divider></mat-divider>
-
         <div class="edit-row">
             <div class="control" (click)="removeNote(note.id)">
                 <mat-icon aria-hidden="false" fontIcon="delete_forever" color="accent"></mat-icon>
@@ -20,5 +19,6 @@
             </div>
         </div>
     </div>
+    <mat-spinner diameter="50" color="accent" *ngIf="!isPending"></mat-spinner>
 </div>
 <app-navigation-mobile-notes></app-navigation-mobile-notes>
