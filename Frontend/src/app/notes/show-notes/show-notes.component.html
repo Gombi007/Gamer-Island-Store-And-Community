@@ -7,13 +7,13 @@
         <mat-divider></mat-divider>
 
         <div class="edit-row">
-            <div (click)="removeNote(note.id)">
+            <div class="control" (click)="removeNote(note.id)">
                 <mat-icon aria-hidden="false" fontIcon="delete_forever" color="accent"></mat-icon>
             </div>
-            <div (click)="editNote(note)">
+            <div class="control" (click)="editNote(note)">
                 <mat-icon aria-hidden="false" fontIcon="edit" color="accent"></mat-icon>
             </div>
-            <div (click)="changeUrgentOrNotNoteStatus(note,note.id)">
+            <div class="control" (click)="changeUrgentOrNotNoteStatus(note,note.id)">
                 <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isUrgent"></mat-icon>
                 <mat-icon aria-hidden="false" class="non-urgent-icon" fontIcon="star_outline" *ngIf="!note.isUrgent">
                 </mat-icon>
