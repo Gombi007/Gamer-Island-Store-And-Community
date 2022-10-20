@@ -15,7 +15,7 @@ export class CreateNotesComponent implements OnInit {
   isPending = false;
   isSuccess = false;
   isModifySuccess = false;
-  buttonLabel = 'Submit';
+  buttonLabel = 'Create';
   createNoteForm: FormGroup;
 
   constructor(private noteService: NoteService, private router: Router) { }
