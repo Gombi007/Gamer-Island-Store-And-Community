@@ -13,7 +13,7 @@
             <div (click)="editNote(note)">
                 <mat-icon aria-hidden="false" fontIcon="edit" color="accent"></mat-icon>
             </div>
-            <div>
+            <div (click)="changeUrgentOrNotNoteStatus(note,note.id)">
                 <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isUrgent"></mat-icon>
                 <mat-icon aria-hidden="false" class="non-urgent-icon" fontIcon="star_outline" *ngIf="!note.isUrgent">
                 </mat-icon>

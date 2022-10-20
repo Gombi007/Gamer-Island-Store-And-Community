@@ -59,4 +59,15 @@ export class ShowNotesComponent implements OnInit {
     this.router.navigate(['/notes/add/create-note'])
   }
 
+  changeUrgentOrNotNoteStatus(note: noteDto, noteId: string) {
+    note.isUrgent = !note.isUrgent;
+    this.noteService.modifyNote(note, noteId).subscribe({
+      next: () => {
+        this.showNotes(this.currentlyRouteAfterUrgentTag);
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+      }
+    });
+
+  }
+
 }
