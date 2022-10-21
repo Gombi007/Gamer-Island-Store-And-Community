@@ -26,4 +26,5 @@ public class User {
     private Instant created;
     private Boolean isDisabled;
     private List<Role> roles;
+    private List<Note> notes;
 }

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,9 +34,11 @@ public class NoteController {
     }
 
     @Operation(description = "Create a new note")
-    @PostMapping()
-    public ResponseEntity<Object> createNote(@RequestBody NoteDto noteDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(noteService.createNote(noteDto));
+    @PostMapping("/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> createNote(@RequestBody NoteDto noteDto, @PathVariable String userId) {
+        noteService.createNote(noteDto, userId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Operation(description = "Modify a note")

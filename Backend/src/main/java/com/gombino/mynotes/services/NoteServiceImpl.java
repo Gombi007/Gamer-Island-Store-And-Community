@@ -2,33 +2,33 @@ package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.models.dto.NoteDto;
 import com.gombino.mynotes.models.entities.Note;
+import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.repositories.NoteRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class NoteServiceImpl implements NoteService {
-    @Autowired
-    NoteRepository noteRepository;
-    @Autowired
-    ModelMapper modelMapper;
+    private final NoteRepository noteRepository;
+    private final ModelMapper modelMapper;
+    private final UserService userService;
 
-    public NoteServiceImpl(NoteRepository noteRepository, ModelMapper modelMapper) {
-        this.noteRepository = noteRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public List<NoteDto> getNotesByUrgentOrNotOrAll(String isUrgent) {
@@ -45,11 +45,16 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public NoteDto createNote(NoteDto noteDto) {
+    public void createNote(NoteDto noteDto, String userId) {
+        User user = userService.getUserById(userId);
+        if (user.getNotes() == null) {
+            user.setNotes(new ArrayList<>());
+        }
         Note note = convertToNoteEntity(noteDto);
         note.setCreated(Instant.now());
-        Note savedNote = noteRepository.save(note);
-        return convertToNoteDto(savedNote);
+        user.getNotes().add(note);
+        userService.updateUser(user);
+        //ToDo search mongodb reference saving
     }
 
     @Override

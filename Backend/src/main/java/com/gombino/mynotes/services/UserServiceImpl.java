@@ -73,6 +73,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User updateUser(User user) {
+        if (!userRepository.findUserById(user.getId()).isPresent()) {
+            throw new NoSuchElementException("There is now User with this id: " + user.getId());
+        }
+        return userRepository.save(user);
+    }
+
+    @Override
     public void addRoleToUser(String username, String roleName) {
         log.warn("Adding role {} to user {}", roleName, username);
         User user = userRepository.findUserByUsername(username).orElseThrow(() -> new NoSuchElementException("There is now User with this username: " + username));
@@ -95,6 +103,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User getUser(String username) {
         return userRepository.findUserByUsername(username).orElseThrow(() -> new NoSuchElementException("No user with this username: " + username));
+    }
+
+    @Override
+    public User getUserById(String userId) {
+        return userRepository.findUserById(userId).orElseThrow(() -> new NoSuchElementException("No user with this id: " + userId));
     }
 
     @Override

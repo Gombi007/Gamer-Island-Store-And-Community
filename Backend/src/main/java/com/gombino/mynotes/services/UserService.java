@@ -12,11 +12,15 @@ public interface UserService {
 
     Role saveRole(Role role);
 
+    User updateUser(User user);
+
     void addRoleToUser(String username, String roleName);
 
     void setLastLoginDate(User user);
 
     User getUser(String username);
+
+    User getUserById(String userId);
 
     List<Role> getRoles();
 

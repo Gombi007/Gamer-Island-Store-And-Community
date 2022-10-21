@@ -9,7 +9,7 @@ public interface NoteService {
 
     List<NoteDto> getNotesByUrgentOrNotOrAll(String isUrgent);
 
-    NoteDto createNote(NoteDto noteDto);
+    void createNote(NoteDto noteDto, String userID);
 
     NoteDto modifyNote(NoteDto noteDto, String id);
 
