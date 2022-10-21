@@ -69,7 +69,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (roleRepository.findRoleByRoleName(role.getRoleName()).isPresent()) {
             throw new ResourceAlreadyExistsException("This role is already exist: " + role.getRoleName());
         }
-
         return roleRepository.save(role);
     }
 
@@ -90,6 +89,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getUser(String username) {
         return userRepository.findUserByUsername(username).orElseThrow(() -> new NoSuchElementException("No user with this username: " + username));
     }
+
+    @Override
+    public List<Role> getRoles() {
+        log.warn("Fetching all role");
+        return roleRepository.findAll();
+    }
+
 
     @Override
     public List<User> getUsers() {

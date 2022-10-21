@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
     private final UserService userService;
+
     @PostMapping("/registration")
     public ResponseEntity<User> saveUser(@RequestBody RegistrationUserDto registrationUserDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registrationUser(registrationUserDto));
@@ -29,12 +30,20 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @PostMapping("/role/save")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role>> getRoles() {
+        return ResponseEntity.ok().body(userService.getRoles());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/roles/save")
     public ResponseEntity<Role> saveRole(@RequestBody Role role) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveRole(role));
     }
 
-    @PostMapping("/role/add-role-to-user")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/roles/add-role-to-user")
     public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserFormDto form) {
         userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
