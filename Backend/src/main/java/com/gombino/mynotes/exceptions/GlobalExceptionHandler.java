@@ -13,4 +13,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handelNotFound(NoSuchElementException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
+
+    @ExceptionHandler()
+    public ResponseEntity<Object> handleExists(ResourceAlreadyExistsException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    }
+
 }

@@ -22,7 +22,8 @@ public class User {
     private String email;
     private String password;
     private String avatar;
-    private Instant lasLogin;
+    private Instant lastLogin;
+    private Instant created;
     private Boolean isDisabled;
     private List<Role> roles;
 }
