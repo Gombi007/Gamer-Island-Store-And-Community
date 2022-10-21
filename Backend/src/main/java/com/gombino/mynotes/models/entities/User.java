@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.List;
 
 @Document("users")
 @Data
@@ -23,4 +24,5 @@ public class User {
     private String avatar;
     private Instant lasLogin;
     private Boolean isDisabled;
+    private List<Role> roles;
 }
