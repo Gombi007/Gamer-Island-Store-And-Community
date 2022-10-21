@@ -1,5 +1,6 @@
 package com.gombino.mynotes.services;
 
+import com.gombino.mynotes.models.dto.RegistrationUserDto;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User saveUser(User user);
+    User registrationUser(RegistrationUserDto registrationUserDto);
 
     Role saveRole(Role role);
 

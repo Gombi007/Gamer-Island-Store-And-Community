@@ -1,6 +1,7 @@
 package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.exceptions.ResourceAlreadyExistsException;
+import com.gombino.mynotes.models.dto.RegistrationUserDto;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.repositories.RoleRepository;
@@ -41,20 +42,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User saveUser(User user) {
-        if (userRepository.findUserByUsername(user.getUsername()).isPresent()) {
-            throw new ResourceAlreadyExistsException("This username is already taken: " + user.getUsername());
+    public User registrationUser(RegistrationUserDto registrationUserDto) {
+        if (userRepository.findUserByUsername(registrationUserDto.getUsername()).isPresent()) {
+            throw new ResourceAlreadyExistsException("This username is already taken: " + registrationUserDto.getUsername());
         }
+        log.warn("Saving new user {} to the DB", registrationUserDto.getUsername());
 
-        log.warn("Saving new user {} to the DB", user.getUsername());
-        user.setCreated(Instant.now());
-        user.setIsDisabled(false);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new ArrayList<>());
+        User newUser = new User();
+        newUser.setUsername(registrationUserDto.getUsername());
+        newUser.setAvatar(registrationUserDto.getAvatar());
+        newUser.setEmail(registrationUserDto.getEmail());
+        newUser.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
+
+        newUser.setCreated(Instant.now());
+        newUser.setIsDisabled(false);
+        newUser.setRoles(new ArrayList<>());
         Role role = roleRepository.findRoleByRoleName("ROLE_USER").get();
-        log.warn("Add basic role {} to the new user {} to the DB", role.getRoleName(), user.getUsername());
-        user.getRoles().add(role);
-        return userRepository.save(user);
+        log.warn("Add basic role {} to the new user {} to the DB", role.getRoleName(), newUser.getUsername());
+        newUser.getRoles().add(role);
+        return userRepository.save(newUser);
     }
 
     @Override
