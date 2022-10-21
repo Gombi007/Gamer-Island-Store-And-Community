@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Tag(name = "Role entity")
-public class Roles {
+public class Role {
     @Id
     private String id;
     private String roleName;
