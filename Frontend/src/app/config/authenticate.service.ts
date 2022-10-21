@@ -1,6 +1,5 @@
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { FormControl } from "@angular/forms";
 import { STRINGS } from "./strings.enum";
 
 @Injectable({
