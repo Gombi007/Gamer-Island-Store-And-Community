@@ -7,8 +7,38 @@
     justify-content: center;
     align-items: center;
 }
+
+.logo{
+    width: min(50%, 150px);       
+}
+
 form{
     padding: 2rem;
-    width: min(97%, 200px);   
-    
+    width: min(97%, 260px);       
+}
+mat-form-field{
+width: 100%;
+}
+
+.changeFormContainer{
+    display: flex;      
+    justify-content: space-between;
+    align-items: center;
+}
+.changeFormContainer button,p{
+    padding: 0;
+    margin: 0;
+}
+.changeFormContainer p{
+  color: var(--color-accent);
+}
+.changeFormContainer button{
+  color: var(--color-success);
+}
+
+.btn-area{
+    width: 100%;
+   display: flex;
+   justify-content: center;
+   padding-top: 1rem;
 }

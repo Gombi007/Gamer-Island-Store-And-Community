@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   registrationForm: FormGroup;
+  showLoginForm = true;
 
   constructor() { }
 
@@ -31,5 +32,9 @@ export class LoginComponent implements OnInit {
       'email': new FormControl(null,),
       'avatar': new FormControl(null,),
     });
+  }
+
+  changeBetweenLoginAndRegisterForm() {
+    this.showLoginForm = !this.showLoginForm;
   }
 }
