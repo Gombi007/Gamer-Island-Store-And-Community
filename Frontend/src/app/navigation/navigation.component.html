@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container" *ngIf="false">
+<mat-sidenav-container class="sidenav-container">
 
   <mat-sidenav position="end" #drawer class="sidenav" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'">
@@ -9,7 +9,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" *ngIf="isLoggedIn">
       <div class="menu">
 
         <div class="desktop-left-side">
@@ -36,4 +36,3 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<app-login *ngIf="true"></app-login>
