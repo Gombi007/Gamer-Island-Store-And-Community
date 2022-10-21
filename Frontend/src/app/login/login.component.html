@@ -1,0 +1,44 @@
+<div class="container">
+    <form [formGroup]="loginForm">
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" id="username" name="username" formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" id="Password" name="password" formControlName="password">
+        </mat-form-field>
+
+        <div class="btn-area">
+            <button mat-raised-button type="submit">Login</button>
+        </div>
+    </form>
+
+    <form [formGroup]="registrationForm">
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" id="username" name="username" formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" id="password" name="password" formControlName="password">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" id="email" name="email" formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Avatar</mat-label>
+            <input matInput placeholder="Avatar" id="avatar" name="avatar" formControlName="avatar">
+        </mat-form-field>
+
+        <div class="btn-area">
+            <button mat-raised-button type="submit">Registration</button>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,14 @@
+.container{
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primary);
+    display: flex;  
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form{
+    padding: 2rem;
+    width: min(97%, 200px);   
+    
+}

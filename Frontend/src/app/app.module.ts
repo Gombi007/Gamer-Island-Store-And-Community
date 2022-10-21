@@ -13,6 +13,7 @@ import { NavigationMobileNotesComponent } from './notes/navigation-mobile-notes/
 import { NavigationDesktopNotesComponent } from './notes/navigation-desktop-notes/navigation-desktop-notes.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PendingComponent } from './pending/pending.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PendingComponent } from './pending/pending.component';
     CreateNotesComponent,
     NavigationMobileNotesComponent,
     NavigationDesktopNotesComponent,
-    PendingComponent
+    PendingComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
