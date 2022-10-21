@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthenticateService } from '../config/authenticate.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,9 @@ export class LoginComponent implements OnInit {
   registrationForm: FormGroup;
   showLoginForm = true;
 
-  constructor() { }
+  constructor(private authService: AuthenticateService, private router: Router) {
+    localStorage.clear();
+  }
 
   ngOnInit(): void {
     this.createLoginForm();
@@ -36,5 +40,21 @@ export class LoginComponent implements OnInit {
 
   changeBetweenLoginAndRegisterForm() {
     this.showLoginForm = !this.showLoginForm;
+  }
+
+  stratLogin() {
+    if (this.loginForm.valid) {
+
+      this.authService.loginViaBackend(this.loginForm.value).subscribe({
+        next: (data: any) => {
+          localStorage.setItem('user_id', data.user_id);
+          localStorage.setItem('token', data.token);
+          this.router.navigate(['']);
+        }
+      });
+
+    }
+
+
   }
 }

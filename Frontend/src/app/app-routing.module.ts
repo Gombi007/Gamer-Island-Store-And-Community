@@ -15,6 +15,11 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
+        path: 'notes',
+        redirectTo: 'notes/show/all',
+        pathMatch: 'full',
+      },
+      {
         path: 'login',
         component: LoginComponent
       },

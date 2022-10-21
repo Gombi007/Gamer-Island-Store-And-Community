@@ -10,7 +10,6 @@ import { AuthenticateService } from '../config/authenticate.service';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-  isLoggedIn = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -21,7 +20,10 @@ export class NavigationComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthenticateService) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
+  }
+
+  isLoggedIn() {
+    return this.authService.isLoggedIn();
   }
 
 }

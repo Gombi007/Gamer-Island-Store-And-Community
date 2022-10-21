@@ -4,12 +4,13 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/notes/" (click)="drawer.toggle()" routerLinkActive="active-link">Notes</a>
+      <a mat-list-item routerLink="/notes" (click)="drawer.toggle()" routerLinkActive="active-link">Notes</a>
+      <a mat-list-item routerLink="/login" (click)="drawer.toggle()" routerLinkActive="active-link">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary" *ngIf="isLoggedIn">
+    <mat-toolbar color="primary" *ngIf="isLoggedIn()">
       <div class="menu">
 
         <div class="desktop-left-side">
@@ -25,11 +26,17 @@
             *ngIf="isHandset$ | async">
             <mat-icon aria-label="Side nav toggle icon" color="accent">menu</mat-icon>
           </button>
-          <div [class.hidden]="isHandset$ | async">
-            <a mat-button color="accent" routerLink="/notes/" routerLinkActive="active-link">
-              Notes</a>
+
+          <div class="desktop-menu-area" [class.hidden]="isHandset$ | async">
+            <a mat-button color="accent" routerLink="/notes" routerLinkActive="active-link">
+              Notes
+            </a>
+            <a mat-button color="accent" routerLink="/login" routerLinkActive="active-link">
+              Logout
+            </a>
           </div>
         </div>
+
       </div>
     </mat-toolbar>
     <!-- Add Content Here -->
