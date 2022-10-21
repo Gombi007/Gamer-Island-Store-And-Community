@@ -20,4 +20,8 @@ export class AuthenticateService {
         body.set('password', userCredential.password);
         return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_LOGIN, body);
     }
+
+    registerViaBackend(userData: any) {
+        return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_REGISTRATION, userData);
+    }
 }
