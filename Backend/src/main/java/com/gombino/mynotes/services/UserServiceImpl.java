@@ -7,6 +7,7 @@ import com.gombino.mynotes.repositories.RoleRepository;
 import com.gombino.mynotes.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public User saveUser(User user) {
         if (userRepository.findUserByUsername(user.getUsername()).isPresent()) {
@@ -32,6 +35,7 @@ public class UserServiceImpl implements UserService {
         log.warn("Saving new user {} to the DB", user.getUsername());
         user.setCreated(Instant.now());
         user.setIsDisabled(false);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(new ArrayList<>());
         Role role = roleRepository.findRoleByRoleName("ROLE_USER").get();
         log.warn("Add basic role {} to the new user {} to the DB", role.getRoleName(), user.getUsername());
