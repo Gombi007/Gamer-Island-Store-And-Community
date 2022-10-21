@@ -58,6 +58,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), token);
         log.warn("Authenticate OK : {}", DBUser.getUsername());
+        userService.setLastLoginDate(DBUser);
     }
 
     @Override

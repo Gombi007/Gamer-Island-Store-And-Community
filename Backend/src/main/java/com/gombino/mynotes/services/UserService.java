@@ -14,6 +14,8 @@ public interface UserService {
 
     void addRoleToUser(String username, String roleName);
 
+    void setLastLoginDate(User user);
+
     User getUser(String username);
 
     List<Role> getRoles();

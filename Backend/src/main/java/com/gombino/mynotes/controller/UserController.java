@@ -20,8 +20,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/registration")
-    public ResponseEntity<User> saveUser(@RequestBody RegistrationUserDto registrationUserDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.registrationUser(registrationUserDto));
+    public ResponseEntity<?> saveUser(@RequestBody RegistrationUserDto registrationUserDto) {
+        userService.registrationUser(registrationUserDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PreAuthorize("hasRole('ADMIN')")

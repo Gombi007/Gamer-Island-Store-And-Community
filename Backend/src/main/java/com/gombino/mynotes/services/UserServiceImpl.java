@@ -86,6 +86,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void setLastLoginDate(User user) {
+        userRepository.findUserByUsername(user.getUsername()).orElseThrow(() -> new NoSuchElementException("No user with this username: " + user.getUsername()));
+        user.setLastLogin(Instant.now());
+        userRepository.save(user);
+    }
+
+    @Override
     public User getUser(String username) {
         return userRepository.findUserByUsername(username).orElseThrow(() -> new NoSuchElementException("No user with this username: " + username));
     }
