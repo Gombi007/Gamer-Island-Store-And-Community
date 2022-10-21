@@ -1,7 +1,5 @@
 package com.gombino.mynotes;
 
-import com.gombino.mynotes.models.entities.Role;
-import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
@@ -31,13 +29,12 @@ public class MyNotesApplication {
     }
 
     @Bean
-    CommandLineRunner run(UserService appUserService) {
+    CommandLineRunner run(UserService userService) {
         return args -> {
-         //   appUserService.saveRole(new Role(null, "ROLE_ADMIN"));
-           //   appUserService.saveUser(new User(null, "admin", "email@test.hu", "1234", "https://www.google.com", null, null, null, null));
-
-
-               appUserService.addRoleToUser("admin", "ROLE_ADMIN");
+            //   userService.saveRole(new Role(null, "ROLE_USER"));
+            //   userService.saveRole(new Role(null, "ROLE_ADMIN"));
+            //   userService.saveUser(new User(null, "admin", "email@test.hu", "1234", "https://www.google.com", null, null, null, null));
+            //   userService.addRoleToUser("admin", "ROLE_ADMIN");
         };
     }
 
