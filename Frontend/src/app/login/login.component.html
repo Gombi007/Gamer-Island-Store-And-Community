@@ -51,10 +51,16 @@
             <button mat-raised-button type="buuton" (click)="startRegistration()">Registration</button>
         </div>
     </form>
+
     <mat-chip-list>
         <mat-chip *ngIf="errorResponse !==''" color="warn" selected>{{errorResponse}}</mat-chip>
         <mat-chip *ngIf="registrationOk!==''" color="accent" selected>{{registrationOk}}</mat-chip>
     </mat-chip-list>
+
+    <mat-chip-list>
+        <mat-chip *ngIf="expiredSession !==null && showLoginForm" color="warn" selected>{{expiredSession}}</mat-chip>
+    </mat-chip-list>
+
 
 
 

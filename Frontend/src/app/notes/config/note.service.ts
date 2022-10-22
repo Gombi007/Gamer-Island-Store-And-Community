@@ -13,22 +13,21 @@ export class NoteService {
     cancelModifyOrSubmitAndGoBack = '';
 
     getNotes() {
-        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_GET_NOTES);
+        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), this.authorServie.headerWithTokenForRequests());
     }
 
     getNotesWithIsUrgentParam(isUrgent: string) {
-        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_GET_NOTES_WITH_ISURGENT + isUrgent);
+        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?isUrgent=' + isUrgent, this.authorServie.headerWithTokenForRequests());
     }
 
     createNote(note: noteDtoToPost) {
-        return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_POST_NOTE + this.authorServie.getUserID(), JSON.stringify(note), this.authorServie.headerWithTokenForRequests());
+        return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), JSON.stringify(note), this.authorServie.headerWithTokenForRequests());
     }
     modifyNote(note: noteDtoToPost, noteId: string) {
-        const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_PUT_NOTE + noteId, JSON.stringify(note), { headers: headers });
+        return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?noteId=' + noteId, JSON.stringify(note), this.authorServie.headerWithTokenForRequests());
     }
 
     removeNote(noteId: string) {
-        return this.http.delete<any>(STRINGS.SERVER_URL + STRINGS.API_REMOVE_NOTE + noteId);
+        return this.http.delete<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?noteId=' + noteId, this.authorServie.headerWithTokenForRequests());
     }
 }

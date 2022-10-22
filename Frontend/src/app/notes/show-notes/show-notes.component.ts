@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { tap } from 'rxjs';
+import { GlobalService } from 'src/app/config/global.service';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 
@@ -14,7 +15,7 @@ export class ShowNotesComponent implements OnInit {
   notes: noteDto[] = [];
   isPending: boolean = false;
 
-  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -34,6 +35,9 @@ export class ShowNotesComponent implements OnInit {
           next: (data) => {
             this.notes = data
             this.isPending = false
+          },
+          error: (response) => {
+            this.globalService.isExpiredToken(response);
           }
         });
     }
@@ -45,6 +49,9 @@ export class ShowNotesComponent implements OnInit {
           next: (data) => {
             this.notes = data
             this.isPending = false
+          },
+          error: (response) => {
+            this.globalService.isExpiredToken(response);
           }
         });
     }
@@ -55,6 +62,9 @@ export class ShowNotesComponent implements OnInit {
           next: (data) => {
             this.notes = data
             this.isPending = false
+          },
+          error: (response) => {
+            this.globalService.isExpiredToken(response);
           }
         });
     }
@@ -68,6 +78,9 @@ export class ShowNotesComponent implements OnInit {
           next: () => {
             this.showNotes(this.currentlyRouteAfterUrgentTag);
             this.isPending = false;
+          },
+          error: (response) => {
+            this.globalService.isExpiredToken(response);
           }
         });
     }
@@ -89,6 +102,9 @@ export class ShowNotesComponent implements OnInit {
           next: () => {
             this.showNotes(this.currentlyRouteAfterUrgentTag);
             this.isPending = false;
+          },
+          error: (response) => {
+            this.globalService.isExpiredToken(response);
           }
         });
     }

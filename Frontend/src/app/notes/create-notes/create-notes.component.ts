@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tap, timer } from 'rxjs';
+import { GlobalService } from 'src/app/config/global.service';
 import { noteDto, noteDtoToPost } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 
@@ -18,7 +19,7 @@ export class CreateNotesComponent implements OnInit {
   buttonLabel = 'Create';
   createNoteForm: FormGroup;
 
-  constructor(private noteService: NoteService, private router: Router) { }
+  constructor(private noteService: NoteService, private router: Router, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.createTheForm();
@@ -78,6 +79,9 @@ export class CreateNotesComponent implements OnInit {
               timer(2000).subscribe(
                 () => this.isSuccess = false
               );
+            },
+            error: (response) => {
+              this.globalService.isExpiredToken(response);
             }
           });
     }
@@ -97,6 +101,9 @@ export class CreateNotesComponent implements OnInit {
               timer(2000).subscribe(
                 () => this.isModifySuccess = false
               );
+            },
+            error: (response) => {
+              this.globalService.isExpiredToken(response);
             }
           });
 

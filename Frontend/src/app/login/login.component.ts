@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { AuthenticateService } from '../config/authenticate.service';
 
@@ -15,14 +15,16 @@ export class LoginComponent implements OnInit {
   showLoginForm = true;
   errorResponse = '';
   registrationOk = '';
+  expiredSession: null | string = null;
 
-  constructor(private authService: AuthenticateService, private router: Router) {
+  constructor(private authService: AuthenticateService, private router: Router, private route: ActivatedRoute) {
     localStorage.clear();
   }
 
   ngOnInit(): void {
     this.createLoginForm();
     this.createRegistrationForm();
+    this.expiredSession = this.route.snapshot.paramMap.get('expiredTokenMessage');
   }
 
   createLoginForm() {
