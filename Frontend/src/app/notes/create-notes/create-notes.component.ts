@@ -63,49 +63,42 @@ export class CreateNotesComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isPending = true;
     let collectedFormData = this.collectDataFromForm();
     if (this.createNoteForm.valid && this.noteService.noteToModify === undefined) {
-      this.noteService.createNote(collectedFormData)
-        .pipe(
-          tap(() => {
-            this.isPending = true
-            this.isSuccess = true
-          }))
-        .subscribe(
-          {
-            next: () => {
-              this.isPending = false;
-              this.createNoteForm.reset();
-              timer(2000).subscribe(
-                () => this.isSuccess = false
-              );
-            },
-            error: (response) => {
-              this.globalService.isExpiredToken(response);
-            }
-          });
+      this.noteService.createNote(collectedFormData).subscribe(
+        {
+          next: () => {
+            this.createNoteForm.reset();
+            this.isPending = false;
+            this.isSuccess = true;
+            timer(2000).subscribe(
+              () => this.isSuccess = false
+            );
+          },
+          error: (response) => {
+            this.globalService.isExpiredToken(response);
+            this.isPending = false;
+          }
+        });
     }
     if (this.createNoteForm.valid && this.noteService.noteToModify !== undefined) {
-      this.noteService.modifyNote(collectedFormData, this.noteService.noteToModify.id)
-        .pipe(
-          tap(() => {
-            this.isPending = true
-            this.isModifySuccess = true
-          }))
-        .subscribe(
-          {
-            next: () => {
-              this.isPending = false;
-              this.createNoteForm.reset();
-              this.noteService.noteToModify = undefined;
-              timer(2000).subscribe(
-                () => this.isModifySuccess = false
-              );
-            },
-            error: (response) => {
-              this.globalService.isExpiredToken(response);
-            }
-          });
+      this.noteService.modifyNote(collectedFormData, this.noteService.noteToModify.id).subscribe(
+        {
+          next: () => {
+            this.createNoteForm.reset();
+            this.noteService.noteToModify = undefined;
+            this.isPending = false;
+            this.isModifySuccess = true;
+            timer(2000).subscribe(
+              () => this.isModifySuccess = false
+            );
+          },
+          error: (response) => {
+            this.globalService.isExpiredToken(response);
+            this.isPending = false;
+          }
+        });
 
     }
 

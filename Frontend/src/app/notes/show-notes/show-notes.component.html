@@ -2,7 +2,7 @@
     <div class="note" *ngFor="let note of notes">
         <h3 class="title">{{note.text}}</h3>
         <p class="note-text">{{note.text2}}</p>
-        <img *ngIf="note.imgUrl !== null" src="{{note.imgUrl}}" alt="pic">
+        <img *ngIf="note.imgUrl.length > 1" src="{{note.imgUrl}}" alt="pic">
         <p class="created">Created: {{note.created}}</p>
         <mat-divider></mat-divider>
         <div class="edit-row">

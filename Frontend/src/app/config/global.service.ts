@@ -9,8 +9,10 @@ export class GlobalService {
 
 
     isExpiredToken(errorResponse: any) {
-        if (errorResponse.error.error_message.includes("The Token has expired")) {
-            this.router.navigate(['login', { expiredTokenMessage: "The session was expired, please login again." }]);
+        if (errorResponse.error.error_message !== undefined) {
+            if (errorResponse.error.error_message.includes("The Token has expired")) {
+                this.router.navigate(['login', { expiredTokenMessage: "The session was expired, please login again." }]);
+            }
         }
     }
 }

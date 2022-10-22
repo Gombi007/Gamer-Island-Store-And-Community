@@ -28,61 +28,59 @@ export class ShowNotesComponent implements OnInit {
   }
 
   showNotes(isUrgent: string = '') {
+    this.isPending = true;
     if (isUrgent === '' || isUrgent === 'all') {
-      this.noteService.getNotes()
-        .pipe(tap(() => { this.isPending = true }))
-        .subscribe({
-          next: (data) => {
-            this.notes = data
-            this.isPending = false
-          },
-          error: (response) => {
-            this.globalService.isExpiredToken(response);
-          }
-        });
+      this.noteService.getNotes().subscribe({
+        next: (data) => {
+          this.notes = data;
+          this.isPending = false;
+        },
+        error: (response) => {
+          this.globalService.isExpiredToken(response);
+          this.isPending = false;
+        }
+      });
     }
 
     if (isUrgent === 'urgent') {
-      this.noteService.getNotesWithIsUrgentParam('true')
-        .pipe(tap(() => { this.isPending = true }))
-        .subscribe({
-          next: (data) => {
-            this.notes = data
-            this.isPending = false
-          },
-          error: (response) => {
-            this.globalService.isExpiredToken(response);
-          }
-        });
+      this.noteService.getNotesWithIsUrgentParam('true').subscribe({
+        next: (data) => {
+          this.notes = data;
+          this.isPending = false;
+        },
+        error: (response) => {
+          this.globalService.isExpiredToken(response);
+          this.isPending = false;
+        }
+      });
     }
     if (isUrgent === 'non-urgent') {
-      this.noteService.getNotesWithIsUrgentParam('false')
-        .pipe(tap(() => { this.isPending = true }))
-        .subscribe({
-          next: (data) => {
-            this.notes = data
-            this.isPending = false
-          },
-          error: (response) => {
-            this.globalService.isExpiredToken(response);
-          }
-        });
+      this.noteService.getNotesWithIsUrgentParam('false').subscribe({
+        next: (data) => {
+          this.notes = data;
+          this.isPending = false;
+        },
+        error: (response) => {
+          this.globalService.isExpiredToken(response);
+          this.isPending = false;
+        }
+      });
     }
   }
 
   removeNote(noteId: string) {
     if (!this.isPending) {
-      this.noteService.removeNote(noteId)
-        .pipe(tap(() => { this.isPending = true }))
-        .subscribe({
-          next: () => {
-            this.showNotes(this.currentlyRouteAfterUrgentTag);
-            this.isPending = false;
-          },
-          error: (response) => {
-            this.globalService.isExpiredToken(response);
-          }
-        });
+      this.isPending = true;
+      this.noteService.removeNote(noteId).subscribe({
+        next: () => {
+          this.showNotes(this.currentlyRouteAfterUrgentTag);
+          this.isPending = false;
+        },
+        error: (response) => {
+          this.globalService.isExpiredToken(response);
+          this.isPending = false;
+        }
+      });
     }
   }
 
@@ -95,6 +93,7 @@ export class ShowNotesComponent implements OnInit {
 
   changeUrgentOrNotNoteStatus(note: noteDto, noteId: string) {
     if (!this.isPending) {
+      this.isPending = true;
       note.isUrgent = !note.isUrgent;
       this.noteService.modifyNote(note, noteId)
         .pipe(tap(() => { this.isPending = true }))
@@ -105,6 +104,7 @@ export class ShowNotesComponent implements OnInit {
           },
           error: (response) => {
             this.globalService.isExpiredToken(response);
+            this.isPending = false;
           }
         });
     }
