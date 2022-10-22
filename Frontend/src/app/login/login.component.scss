@@ -4,17 +4,20 @@
     background-color: var(--color-primary);
     display: flex;  
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
 .logo{
-    width: min(50%, 150px);       
+    padding-top: 1rem;
+    width: min(30%, 150px);       
 }
 
 form{
-    padding: 2rem;
+    padding: 1rem;
+    margin: 0.5rem;
     width: min(97%, 260px);       
+    box-shadow: 0 0 3px 2px var(--color-disabled);
 }
 mat-form-field{
 width: 100%;
@@ -39,10 +42,9 @@ width: 100%;
 .btn-area{
     width: 100%;
    display: flex;
-   justify-content: center;
-   padding-top: 1rem;
+   justify-content: center;  
 }
 
 mat-chip-list{
-    padding-top: 0.3rem;
+    padding-top: 0.5rem;
 }
