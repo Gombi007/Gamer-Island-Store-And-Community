@@ -1,5 +1,5 @@
 export enum STRINGS {
-    SERVER_URL = "http://localhost:8081/",
+    SERVER_URL = "http://gombino.ddns.net:8081/",
     API_LOGIN = "api/login",
     API_REGISTRATION = "api/registration",
     API_GET_NOTES = "api/notes/",

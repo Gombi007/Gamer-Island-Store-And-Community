@@ -23,4 +23,5 @@ public class Note {
     private Instant created;
     private Instant lastModified;
     private String imgUrl;
+    private String creatorId;
 }

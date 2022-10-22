@@ -1,5 +1,6 @@
 package com.gombino.mynotes.services;
 
+import com.gombino.mynotes.exceptions.PermissionDeniedException;
 import com.gombino.mynotes.models.dto.NoteDto;
 import com.gombino.mynotes.models.entities.Note;
 import com.gombino.mynotes.models.entities.User;
@@ -31,14 +32,15 @@ public class NoteServiceImpl implements NoteService {
 
 
     @Override
-    public List<NoteDto> getNotesByUrgentOrNotOrAll(String isUrgent) {
+    public List<NoteDto> getNotesByUrgentOrNotOrAll(String isUrgent, String userId) {
+        User user = userService.getUserById(userId);
         if (isUrgent != null && !isUrgent.isEmpty()) {
             boolean isUrgentBoolean = Boolean.parseBoolean(isUrgent);
-            return noteRepository.findAllUrgentNotes(isUrgentBoolean).stream()
+            return noteRepository.findAllUrgentNotesByCreator(user.getId(), isUrgentBoolean).stream()
                     .map(this::convertToNoteDto)
                     .collect(Collectors.toList());
         } else {
-            return noteRepository.findAll().stream()
+            return noteRepository.findAllNotesByCreator(user.getId()).stream()
                     .map(this::convertToNoteDto)
                     .collect(Collectors.toList());
         }
@@ -47,32 +49,45 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public void createNote(NoteDto noteDto, String userId) {
         User user = userService.getUserById(userId);
-        if (user.getNotes() == null) {
-            user.setNotes(new ArrayList<>());
-        }
+
         Note note = convertToNoteEntity(noteDto);
         note.setCreated(Instant.now());
-        user.getNotes().add(note);
+        note.setCreatorId(user.getId());
+        Note savedNote = noteRepository.save(note);
+
+        if (user.getNoteIds() == null) {
+            user.setNoteIds(new ArrayList<>());
+        }
+        user.getNoteIds().add(savedNote.getId());
         userService.updateUser(user);
-        //ToDo search mongodb reference saving
+
     }
 
     @Override
-    public NoteDto modifyNote(NoteDto noteDto, String id) {
-        Note originalNote = noteRepository.findById(id).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
-        originalNote.setText(noteDto.getText());
-        originalNote.setText2(noteDto.getText2());
-        originalNote.setIsUrgent(noteDto.getIsUrgent());
-        originalNote.setImgUrl(noteDto.getImgUrl());
-        originalNote.setLastModified(Instant.now());
-        Note modifiedNote = noteRepository.save(originalNote);
-        return convertToNoteDto(modifiedNote);
+    public NoteDto modifyNote(NoteDto noteDto, String noteId, String userId) {
+        User user = userService.getUserById(userId);
+        Note originalNote = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
+        if (user.getId().equals(originalNote.getCreatorId())) {
+            originalNote.setText(noteDto.getText());
+            originalNote.setText2(noteDto.getText2());
+            originalNote.setIsUrgent(noteDto.getIsUrgent());
+            originalNote.setImgUrl(noteDto.getImgUrl());
+            originalNote.setLastModified(Instant.now());
+            Note modifiedNote = noteRepository.save(originalNote);
+            return convertToNoteDto(modifiedNote);
+        }
+        throw new PermissionDeniedException("You can modify just your own notes");
     }
 
     @Override
-    public void removeNoteById(String id) {
-        Note note = noteRepository.findById(id).orElseThrow(() -> new NoSuchElementException("There is no note with this id"));
-        noteRepository.delete(note);
+    public void removeNoteById(String noteId, String userId) {
+        User user = userService.getUserById(userId);
+        Note note = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this id"));
+        if (user.getId().equals(note.getCreatorId())) {
+            noteRepository.delete(note);
+        } else {
+            throw new PermissionDeniedException("You can delete just your own notes");
+        }
     }
 
 

@@ -14,8 +14,13 @@ public interface NoteRepository extends MongoRepository<Note, String> {
     @Query("{name:'?0'}")
     Note findItemByName(String name);
 
-    @Query(value = "{isUrgent: ?0 }")
-    List<Note> findAllUrgentNotes(boolean isUrgent);
+
+
+    @Query(value = "{'creatorId':?0,isUrgent: ?1 }")
+    List<Note> findAllUrgentNotesByCreator(String creatorId, boolean isUrgent);
+
+    @Query(value = "{'creatorId':?0}")
+    List<Note> findAllNotesByCreator(String creatorId);
 
     public long count();
 }
