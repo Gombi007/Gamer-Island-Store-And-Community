@@ -1,0 +1,13 @@
+.container {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    width: min(50%, 300px);
+    border-radius: 50%;
+    box-shadow: 0 0 7px 5px var(--color-disabled);
+}

@@ -14,7 +14,8 @@ import { NavigationDesktopNotesComponent } from './notes/navigation-desktop-note
 import { ReactiveFormsModule } from '@angular/forms';
 import { PendingComponent } from './pending/pending.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './profile/navigation-profile/profile.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProfileComponent } from './profile/profile.component';
     NavigationDesktopNotesComponent,
     PendingComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
