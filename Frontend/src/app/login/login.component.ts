@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['']);
         },
         error: (response) => {
+
           this.errorResponse = response.error;
           this.isPending = false;
           timer(3000).subscribe(

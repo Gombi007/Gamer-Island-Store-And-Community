@@ -1,6 +1,8 @@
 package com.gombino.mynotes;
 
+import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
+@Slf4j
 public class MyNotesApplication {
     @Bean
     BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -28,8 +31,7 @@ public class MyNotesApplication {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200/").allowedMethods("GET", "POST", "PUT", "DELETE");
-
+                registry.addMapping("/**").allowedOrigins("http://localhost/", "http://localhost:4200/").allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };
     }
@@ -37,13 +39,12 @@ public class MyNotesApplication {
     @Bean
     CommandLineRunner run(UserService userService) {
         return args -> {
-            //  userService.saveRole(new Role(null, "ROLE_USER"));
-            //   userService.saveRole(new Role(null, "ROLE_ADMIN"));
-            //  userService.saveUser(new User(null, "admin", "email@test.hu", "1234", "https://www.google.com", null, null, null, null));
-            //   userService.addRoleToUser("admin", "ROLE_ADMIN");
+            if (userService.getRoles().isEmpty()) {
+                userService.saveRole(new Role(null, "ROLE_USER"));
+                userService.saveRole(new Role(null, "ROLE_ADMIN"));
+            }
         };
     }
-
 
     public static void main(String[] args) {
         SpringApplication.run(MyNotesApplication.class, args);

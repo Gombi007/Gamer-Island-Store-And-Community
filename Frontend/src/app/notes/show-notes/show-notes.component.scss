@@ -1,15 +1,14 @@
 .container {
     width: 100%;
-    padding-top: 1rem;
     padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+    align-items: center; 
 }
 
 
 .note {
+    margin-top: 1rem;
     width: min(97%, 800px);
     display: flex;
     flex-direction: column;
