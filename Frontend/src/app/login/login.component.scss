@@ -1,50 +1,56 @@
-.container{
+.container {
     width: 100%;
     height: 100%;
     background-color: var(--color-primary);
-    display: flex;  
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 }
 
-.logo{
+.logo {
     padding-top: 1rem;
-    width: min(30%, 150px);       
+    width: min(30%, 150px);
 }
 
-form{
+form {
     padding: 1rem;
-    margin: 0.5rem;
-    width: min(97%, 260px);       
+    margin: 2rem;
+    width: min(85%, 450px);
     box-shadow: 0 0 3px 2px var(--color-disabled);
-}
-mat-form-field{
-width: 100%;
+    border-radius: 0.5rem;
 }
 
-.changeFormContainer{
-    display: flex;      
+mat-form-field {
+    width: 100%;
+}
+
+.changeFormContainer {
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.changeFormContainer button,p{
+
+.changeFormContainer button,
+p {
     padding: 0;
     margin: 0;
 }
-.changeFormContainer p{
-  color: var(--color-accent);
-}
-.changeFormContainer button{
-  color: var(--color-success);
+
+.changeFormContainer p {
+    color: var(--color-accent);
 }
 
-.btn-area{
+.changeFormContainer button {
+    color: var(--color-success);
+}
+
+.btn-area {
     width: 100%;
-   display: flex;
-   justify-content: center;  
+    display: flex;
+    justify-content: center;
 }
 
-mat-chip-list{
+mat-chip-list {
     padding-top: 0.5rem;
 }

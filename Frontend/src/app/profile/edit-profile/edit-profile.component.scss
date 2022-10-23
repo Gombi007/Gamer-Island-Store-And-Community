@@ -1,4 +1,5 @@
 .container {
+    width: 100%;
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -10,4 +11,15 @@ img {
     width: min(50%, 300px);
     border-radius: 50%;
     box-shadow: 0 0 7px 5px var(--color-disabled);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    margin: 2rem;
+    width: min(85%, 450px);
+    box-shadow: 0 0 3px 2px var(--color-disabled);
+    border-radius: 0.5rem;
 }

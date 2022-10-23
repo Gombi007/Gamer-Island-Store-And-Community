@@ -1,4 +1,54 @@
 <div class="container">
     <h3>Hello, PROFILE_NAME</h3>
     <img src="https://picsum.photos/200" alt="profile-picture">
+
+    <form [formGroup]="profileForm">
+        <h3>Update your personal info</h3>
+
+        <mat-form-field appearance="standard" color="accent">
+            <input matInput placeholder="Username" id="username" name="username" formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" id="email" name="email" formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Avatar</mat-label>
+            <input matInput placeholder="Avatar URL from web" id="avatar" name="avatar" formControlName="avatar">
+        </mat-form-field>
+
+        <div class="btn-area">
+            <button mat-raised-button type="button" (click)="saveProfile()">Update</button>
+        </div>
+    </form>
+
+
+    <form [formGroup]="passChangeForm">
+        <h3>Change your password</h3>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Current Password</mat-label>
+            <input type="password" matInput placeholder="At least 6 character long password" id="oldPassword"
+                name="oldPassword" formControlName="oldPassword">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>New Password</mat-label>
+            <input type="password" matInput placeholder="At least 6 character long password" id="newPassword"
+                name="newPassword" formControlName="newPassword">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>New Password Again</mat-label>
+            <input type="password" matInput placeholder="At least 6 character long password" id="reNewPassword"
+                name="reNewPassword" formControlName="reNewPassword">
+        </mat-form-field>
+
+        <div class="btn-area">
+            <button mat-raised-button type="button" (click)="saveProfile()">Change</button>
+        </div>
+    </form>
+
 </div>
