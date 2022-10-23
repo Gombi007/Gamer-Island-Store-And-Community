@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
     return this.registrationForm = new FormGroup({
       'username': new FormControl(null, [Validators.required]),
       'password': new FormControl(null, [Validators.required]),
+      'rePassword': new FormControl(null, [Validators.required]),
       'email': new FormControl(null,),
       'avatar': new FormControl(null,),
     });
@@ -51,7 +52,6 @@ export class LoginComponent implements OnInit {
 
 
   startLogin() {
-
     if (this.loginForm.valid) {
       this.isPending = true;
       this.authService.loginViaBackend(this.loginForm.value).subscribe({
@@ -76,25 +76,29 @@ export class LoginComponent implements OnInit {
 
   startRegistration() {
     if (this.registrationForm.valid) {
-      this.isPending = true;
-      this.authService.registerViaBackend(this.registrationForm.value).subscribe({
-        next: () => {
-          this.showLoginForm = true;
-          this.registrationOk = 'Registration OK, Please Login'
-          this.registrationForm.reset();
-          this.isPending = false;
-          timer(3000).subscribe(
-            () => this.registrationOk = ''
-          );
-        },
-        error: (response) => {
-          this.errorResponse = response.error;
-          this.isPending = false;
-          timer(3000).subscribe(
-            () => this.errorResponse = ''
-          );
-        }
-      });
+      if (this.registrationForm.get('password')?.value !== this.registrationForm.get('rePassword')?.value) {
+        this.errorResponse = "The passwords are different"
+      } else {
+        this.isPending = true;
+        this.authService.registerViaBackend(this.registrationForm.value).subscribe({
+          next: () => {
+            this.showLoginForm = true;
+            this.registrationOk = 'Registration OK, Please Login'
+            this.registrationForm.reset();
+            this.isPending = false;
+            timer(3000).subscribe(
+              () => this.registrationOk = ''
+            );
+          },
+          error: (response) => {
+            this.errorResponse = response.error;
+            this.isPending = false;
+            timer(3000).subscribe(
+              () => this.errorResponse = ''
+            );
+          }
+        });
+      }
     }
   }
 }
