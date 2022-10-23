@@ -13,15 +13,19 @@
     <mat-toolbar color="primary" *ngIf="isLoggedIn()">
       <div class="menu">
 
-        <div class="desktop-left-side">
-          <app-navigation-desktop-notes [class.hidden]="isHandset$ | async"></app-navigation-desktop-notes>
+        <div class="menu-profile" [class.menu-profile-mobile]="isHandset$ | async">
+          <app-profile class="profile"></app-profile>
         </div>
 
-        <div class="desktop-center">
+        <div class="menu-navigation-submenu" [class.hidden]="isHandset$ | async">
+          <app-navigation-desktop-notes></app-navigation-desktop-notes>
+        </div>
+
+        <div class="menu-logo">
           <img src="/assets/img/logo.png" alt="logo" style="width: 3.4rem;">
         </div>
 
-        <div class="desktop-right-side">
+        <div class="menu-navigation">
           <button class="hamburger" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
             *ngIf="isHandset$ | async">
             <mat-icon aria-label="Side nav toggle icon" color="accent">menu</mat-icon>
