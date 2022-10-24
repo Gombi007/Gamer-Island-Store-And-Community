@@ -54,7 +54,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User newUser = new User();
         newUser.setUsername(registrationUserDto.getUsername());
-        newUser.setAvatar(registrationUserDto.getAvatar());
+        if (registrationUserDto.getAvatar() != null && !registrationUserDto.getAvatar().isEmpty()) {
+            newUser.setAvatar(registrationUserDto.getAvatar());
+        } else {
+            newUser.setAvatar("https://i.pravatar.cc/150?img=8");
+        }
         newUser.setEmail(registrationUserDto.getEmail());
         newUser.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
 
@@ -133,9 +137,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return convertToUserDto(user);
     }
 
+    @Override
+    public UserDto updateUserProfile(String userId, UserDto userDto) {
+        User user = getUserById(userId);
+        user.setEmail(userDto.getEmail());
+        user.setAvatar(userDto.getAvatar());
+        log.warn("User profile was updated {}", user.getUsername());
+        return convertToUserDto(userRepository.save(user));
+    }
+
     //Converters
     private UserDto convertToUserDto(User user) {
         return modelMapper.map(user, UserDto.class);
+    }
+
+    private User convertToUser(UserDto userDto) {
+        return modelMapper.map(userDto, User.class);
     }
 
 }

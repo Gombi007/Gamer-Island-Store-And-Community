@@ -56,4 +56,10 @@ public class UserController {
     public ResponseEntity<UserDto> getProfileData(@PathVariable String userId) {
         return ResponseEntity.ok().body(userService.getProfileData(userId));
     }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/profile/{userId}")
+    public ResponseEntity<UserDto> updateUserProfile(@PathVariable String userId, @RequestBody UserDto userDto) {
+        return ResponseEntity.ok().body(userService.updateUserProfile(userId, userDto));
+    }
 }

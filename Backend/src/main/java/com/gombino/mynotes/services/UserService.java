@@ -28,4 +28,6 @@ public interface UserService {
     List<User> getUsers();
 
     UserDto getProfileData(String userId);
+
+    UserDto updateUserProfile(String userId, UserDto userDto);
 }
