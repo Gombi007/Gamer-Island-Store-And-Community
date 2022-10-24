@@ -50,6 +50,21 @@ export class LoginComponent implements OnInit {
     this.showLoginForm = !this.showLoginForm;
   }
 
+  removeErrorMessageFromUI() {
+    timer(3000).subscribe(
+      () => this.errorResponse = ''
+    );
+  }
+
+  isTwoPasswordFieldSame() {
+    if (this.registrationForm.get('password')?.value === this.registrationForm.get('rePassword')?.value) {
+      return true;
+    }
+    this.errorResponse = "The passwords are different";
+    this.removeErrorMessageFromUI();
+    return false;
+  }
+
 
   startLogin() {
     if (this.loginForm.valid) {
@@ -66,39 +81,30 @@ export class LoginComponent implements OnInit {
 
           this.errorResponse = response.error;
           this.isPending = false;
-          timer(3000).subscribe(
-            () => this.errorResponse = ''
-          );
+          this.removeErrorMessageFromUI();
         }
       });
     }
   }
 
   startRegistration() {
-    if (this.registrationForm.valid) {
-      if (this.registrationForm.get('password')?.value !== this.registrationForm.get('rePassword')?.value) {
-        this.errorResponse = "The passwords are different"
-      } else {
-        this.isPending = true;
-        this.authService.registerViaBackend(this.registrationForm.value).subscribe({
-          next: () => {
-            this.showLoginForm = true;
-            this.registrationOk = 'Registration OK, Please Login'
-            this.registrationForm.reset();
-            this.isPending = false;
-            timer(3000).subscribe(
-              () => this.registrationOk = ''
-            );
-          },
-          error: (response) => {
-            this.errorResponse = response.error;
-            this.isPending = false;
-            timer(3000).subscribe(
-              () => this.errorResponse = ''
-            );
-          }
-        });
-      }
+    if (this.registrationForm.valid && this.isTwoPasswordFieldSame()) {
+      this.isPending = true;
+      this.authService.registerViaBackend(this.registrationForm.value).subscribe({
+        next: () => {
+          this.showLoginForm = true;
+          this.registrationOk = 'Registration OK, Please Login'
+          this.registrationForm.reset();
+          this.isPending = false;
+          this.removeErrorMessageFromUI();
+        },
+        error: (response) => {
+          this.errorResponse = response.error;
+          this.isPending = false;
+          this.removeErrorMessageFromUI();
+        }
+      });
     }
   }
 }
+

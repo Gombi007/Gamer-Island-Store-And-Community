@@ -20,6 +20,7 @@ form {
     padding: 1rem;
     margin: 2rem;
     width: min(85%, 450px);
-    box-shadow: 0 0 3px 2px var(--color-disabled);
+
+    background-color: var(--color-primary);
     border-radius: 0.5rem;
 }

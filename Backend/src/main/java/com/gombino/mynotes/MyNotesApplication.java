@@ -31,7 +31,7 @@ public class MyNotesApplication {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost/", "http://localhost:4200/").allowedMethods("GET", "POST", "PUT", "DELETE");
+                registry.addMapping("/**").allowedOrigins("http://localhost/", "http://localhost:4200/", "http://192.168.1.66:4200/").allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };
     }
