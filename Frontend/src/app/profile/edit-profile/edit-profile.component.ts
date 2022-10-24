@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { timer } from 'rxjs';
+import { GlobalService } from 'src/app/config/global.service';
 import { ProfileService } from '../config/profile.service';
 
 @Component({
@@ -9,18 +10,19 @@ import { ProfileService } from '../config/profile.service';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
+  avatar = '';
+  username = '';
   profileForm: FormGroup
   passChangeForm: FormGroup
   errorResponse = '';
   updateSuccess = '';
   isPending = false;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.createProfileForm();
     this.createPassChangeForm();
-
     this.getProfileData();
   }
 
@@ -30,12 +32,11 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-
   createProfileForm() {
     return this.profileForm = new FormGroup({
       'username': new FormControl({ value: "Username", disabled: true }),
       'email': new FormControl(null, [Validators.email]),
-      'avatar': new FormControl(null,),
+      'avatar': new FormControl(null),
     });
   }
 
@@ -51,19 +52,38 @@ export class EditProfileComponent implements OnInit {
     this.isPending = true;
     this.profileService.getProfileData().subscribe({
       next: (data) => {
+        this.avatar = data.avatar;
+        this.username = data.username;
         this.profileForm.setValue(data);
         this.isPending = false;
       },
       error: (response) => {
         this.errorResponse = response.error;
         this.isPending = false;
+        this.globalService.isExpiredToken(response);
       }
     });
-
   }
 
   updateProfile() {
-
+    if (this.profileForm.valid) {
+      this.isPending = true;
+      this.profileService.updateProfileData(this.profileForm).subscribe({
+        next: (data) => {
+          this.avatar = data.avatar;
+          this.username = data.username;
+          this.profileForm.setValue(data);
+          this.isPending = false;
+          this.updateSuccess = "Profile was saved successfully"
+        },
+        error: (response) => {
+          console.log(response);
+          this.errorResponse = response.error;
+          this.globalService.isExpiredToken(response);
+          this.isPending = false;
+        }
+      });
+    }
   }
 
   changePass() { }
