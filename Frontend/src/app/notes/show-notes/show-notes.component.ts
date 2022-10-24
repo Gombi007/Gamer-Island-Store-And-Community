@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
@@ -34,6 +35,7 @@ export class ShowNotesComponent implements OnInit {
         next: (data) => {
           this.notes = data;
           this.isPending = false;
+
         },
         error: (response) => {
           this.globalService.isExpiredToken(response);
@@ -94,8 +96,13 @@ export class ShowNotesComponent implements OnInit {
   changeUrgentOrNotNoteStatus(note: noteDto, noteId: string) {
     if (!this.isPending) {
       this.isPending = true;
-      note.isUrgent = !note.isUrgent;
-      this.noteService.modifyNote(note, noteId)
+      let noteForm: FormGroup = new FormGroup({
+        'title': new FormControl(note.title),
+        'text': new FormControl(note.text),
+        'imgUrl': new FormControl(note.imgUrl),
+        'isUrgent': new FormControl(!note.isUrgent),
+      });
+      this.noteService.modifyNote(noteForm, noteId)
         .pipe(tap(() => { this.isPending = true }))
         .subscribe({
           next: () => {

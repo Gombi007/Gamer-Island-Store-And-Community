@@ -1,5 +1,5 @@
 <div class="form">
-    <form [formGroup]="createNoteForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="createNoteForm" (ngSubmit)="onSubmit()" #form="ngForm">
         <mat-form-field appearance="standard" color="accent">
             <mat-label>Title</mat-label>
             <input matInput placeholder="Write a title" id="title" name="title" formControlName="title">
@@ -31,8 +31,8 @@
 
         <mat-form-field appearance="standard" color="accent">
             <mat-label>Image Url</mat-label>
-            <input type="url" matInput placeholder="Add an image link if you want" id="imageUrl" name="imageUrl"
-                formControlName="imageUrl">
+            <input type="url" matInput placeholder="Add an image link if you want" id="imgUrl" name="imgUrl"
+                formControlName="imgUrl">
         </mat-form-field>
 
         <br>
