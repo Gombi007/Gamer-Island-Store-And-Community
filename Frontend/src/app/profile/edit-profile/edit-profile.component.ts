@@ -13,6 +13,7 @@ export class EditProfileComponent implements OnInit {
   passChangeForm: FormGroup
   errorResponse = '';
   updateSuccess = '';
+  isPending = false;
 
   constructor(private profileService: ProfileService) { }
 
@@ -47,9 +48,16 @@ export class EditProfileComponent implements OnInit {
   }
 
   getProfileData() {
+    this.isPending = true;
     this.profileService.getProfileData().subscribe({
-      next: (data) => { this.profileForm = data; },
-      error: (response) => { this.errorResponse = response.error }
+      next: (data) => {
+        this.profileForm.setValue(data);
+        this.isPending = false;
+      },
+      error: (response) => {
+        this.errorResponse = response.error;
+        this.isPending = false;
+      }
     });
 
   }
