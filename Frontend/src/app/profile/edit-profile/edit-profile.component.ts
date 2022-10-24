@@ -14,19 +14,18 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.createProfileForm();
-    this.createpassChangeForm();
+    this.createPassChangeForm();
   }
 
   createProfileForm() {
     return this.profileForm = new FormGroup({
       'username': new FormControl({ value: "Username", disabled: true }),
-      'password': new FormControl(null, [Validators.required]),
-      'email': new FormControl(null,),
+      'email': new FormControl(null, [Validators.email]),
       'avatar': new FormControl(null,),
     });
   }
 
-  createpassChangeForm() {
+  createPassChangeForm() {
     return this.passChangeForm = new FormGroup({
       'oldPassword': new FormControl(null, [Validators.required]),
       'newPassword': new FormControl(null, [Validators.required]),
@@ -36,8 +35,10 @@ export class EditProfileComponent implements OnInit {
 
 
 
-  saveProfile() {
+  updateProfile() {
 
   }
+
+  changePass() { }
 
 }

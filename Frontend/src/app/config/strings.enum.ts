@@ -3,5 +3,6 @@ export enum STRINGS {
     API_LOGIN = "api/login",
     API_REGISTRATION = "api/registration",
     API_NOTES = "api/notes/",
+    API_PROFILE = "api/profile/",
 
 }
