@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { timer } from 'rxjs';
+import { ProfileService } from '../config/profile.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -9,13 +11,24 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class EditProfileComponent implements OnInit {
   profileForm: FormGroup
   passChangeForm: FormGroup
+  errorResponse = '';
+  updateSuccess = '';
 
-  constructor() { }
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.createProfileForm();
     this.createPassChangeForm();
+
+    this.getProfileData();
   }
+
+  removeErrorMessageFromUI() {
+    timer(3000).subscribe(
+      () => this.errorResponse = ''
+    );
+  }
+
 
   createProfileForm() {
     return this.profileForm = new FormGroup({
@@ -33,7 +46,13 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  getProfileData() {
+    this.profileService.getProfileData().subscribe({
+      next: (data) => { this.profileForm = data; },
+      error: (response) => { this.errorResponse = response.error }
+    });
 
+  }
 
   updateProfile() {
 
