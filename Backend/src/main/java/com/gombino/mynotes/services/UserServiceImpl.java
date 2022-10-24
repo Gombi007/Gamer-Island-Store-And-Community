@@ -1,8 +1,10 @@
 package com.gombino.mynotes.services;
 
+import com.gombino.mynotes.exceptions.PermissionDeniedException;
 import com.gombino.mynotes.exceptions.ResourceAlreadyExistsException;
 import com.gombino.mynotes.models.dto.RegistrationUserDto;
 import com.gombino.mynotes.models.dto.UserDto;
+import com.gombino.mynotes.models.dto.UserPasswordDto;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.repositories.RoleRepository;
@@ -144,6 +146,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setAvatar(userDto.getAvatar());
         log.warn("User profile was updated {}", user.getUsername());
         return convertToUserDto(userRepository.save(user));
+    }
+
+    @Override
+    public void changeUserPassword(String userId, UserPasswordDto userPasswordDto) {
+        User user = getUserById(userId);
+        boolean areOriginalPasswordsSame = passwordEncoder.matches(userPasswordDto.getOriginalPassword(), user.getPassword());
+        boolean areNewAndConfirmedPasswordsSame = userPasswordDto.getNewPassword().equals(userPasswordDto.getConfirmNewPassword());
+        if (!areOriginalPasswordsSame) {
+            throw new PermissionDeniedException("Current password is not valid.");
+        }
+        if (!areNewAndConfirmedPasswordsSame) {
+            throw new PermissionDeniedException("The new password and the confirm new password are different");
+        }
+        user.setPassword(passwordEncoder.encode(userPasswordDto.getNewPassword()));
+        userRepository.save(user);
     }
 
     //Converters

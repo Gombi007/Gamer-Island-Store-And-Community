@@ -3,6 +3,7 @@ package com.gombino.mynotes.controller;
 import com.gombino.mynotes.models.dto.RegistrationUserDto;
 import com.gombino.mynotes.models.dto.RoleToUserFormDto;
 import com.gombino.mynotes.models.dto.UserDto;
+import com.gombino.mynotes.models.dto.UserPasswordDto;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.services.UserService;
@@ -61,5 +62,12 @@ public class UserController {
     @PutMapping("/profile/{userId}")
     public ResponseEntity<UserDto> updateUserProfile(@PathVariable String userId, @RequestBody UserDto userDto) {
         return ResponseEntity.ok().body(userService.updateUserProfile(userId, userDto));
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/profile/change-password/{userId}")
+    public ResponseEntity<UserDto> changeUserPassword(@PathVariable String userId, @RequestBody UserPasswordDto userPasswordDto) {
+        userService.changeUserPassword(userId, userPasswordDto);
+        return ResponseEntity.ok().build();
     }
 }

@@ -2,6 +2,7 @@ package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.models.dto.RegistrationUserDto;
 import com.gombino.mynotes.models.dto.UserDto;
+import com.gombino.mynotes.models.dto.UserPasswordDto;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 
@@ -30,4 +31,6 @@ public interface UserService {
     UserDto getProfileData(String userId);
 
     UserDto updateUserProfile(String userId, UserDto userDto);
+
+    void changeUserPassword(String userId, UserPasswordDto userPasswordDto);
 }
