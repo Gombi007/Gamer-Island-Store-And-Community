@@ -32,15 +32,15 @@ export class LoginComponent implements OnInit {
   createLoginForm() {
     return this.loginForm = new FormGroup({
       'username': new FormControl(null, [Validators.required]),
-      'password': new FormControl(null, [Validators.required]),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
     });
   }
 
   createRegistrationForm() {
     return this.registrationForm = new FormGroup({
       'username': new FormControl(null, [Validators.required]),
-      'password': new FormControl(null, [Validators.required]),
-      'rePassword': new FormControl(null, [Validators.required]),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      'rePassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'email': new FormControl(null, [Validators.email]),
       'avatar': new FormControl(null,),
     });

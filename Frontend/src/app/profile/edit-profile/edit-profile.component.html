@@ -20,7 +20,8 @@
         </mat-form-field>
 
         <div class="btn-area">
-            <button mat-raised-button type="button" (click)="updateProfile()">Update</button>
+            <button mat-raised-button type="button" (click)="updateProfile()"
+                [disabled]="!profileForm.valid">Update</button>
         </div>
     </form>
 
@@ -51,7 +52,8 @@
         </mat-form-field>
 
         <div class="btn-area">
-            <button mat-raised-button type="button" (click)="changePass()">Change</button>
+            <button mat-raised-button type="button" (click)="changePass()"
+                [disabled]="!passChangeForm.valid">Change</button>
         </div>
     </form>
 </div>

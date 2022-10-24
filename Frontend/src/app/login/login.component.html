@@ -8,8 +8,8 @@
 
         <mat-form-field appearance="standard" color="accent">
             <mat-label>Password</mat-label>
-            <input type="password" matInput placeholder="Password" id="Password" name="password"
-                formControlName="password">
+            <input type="password" matInput placeholder="At least 6 character long password" id="Password"
+                name="password" formControlName="password">
         </mat-form-field>
         <div class="changeFormContainer">
             <p class="changeForm">You don't have an account yet?</p>
@@ -17,7 +17,8 @@
         </div>
 
         <div class="btn-area">
-            <button mat-raised-button type="button" (click)="startLogin()">Login</button>
+            <button mat-raised-button type="button" (click)="startLogin()" profileForm
+                [disabled]="!loginForm.valid">Login</button>
         </div>
     </form>
 
@@ -55,7 +56,8 @@
         </div>
 
         <div class="btn-area">
-            <button mat-raised-button type="buuton" (click)="startRegistration()">Registration</button>
+            <button mat-raised-button type="buuton" (click)="startRegistration()"
+                [disabled]="!registrationForm.valid">Registration</button>
         </div>
     </form>
 

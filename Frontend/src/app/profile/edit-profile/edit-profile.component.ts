@@ -45,9 +45,9 @@ export class EditProfileComponent implements OnInit {
 
   createPassChangeForm() {
     return this.passChangeForm = new FormGroup({
-      'originalPassword': new FormControl(null, [Validators.required]),
-      'newPassword': new FormControl(null, [Validators.required]),
-      'confirmNewPassword': new FormControl(null, [Validators.required]),
+      'originalPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      'newPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      'confirmNewPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
     });
   }
 
