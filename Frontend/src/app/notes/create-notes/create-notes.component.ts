@@ -81,6 +81,7 @@ export class CreateNotesComponent implements OnInit {
         {
           next: () => {
             this.createNoteForm.reset();
+            this.form.resetForm();
             this.noteService.noteToModify = undefined;
             this.isPending = false;
             this.isModifySuccess = true;
