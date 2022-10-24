@@ -18,8 +18,8 @@ export class ProfileService {
         return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_PROFILE + this.authorServie.getUserID(), userProfileData.value, this.authorServie.headerWithTokenForRequests());
     }
 
-    changePassword(passChangeForm: FormGroup) {
-        return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_PROFILE + this.authorServie.getUserID(), { passChangeForm }, this.authorServie.headerWithTokenForRequests());
+    changePassword(changePasswordForm: FormGroup) {
+        return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_PROFILE_CHANGE_PASSWORD + this.authorServie.getUserID(), changePasswordForm.value, this.authorServie.headerWithTokenForRequests());
     }
 
 

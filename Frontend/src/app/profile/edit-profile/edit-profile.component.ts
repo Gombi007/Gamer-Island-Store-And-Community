@@ -26,9 +26,12 @@ export class EditProfileComponent implements OnInit {
     this.getProfileData();
   }
 
-  removeErrorMessageFromUI() {
+  removeMessegasFromUI() {
     timer(3000).subscribe(
-      () => this.errorResponse = ''
+      () => {
+        this.errorResponse = '';
+        this.updateSuccess = '';
+      }
     );
   }
 
@@ -42,9 +45,9 @@ export class EditProfileComponent implements OnInit {
 
   createPassChangeForm() {
     return this.passChangeForm = new FormGroup({
-      'oldPassword': new FormControl(null, [Validators.required]),
+      'originalPassword': new FormControl(null, [Validators.required]),
       'newPassword': new FormControl(null, [Validators.required]),
-      'reNewPassword': new FormControl(null, [Validators.required]),
+      'confirmNewPassword': new FormControl(null, [Validators.required]),
     });
   }
 
@@ -61,6 +64,7 @@ export class EditProfileComponent implements OnInit {
         this.errorResponse = response.error;
         this.isPending = false;
         this.globalService.isExpiredToken(response);
+        this.removeMessegasFromUI();
       }
     });
   }
@@ -75,17 +79,44 @@ export class EditProfileComponent implements OnInit {
           this.profileForm.setValue(data);
           this.isPending = false;
           this.updateSuccess = "Profile was saved successfully"
+          this.removeMessegasFromUI();
         },
         error: (response) => {
-          console.log(response);
           this.errorResponse = response.error;
           this.globalService.isExpiredToken(response);
           this.isPending = false;
+          this.removeMessegasFromUI();
         }
       });
     }
   }
 
-  changePass() { }
+  isTwoPasswordFieldSame() {
+    if (this.passChangeForm.get('newPassword')?.value === this.passChangeForm.get('confirmNewPassword')?.value) {
+      return true;
+    }
+    this.errorResponse = "The new and the confirmed passwords are different";
+    this.removeMessegasFromUI();
+    return false;
+  }
+
+  changePass() {
+    if (this.passChangeForm.valid && this.isTwoPasswordFieldSame()) {
+      this.isPending = true;
+      this.profileService.changePassword(this.passChangeForm).subscribe({
+        next: () => {
+          this.isPending = false;
+          this.updateSuccess = "Password was changed successfully";
+          this.removeMessegasFromUI();
+        },
+        error: (response) => {
+          this.errorResponse = response.error;
+          this.globalService.isExpiredToken(response);
+          this.isPending = false;
+          this.removeMessegasFromUI();
+        }
+      });
+    }
+  }
 
 }

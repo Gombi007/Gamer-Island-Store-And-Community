@@ -24,14 +24,18 @@
         </div>
     </form>
 
+    <mat-chip-list>
+        <mat-chip *ngIf="updateSuccess!==''" color="accent" selected>{{updateSuccess}}</mat-chip>
+        <mat-chip *ngIf="errorResponse !==''" color="warn" selected>{{errorResponse}}</mat-chip>
+    </mat-chip-list>
 
     <form [formGroup]="passChangeForm">
         <h3>Change your password</h3>
 
         <mat-form-field appearance="standard" color="accent">
             <mat-label>Current Password</mat-label>
-            <input type="password" matInput placeholder="At least 6 character long password" id="oldPassword"
-                name="oldPassword" formControlName="oldPassword">
+            <input type="password" matInput placeholder="At least 6 character long password" id="originalPassword"
+                name="originalPassword" formControlName="originalPassword">
         </mat-form-field>
 
         <mat-form-field appearance="standard" color="accent">
@@ -42,14 +46,13 @@
 
         <mat-form-field appearance="standard" color="accent">
             <mat-label>Confirm New Password</mat-label>
-            <input type="password" matInput placeholder="At least 6 character long password" id="reNewPassword"
-                name="reNewPassword" formControlName="reNewPassword">
+            <input type="password" matInput placeholder="At least 6 character long password" id="confirmNewPassword"
+                name="confirmNewPassword" formControlName="confirmNewPassword">
         </mat-form-field>
 
         <div class="btn-area">
             <button mat-raised-button type="button" (click)="changePass()">Change</button>
         </div>
     </form>
-
 </div>
 <app-pending *ngIf="isPending"></app-pending>
