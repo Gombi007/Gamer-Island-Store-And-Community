@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (registrationUserDto.getAvatar() != null && !registrationUserDto.getAvatar().isEmpty()) {
             newUser.setAvatar(registrationUserDto.getAvatar());
         } else {
-            newUser.setAvatar("https://i.pravatar.cc/150?img=8");
+            newUser.setAvatar("https://www.meme-arsenal.com/memes/1c9bec1c1817f33f756ce195fab4e02f.jpg");
         }
         newUser.setEmail(registrationUserDto.getEmail());
         newUser.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
