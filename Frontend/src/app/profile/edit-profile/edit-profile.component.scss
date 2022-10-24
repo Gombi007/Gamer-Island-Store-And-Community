@@ -20,7 +20,11 @@ form {
     padding: 1rem;
     margin: 2rem;
     width: min(85%, 450px);
-
     background-color: var(--color-primary);
+    box-shadow: 0 0 2px 1px var(--color-disabled);
     border-radius: 0.5rem;
+}
+
+mat-form-field {
+    width: min(95%, 380px);
 }
