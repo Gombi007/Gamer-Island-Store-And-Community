@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NoteDto {
     private String id;
+    private String title;
     private String text;
-    private String text2;
     private Boolean isUrgent;
     private String created;
     private String lastModified;

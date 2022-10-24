@@ -68,8 +68,8 @@ public class NoteServiceImpl implements NoteService {
         User user = userService.getUserById(userId);
         Note originalNote = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
         if (user.getId().equals(originalNote.getCreatorId())) {
+            originalNote.setTitle(noteDto.getTitle());
             originalNote.setText(noteDto.getText());
-            originalNote.setText2(noteDto.getText2());
             originalNote.setIsUrgent(noteDto.getIsUrgent());
             originalNote.setImgUrl(noteDto.getImgUrl());
             originalNote.setLastModified(Instant.now());

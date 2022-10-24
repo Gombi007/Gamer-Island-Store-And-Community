@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-@Document("note")
+@Document("notes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,8 +17,8 @@ import java.time.Instant;
 public class Note {
     @Id
     private String id;
+    private String title;
     private String text;
-    private String text2;
     private Boolean isUrgent;
     private Instant created;
     private Instant lastModified;
