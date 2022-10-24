@@ -2,12 +2,14 @@ package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.exceptions.ResourceAlreadyExistsException;
 import com.gombino.mynotes.models.dto.RegistrationUserDto;
+import com.gombino.mynotes.models.dto.UserDto;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.repositories.RoleRepository;
 import com.gombino.mynotes.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final RoleRepository roleRepository;
 
     private final BCryptPasswordEncoder passwordEncoder;
+
+    private final ModelMapper modelMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -122,4 +126,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         log.warn("Fetching all user");
         return userRepository.findAll();
     }
+
+    @Override
+    public UserDto getProfileData(String userId) {
+        User user = getUserById(userId);
+        return convertToUserDto(user);
+    }
+
+    //Converters
+    private UserDto convertToUserDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
+
 }

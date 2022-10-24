@@ -2,6 +2,7 @@ package com.gombino.mynotes.controller;
 
 import com.gombino.mynotes.models.dto.RegistrationUserDto;
 import com.gombino.mynotes.models.dto.RoleToUserFormDto;
+import com.gombino.mynotes.models.dto.UserDto;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.services.UserService;
@@ -48,5 +49,11 @@ public class UserController {
     public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserFormDto form) {
         userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/profile/{userId}")
+    public ResponseEntity<UserDto> getProfileData(@PathVariable String userId) {
+        return ResponseEntity.ok().body(userService.getProfileData(userId));
     }
 }
