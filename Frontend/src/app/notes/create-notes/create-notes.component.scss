@@ -1,46 +1,60 @@
 .form {
-    display: flex;  
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 1rem;
-  
+
+
 }
-form{
-    width: min(97%, 400px);
-    
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-primary);
+    width: min(97%, 450px);
+    box-shadow: 0 0 2px 1px var(--color-disabled);
+    border-radius: 0.5rem;
+    padding: 1rem;
+
 }
+
 .mat-form-field {
     width: min(97%, 400px);
 }
 
-input,label{
-    color: var(--color-accent);  
-}  
+input,
+label {
+    color: var(--color-accent);
+}
 
-.mat-hint{
-    color:var(--color-warn);
-  }
+.mat-hint {
+    color: var(--color-warn);
+}
 
-.btn-area{
-    width: min(97%, 400px);
+.btn-area {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 1rem;
-    gap: 1rem;   
 }
 
-.success{
-    color: var(--color-accent);   
+.btn-area button {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.success {
+    color: var(--color-accent);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;   
-}
-.success .mat-icon{
-    color: var(--color-success);   
-    font-size: 1.5rem; 
 }
 
+.success .mat-icon {
+    color: var(--color-success);
+    font-size: 1.5rem;
+}

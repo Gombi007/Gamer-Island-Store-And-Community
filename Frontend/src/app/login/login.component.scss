@@ -1,6 +1,5 @@
 .container {
-    width: 100%;
-    height: 100%;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -19,13 +18,13 @@ form {
     background-color: var(--color-primary);
     padding: 1rem;
     margin: 2rem;
-    width: min(85%, 450px);
+    width: min(97%, 450px);
     box-shadow: 0 0 2px 1px var(--color-disabled);
     border-radius: 0.5rem;
 }
 
 mat-form-field {
-    width: min(95%, 380px);
+    width: min(85%, 380px);
 }
 
 .changeFormContainer {

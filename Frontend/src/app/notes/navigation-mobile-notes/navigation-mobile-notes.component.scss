@@ -10,8 +10,8 @@
     height: max-content;
     border-radius: 25px;
     color: var(--color-accent);
-    box-shadow: 0 0 2px 0.1px var(--color-accent);;
-    background-color:var(--color-primary);
+    border: 1px solid var(--color-disabled);
+    background-color: var(--color-primary);
     display: flex;
     justify-content: space-around;
     align-items: center;
