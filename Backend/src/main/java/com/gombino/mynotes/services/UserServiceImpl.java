@@ -52,6 +52,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (userRepository.findUserByUsername(registrationUserDto.getUsername()).isPresent()) {
             throw new ResourceAlreadyExistsException("This username is already taken: " + registrationUserDto.getUsername());
         }
+        if (registrationUserDto.getPassword().length() < 6) {
+            throw new PermissionDeniedException("Password must be at least six character");
+        }
+
         log.warn("Saving new user {} to the DB", registrationUserDto.getUsername());
 
         User newUser = new User();
@@ -153,6 +157,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = getUserById(userId);
         boolean areOriginalPasswordsSame = passwordEncoder.matches(userPasswordDto.getOriginalPassword(), user.getPassword());
         boolean areNewAndConfirmedPasswordsSame = userPasswordDto.getNewPassword().equals(userPasswordDto.getConfirmNewPassword());
+        if (userPasswordDto.getNewPassword().length() < 6) {
+            throw new PermissionDeniedException("Password must be at least six character");
+        }
         if (!areOriginalPasswordsSame) {
             throw new PermissionDeniedException("Current password is not valid.");
         }
