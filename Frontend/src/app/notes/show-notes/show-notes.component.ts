@@ -45,7 +45,7 @@ export class ShowNotesComponent implements OnInit {
     }
 
     if (favOrMyNotes === 'favorites') {
-      this.noteService.getFavoriteNotes(favOrMyNotes).subscribe({
+      this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes).subscribe({
         next: (data) => {
           this.notes = data;
           this.isPending = false;
@@ -57,7 +57,7 @@ export class ShowNotesComponent implements OnInit {
       });
     }
     if (favOrMyNotes === 'my-notes') {
-      this.noteService.getFavoriteNotes(favOrMyNotes).subscribe({
+      this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes).subscribe({
         next: (data) => {
           this.notes = data;
           this.isPending = false;

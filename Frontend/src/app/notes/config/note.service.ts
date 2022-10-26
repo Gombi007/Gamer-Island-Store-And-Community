@@ -18,11 +18,7 @@ export class NoteService {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), this.authorServie.headerWithTokenForRequests());
     }
 
-    getFavoriteNotes(favOrMyNotes: string) {
-        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?favOrMyNotes=' + favOrMyNotes, this.authorServie.headerWithTokenForRequests());
-    }
-
-    getMyNotes(favOrMyNotes: string) {
+    getFavoriteNotesOrMyNotes(favOrMyNotes: string) {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?favOrMyNotes=' + favOrMyNotes, this.authorServie.headerWithTokenForRequests());
     }
 
