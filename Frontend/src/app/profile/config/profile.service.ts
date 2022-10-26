@@ -9,6 +9,18 @@ import { STRINGS } from "src/app/config/strings.enum";
 export class ProfileService {
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 
+    private userProfileData = {
+        username: '',
+        avatar: ''
+    }
+
+    get userProfileDataGetter(): { username: string, avatar: string } {
+        return this.userProfileData
+    }
+
+    set userProfileDataSetter(userProfileData: { username: string, avatar: string }) {
+        this.userProfileData = userProfileData;
+    }
 
     getProfileData() {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_PROFILE + this.authorServie.getUserID(), this.authorServie.headerWithTokenForRequests());
@@ -21,6 +33,5 @@ export class ProfileService {
     changePassword(changePasswordForm: FormGroup) {
         return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_PROFILE_CHANGE_PASSWORD + this.authorServie.getUserID(), changePasswordForm.value, this.authorServie.headerWithTokenForRequests());
     }
-
 
 }

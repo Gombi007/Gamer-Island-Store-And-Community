@@ -7,8 +7,6 @@ import { ProfileService } from '../config/profile.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  username = '';
-  avatar = 'Username';
   isPending = false;
 
   constructor(private profileService: ProfileService) { }
@@ -17,12 +15,16 @@ export class ProfileComponent implements OnInit {
     this.getProfileData();
   }
 
+  get profileData() {
+    return this.profileService.userProfileDataGetter;
+  }
+
+
   getProfileData() {
     this.isPending = true;
     this.profileService.getProfileData().subscribe({
       next: (data) => {
-        this.username = data.username;
-        this.avatar = data.avatar;
+        this.profileService.userProfileDataSetter = data;
         this.isPending = false
       },
       error: () => {

@@ -1,11 +1,11 @@
 <div class="container">
-    <img src="{{avatar}}" alt="profile-pic" [matMenuTriggerFor]="menuProfile">
+    <img src="{{profileData.avatar}}" alt="profile-pic" [matMenuTriggerFor]="menuProfile">
     <mat-menu #menuProfile="matMenu">
         <button mat-menu-item color="accent" routerLink="/profile/edit-profile" routerLinkActive="active-link"> Edit
             Profile </button>
         <button mat-menu-item color="accent" routerLink="/login" routerLinkActive="active-link"> Logout
             <span class="username">
-                {{username}}
+                {{profileData.username}}
             </span>
         </button>
     </mat-menu>

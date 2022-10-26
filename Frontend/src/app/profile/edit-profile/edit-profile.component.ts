@@ -10,8 +10,6 @@ import { ProfileService } from '../config/profile.service';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-  avatar = '';
-  username = '';
   profileForm: FormGroup
   passChangeForm: FormGroup
   errorResponse = '';
@@ -51,13 +49,16 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  get profileData() {
+    return this.profileService.userProfileDataGetter;
+  }
+
   getProfileData() {
     this.isPending = true;
     this.profileService.getProfileData().subscribe({
       next: (data) => {
-        this.avatar = data.avatar;
-        this.username = data.username;
         this.profileForm.setValue(data);
+        this.profileService.userProfileDataSetter = data;
         this.isPending = false;
       },
       error: (response) => {
@@ -74,9 +75,8 @@ export class EditProfileComponent implements OnInit {
       this.isPending = true;
       this.profileService.updateProfileData(this.profileForm).subscribe({
         next: (data) => {
-          this.avatar = data.avatar;
-          this.username = data.username;
           this.profileForm.setValue(data);
+          this.profileService.userProfileDataSetter = data;
           this.isPending = false;
           this.updateSuccess = "Profile was saved successfully"
           this.removeMessegasFromUI();
