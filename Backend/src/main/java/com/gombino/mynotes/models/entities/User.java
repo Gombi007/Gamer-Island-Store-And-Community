@@ -27,4 +27,5 @@ public class User {
     private Boolean isDisabled;
     private List<Role> roles;
     private List<String> noteIds;
+    private List<String> favoriteNotesIds;
 }

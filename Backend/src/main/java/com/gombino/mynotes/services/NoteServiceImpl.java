@@ -32,19 +32,41 @@ public class NoteServiceImpl implements NoteService {
 
 
     @Override
-    public List<NoteDto> getNotesByUrgentOrNotOrAll(String isUrgent, String userId) {
+    public List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId) {
         User user = userService.getUserById(userId);
-        if (isUrgent != null && !isUrgent.isEmpty()) {
-            boolean isUrgentBoolean = Boolean.parseBoolean(isUrgent);
-            return noteRepository.findAllUrgentNotesByCreator(user.getId(), isUrgentBoolean).stream()
-                    .map(this::convertToNoteDto)
-                    .collect(Collectors.toList());
-        } else {
-            return noteRepository.findAllNotesByCreator(user.getId()).stream()
+
+        if (favOrMyNotes == null) {
+            return noteRepository.findAllPublicNotes()
+                    .stream()
                     .map(this::convertToNoteDto)
                     .collect(Collectors.toList());
         }
+
+        if (favOrMyNotes.equals("favorites")) {
+            List<NoteDto> result = new ArrayList<>();
+            List<String> favoriteNotes = user.getFavoriteNotesIds();
+            for (String noteId : favoriteNotes) {
+                Note note = noteRepository.findById(noteId).get();
+                if (note.getCreatorId().equals(user.getId())) {
+                    result.add(convertToNoteDto(note));
+                } else {
+                    if (!note.getVisibilityOnlyForMe()) {
+                        result.add(convertToNoteDto(note));
+                    }
+                }
+            }
+            return result;
+        }
+
+        if (favOrMyNotes.equals("my-notes")) {
+            return noteRepository.findAllAllNotesByUser(user.getId())
+                    .stream()
+                    .map(this::convertToNoteDto)
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
+
 
     @Override
     public void createNote(NoteDto noteDto, String userId) {
@@ -59,6 +81,13 @@ public class NoteServiceImpl implements NoteService {
             user.setNoteIds(new ArrayList<>());
         }
         user.getNoteIds().add(savedNote.getId());
+
+        if (user.getFavoriteNotesIds() == null) {
+            user.setFavoriteNotesIds(new ArrayList<>());
+        }
+        if (note.getIsFavorite()) {
+            user.getFavoriteNotesIds().add(note.getId());
+        }
         userService.updateUser(user);
 
     }
@@ -70,9 +99,12 @@ public class NoteServiceImpl implements NoteService {
         if (user.getId().equals(originalNote.getCreatorId())) {
             originalNote.setTitle(noteDto.getTitle());
             originalNote.setText(noteDto.getText());
-            originalNote.setIsUrgent(noteDto.getIsUrgent());
+            originalNote.setLink(noteDto.getLink());
             originalNote.setImgUrl(noteDto.getImgUrl());
+            originalNote.setVisibilityOnlyForMe(noteDto.getVisibilityOnlyForMe());
+            originalNote.setIsFavorite(noteDto.getIsFavorite());
             originalNote.setLastModified(Instant.now());
+
             Note modifiedNote = noteRepository.save(originalNote);
             return convertToNoteDto(modifiedNote);
         }

@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class NoteController {
     private final NoteService noteService;
 
-    @Operation(description = "List all notes Or Just urgent and non urgent notes")
+    @Operation(description = "List all notes Or Just favorites or my notes")
     @GetMapping("/{userId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> getNotesByUrgentOrNotOrAll(@RequestParam(required = false) String isUrgent, @PathVariable String userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(noteService.getNotesByUrgentOrNotOrAll(isUrgent, userId));
+    public ResponseEntity<Object> getNotesByUrgentOrNotOrAll(@RequestParam(required = false) String favOrMyNotes, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.getPublicOrFavoritesOrMyNotes(favOrMyNotes, userId));
     }
 
     @Operation(description = "Create a new note")
@@ -33,6 +33,7 @@ public class NoteController {
         noteService.createNote(noteDto, userId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 
     @Operation(description = "Modify a note")
     @PutMapping("/{userId}")

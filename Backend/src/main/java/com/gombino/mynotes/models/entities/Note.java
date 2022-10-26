@@ -19,9 +19,11 @@ public class Note {
     private String id;
     private String title;
     private String text;
-    private Boolean isUrgent;
+    private String link;
+    private String imgUrl;
+    private Boolean visibilityOnlyForMe;
+    private Boolean isFavorite;
     private Instant created;
     private Instant lastModified;
-    private String imgUrl;
     private String creatorId;
 }

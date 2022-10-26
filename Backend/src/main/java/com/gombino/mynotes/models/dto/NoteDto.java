@@ -11,11 +11,11 @@ public class NoteDto {
     private String id;
     private String title;
     private String text;
-    private Boolean isUrgent;
+    private String link;
+    private String imgUrl;
+    private Boolean visibilityOnlyForMe;
+    private Boolean isFavorite;
     private String created;
     private String lastModified;
-    private String imgUrl;
     private String creatorId;
-
-
 }

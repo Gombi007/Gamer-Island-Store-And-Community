@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface NoteService {
 
-    List<NoteDto> getNotesByUrgentOrNotOrAll(String isUrgent, String userId);
+    List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId);
 
     void createNote(NoteDto noteDto, String userID);
 
