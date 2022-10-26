@@ -36,38 +36,48 @@ public class NoteServiceImpl implements NoteService {
         User user = userService.getUserById(userId);
 
         if (favOrMyNotes == null) {
-            return noteRepository.findAllPublicNotes()
+            List<NoteDto> noteDtoLis = noteRepository.findAllPublicNotes()
                     .stream()
                     .map(this::convertToNoteDto)
                     .collect(Collectors.toList());
+            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoLis);
         }
 
         if (favOrMyNotes.equals("favorites")) {
-            List<NoteDto> result = new ArrayList<>();
-            if (user.getFavoriteNotesIds() == null) {
-                user.setFavoriteNotesIds(new ArrayList<>());
-            }
+            List<NoteDto> noteDtoList = new ArrayList<>();
             List<String> favoriteNotes = user.getFavoriteNotesIds();
             for (String noteId : favoriteNotes) {
                 Note note = noteRepository.findById(noteId).get();
                 if (note.getCreatorId().equals(user.getId())) {
-                    result.add(convertToNoteDto(note));
+                    noteDtoList.add(convertToNoteDto(note));
                 } else {
                     if (!note.getVisibilityOnlyForMe()) {
-                        result.add(convertToNoteDto(note));
+                        noteDtoList.add(convertToNoteDto(note));
                     }
                 }
             }
-            return result;
+            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList);
         }
 
         if (favOrMyNotes.equals("my-notes")) {
-            return noteRepository.findAllAllNotesByUser(user.getId())
+            List<NoteDto> noteDtoLis = noteRepository.findAllAllNotesByUser(user.getId())
                     .stream()
                     .map(this::convertToNoteDto)
                     .collect(Collectors.toList());
+            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoLis);
         }
         return null;
+    }
+
+    private List<NoteDto> setTheNoteDtoFavoriteIfThatOnTheUserFavList(User user, List<NoteDto> noteDtoList) {
+        for (NoteDto noteDto : noteDtoList) {
+            if (user.getFavoriteNotesIds().contains(noteDto.getId())) {
+                noteDto.setIsFavorite(true);
+            } else {
+                noteDto.setIsFavorite(false);
+            }
+        }
+        return noteDtoList;
     }
 
 
