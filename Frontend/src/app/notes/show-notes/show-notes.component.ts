@@ -100,7 +100,7 @@ export class ShowNotesComponent implements OnInit {
         'title': new FormControl(note.title),
         'text': new FormControl(note.text),
         'imgUrl': new FormControl(note.imgUrl),
-        'isUrgent': new FormControl(!note.isUrgent),
+        'isFavorite': new FormControl(!note.isFavorite),
       });
       this.noteService.modifyNote(noteForm, noteId)
         .subscribe({

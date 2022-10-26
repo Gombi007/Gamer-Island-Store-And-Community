@@ -35,9 +35,21 @@
                 formControlName="imgUrl">
         </mat-form-field>
 
+        <mat-form-field appearance="standard" color="accent">
+            <mat-label>Link</mat-label>
+            <input type="url" matInput placeholder="Add an link if you want" id="link" name="link"
+                formControlName="link">
+        </mat-form-field>
+
+        <mat-checkbox class="example-margin" name="visibilityOnlyForMe" id="visibilityOnlyForMe"
+            formControlName="visibilityOnlyForMe">
+            Visibility private
+        </mat-checkbox>
+
         <br>
-        <mat-checkbox class="example-margin" name="isUrgent" id="isUrgent" formControlName="isUrgent">
-            Urgent
+
+        <mat-checkbox class="example-margin" name="isFavorite" id="isFavorite" formControlName="isFavorite">
+            Add to favorites
         </mat-checkbox>
 
         <div class="btn-area">

@@ -36,8 +36,10 @@ export class CreateNotesComponent implements OnInit {
     return this.createNoteForm = new FormGroup({
       'title': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
       'text': new FormControl(null, [Validators.required, Validators.maxLength(160)]),
+      'link': new FormControl(null),
       'imgUrl': new FormControl(null),
-      'isUrgent': new FormControl(false),
+      'isFavorite': new FormControl(false),
+      'visibilityOnlyForMe': new FormControl(true),
     });
   }
 
@@ -45,8 +47,10 @@ export class CreateNotesComponent implements OnInit {
     form.setValue({
       'title': modifyNote.title,
       'text': modifyNote.text,
+      'link': modifyNote.link,
       'imgUrl': modifyNote.imgUrl,
-      'isUrgent': modifyNote.isUrgent,
+      'isFavorite': modifyNote.isFavorite,
+      'visibilityOnlyForMe': modifyNote.visibilityOnlyForMe
     });
   }
 

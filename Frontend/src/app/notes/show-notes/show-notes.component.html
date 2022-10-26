@@ -13,8 +13,8 @@
                 <mat-icon aria-hidden="false" fontIcon="edit" color="accent"></mat-icon>
             </div>
             <div class="control" (click)="changeUrgentOrNotNoteStatus(note,note.id)">
-                <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isUrgent"></mat-icon>
-                <mat-icon aria-hidden="false" class="non-urgent-icon" fontIcon="star_outline" *ngIf="!note.isUrgent">
+                <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isFavorite"></mat-icon>
+                <mat-icon aria-hidden="false" class="non-urgent-icon" fontIcon="star_outline" *ngIf="!note.isFavorite">
                 </mat-icon>
             </div>
         </div>
