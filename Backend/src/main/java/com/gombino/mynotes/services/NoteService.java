@@ -15,4 +15,6 @@ public interface NoteService {
 
     void removeNoteById(String noteId, String userId);
 
+    void changeFavoriteState(Boolean isNoteFavorite, String noteId, String userId);
+
 }

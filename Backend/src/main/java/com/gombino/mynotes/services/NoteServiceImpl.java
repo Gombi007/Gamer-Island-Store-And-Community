@@ -79,26 +79,14 @@ public class NoteServiceImpl implements NoteService {
         note.setCreated(Instant.now());
         note.setCreatorId(user.getId());
         Note savedNote = noteRepository.save(note);
-
-        if (user.getNoteIds() == null) {
-            user.setNoteIds(new ArrayList<>());
-        }
-        user.getNoteIds().add(savedNote.getId());
-
-        if (user.getFavoriteNotesIds() == null) {
-            user.setFavoriteNotesIds(new ArrayList<>());
-        }
-        if (note.getIsFavorite()) {
-            user.getFavoriteNotesIds().add(savedNote.getId());
-        }
-        userService.updateUser(user);
-
+        changeFavoriteState(noteDto.getIsFavorite(), savedNote.getId(), user.getId());
     }
 
     @Override
     public NoteDto modifyNote(NoteDto noteDto, String noteId, String userId) {
         User user = userService.getUserById(userId);
         Note originalNote = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
+
         if (user.getId().equals(originalNote.getCreatorId())) {
             originalNote.setTitle(noteDto.getTitle());
             originalNote.setText(noteDto.getText());
@@ -106,18 +94,33 @@ public class NoteServiceImpl implements NoteService {
             originalNote.setImgUrl(noteDto.getImgUrl());
             originalNote.setVisibilityOnlyForMe(noteDto.getVisibilityOnlyForMe());
             originalNote.setIsFavorite(noteDto.getIsFavorite());
-            if (originalNote.getIsFavorite()) {
-                user.getFavoriteNotesIds().add(originalNote.getId());
-            } else {
-                user.getFavoriteNotesIds().remove(originalNote.getId());
-            }
             originalNote.setLastModified(Instant.now());
 
+            changeFavoriteState(noteDto.getIsFavorite(), noteId, userId);
+
             Note modifiedNote = noteRepository.save(originalNote);
-            userService.updateUser(user);
             return convertToNoteDto(modifiedNote);
         }
         throw new PermissionDeniedException("You can modify just your own notes");
+    }
+
+    @Override
+    public void changeFavoriteState(Boolean isNoteFavorite, String noteId, String userId) {
+        User user = userService.getUserById(userId);
+        Note originalNote = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
+        List<String> userFavoriteNotes = user.getFavoriteNotesIds();
+        if (userFavoriteNotes == null) {
+            user.setFavoriteNotesIds(new ArrayList<>());
+        }
+
+        if (userFavoriteNotes.contains(originalNote.getId()) && !isNoteFavorite) {
+            userFavoriteNotes.remove(originalNote.getId());
+        }
+
+        if (!userFavoriteNotes.contains(originalNote.getId()) && isNoteFavorite) {
+            userFavoriteNotes.add(originalNote.getId());
+        }
+        userService.updateUser(user);
     }
 
     @Override

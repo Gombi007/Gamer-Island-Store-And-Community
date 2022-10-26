@@ -42,6 +42,16 @@ public class NoteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(noteService.modifyNote(noteDto, noteId, userId));
     }
 
+    @Operation(description = "Add or remove a note the user favorite list")
+    @PutMapping("/change-favorite-state/{noteId}/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> changeFavoriteState(@PathVariable(required = true) String noteId, @PathVariable(required = true) String userId, @RequestParam(required = true) String isNoteFavoriteString) {
+        Boolean isNoteFavorite = Boolean.parseBoolean(isNoteFavoriteString);
+        noteService.changeFavoriteState(isNoteFavorite, noteId, userId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
     @Operation(description = "Remove a note")
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasRole('USER')")
