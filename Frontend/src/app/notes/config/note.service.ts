@@ -18,13 +18,18 @@ export class NoteService {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), this.authorServie.headerWithTokenForRequests());
     }
 
-    getNotesWithIsUrgentParam(isUrgent: string) {
-        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?isUrgent=' + isUrgent, this.authorServie.headerWithTokenForRequests());
+    getFavoriteNotes(favOrMyNotes: string) {
+        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?favOrMyNotes=' + favOrMyNotes, this.authorServie.headerWithTokenForRequests());
+    }
+
+    getMyNotes(favOrMyNotes: string) {
+        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?favOrMyNotes=' + favOrMyNotes, this.authorServie.headerWithTokenForRequests());
     }
 
     createNote(noteForm: FormGroup) {
         return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), noteForm.value, this.authorServie.headerWithTokenForRequests());
     }
+
     modifyNote(noteForm: FormGroup, noteId: string) {
         return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?noteId=' + noteId, noteForm.value, this.authorServie.headerWithTokenForRequests());
     }

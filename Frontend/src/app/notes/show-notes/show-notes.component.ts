@@ -28,9 +28,9 @@ export class ShowNotesComponent implements OnInit {
     );
   }
 
-  showNotes(isUrgent: string = '') {
+  showNotes(favOrMyNotes: string = '') {
     this.isPending = true;
-    if (isUrgent === '' || isUrgent === 'community') {
+    if (favOrMyNotes === '' || favOrMyNotes === 'community') {
       this.noteService.getPublicNotes().subscribe({
         next: (data) => {
           this.notes = data;
@@ -44,8 +44,8 @@ export class ShowNotesComponent implements OnInit {
       });
     }
 
-    if (isUrgent === 'favorites') {
-      this.noteService.getNotesWithIsUrgentParam('true').subscribe({
+    if (favOrMyNotes === 'favorites') {
+      this.noteService.getFavoriteNotes(favOrMyNotes).subscribe({
         next: (data) => {
           this.notes = data;
           this.isPending = false;
@@ -56,8 +56,8 @@ export class ShowNotesComponent implements OnInit {
         }
       });
     }
-    if (isUrgent === 'my-notes') {
-      this.noteService.getNotesWithIsUrgentParam('false').subscribe({
+    if (favOrMyNotes === 'my-notes') {
+      this.noteService.getFavoriteNotes(favOrMyNotes).subscribe({
         next: (data) => {
           this.notes = data;
           this.isPending = false;
