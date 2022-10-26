@@ -103,7 +103,6 @@ export class ShowNotesComponent implements OnInit {
         'isUrgent': new FormControl(!note.isUrgent),
       });
       this.noteService.modifyNote(noteForm, noteId)
-        .pipe(tap(() => { this.isPending = true }))
         .subscribe({
           next: () => {
             this.showNotes(this.currentlyRouteAfterUrgentTag);
