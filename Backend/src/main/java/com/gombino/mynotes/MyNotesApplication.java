@@ -4,6 +4,7 @@ import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,12 +27,20 @@ public class MyNotesApplication {
         return new ModelMapper();
     }
 
+    @Value("${SERVER_CORS_PERMSSION}")
+    private String cors1;
+    @Value("${SERVER_CORS_PERMSSION_1}")
+    private String cors2;
+    @Value("${SERVER_CORS_PERMSSION_2}")
+    private String cors3;
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost/", "http://localhost:4200/", "http://192.168.1.66:4200/").allowedMethods("GET", "POST", "PUT", "DELETE");
+
+                registry.addMapping("/**").allowedOrigins(cors1, cors2, cors3).allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };
     }
