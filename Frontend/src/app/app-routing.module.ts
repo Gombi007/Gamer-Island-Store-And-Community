@@ -11,21 +11,21 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: '',
-        redirectTo: 'notes/show/all',
-        pathMatch: 'full',
-      },
-      {
-        path: 'notes',
-        redirectTo: 'notes/show/all',
-        pathMatch: 'full',
-      },
-      {
         path: 'login',
         component: LoginComponent
       },
       {
-        path: 'notes/show/:urgent',
+        path: '',
+        redirectTo: 'notes/show/community',
+        pathMatch: 'full',
+      },
+      {
+        path: 'notes',
+        redirectTo: 'notes/show/community',
+        pathMatch: 'full',
+      },
+      {
+        path: 'notes/show/:favOrMyNotes',
         component: ShowNotesComponent,
         canActivate: [AuthGuard]
       },
