@@ -44,6 +44,9 @@ public class NoteServiceImpl implements NoteService {
 
         if (favOrMyNotes.equals("favorites")) {
             List<NoteDto> result = new ArrayList<>();
+            if (user.getFavoriteNotesIds() == null) {
+                user.setFavoriteNotesIds(new ArrayList<>());
+            }
             List<String> favoriteNotes = user.getFavoriteNotesIds();
             for (String noteId : favoriteNotes) {
                 Note note = noteRepository.findById(noteId).get();
@@ -86,7 +89,7 @@ public class NoteServiceImpl implements NoteService {
             user.setFavoriteNotesIds(new ArrayList<>());
         }
         if (note.getIsFavorite()) {
-            user.getFavoriteNotesIds().add(note.getId());
+            user.getFavoriteNotesIds().add(savedNote.getId());
         }
         userService.updateUser(user);
 
@@ -103,9 +106,15 @@ public class NoteServiceImpl implements NoteService {
             originalNote.setImgUrl(noteDto.getImgUrl());
             originalNote.setVisibilityOnlyForMe(noteDto.getVisibilityOnlyForMe());
             originalNote.setIsFavorite(noteDto.getIsFavorite());
+            if (originalNote.getIsFavorite()) {
+                user.getFavoriteNotesIds().add(originalNote.getId());
+            } else {
+                user.getFavoriteNotesIds().remove(originalNote.getId());
+            }
             originalNote.setLastModified(Instant.now());
 
             Note modifiedNote = noteRepository.save(originalNote);
+            userService.updateUser(user);
             return convertToNoteDto(modifiedNote);
         }
         throw new PermissionDeniedException("You can modify just your own notes");
