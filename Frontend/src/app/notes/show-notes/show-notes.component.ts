@@ -12,7 +12,7 @@ import { NoteService } from '../config/note.service';
   styleUrls: ['./show-notes.component.scss']
 })
 export class ShowNotesComponent implements OnInit {
-  currentlyRouteAfterUrgentTag = '';
+  currentlyRouteAfterNotesTag = '';
   notes: noteDto[] = [];
   isPending: boolean = false;
 
@@ -22,16 +22,16 @@ export class ShowNotesComponent implements OnInit {
     this.route.params.subscribe(
       (param: Params) => {
         this.noteService.cancelModifyOrSubmitAndGoBack = this.router.url;
-        this.currentlyRouteAfterUrgentTag = param['urgent'];
-        this.showNotes(this.currentlyRouteAfterUrgentTag);
+        this.currentlyRouteAfterNotesTag = param['favOrMyNotes'];
+        this.showNotes(this.currentlyRouteAfterNotesTag);
       }
     );
   }
 
   showNotes(isUrgent: string = '') {
     this.isPending = true;
-    if (isUrgent === '' || isUrgent === 'all') {
-      this.noteService.getNotes().subscribe({
+    if (isUrgent === '' || isUrgent === 'community') {
+      this.noteService.getPublicNotes().subscribe({
         next: (data) => {
           this.notes = data;
           this.isPending = false;
@@ -44,7 +44,7 @@ export class ShowNotesComponent implements OnInit {
       });
     }
 
-    if (isUrgent === 'urgent') {
+    if (isUrgent === 'favorites') {
       this.noteService.getNotesWithIsUrgentParam('true').subscribe({
         next: (data) => {
           this.notes = data;
@@ -56,7 +56,7 @@ export class ShowNotesComponent implements OnInit {
         }
       });
     }
-    if (isUrgent === 'non-urgent') {
+    if (isUrgent === 'my-notes') {
       this.noteService.getNotesWithIsUrgentParam('false').subscribe({
         next: (data) => {
           this.notes = data;
@@ -75,7 +75,7 @@ export class ShowNotesComponent implements OnInit {
       this.isPending = true;
       this.noteService.removeNote(noteId).subscribe({
         next: () => {
-          this.showNotes(this.currentlyRouteAfterUrgentTag);
+          this.showNotes(this.currentlyRouteAfterNotesTag);
           this.isPending = false;
         },
         error: (response) => {
@@ -105,7 +105,7 @@ export class ShowNotesComponent implements OnInit {
       this.noteService.modifyNote(noteForm, noteId)
         .subscribe({
           next: () => {
-            this.showNotes(this.currentlyRouteAfterUrgentTag);
+            this.showNotes(this.currentlyRouteAfterNotesTag);
             this.isPending = false;
           },
           error: (response) => {

@@ -4,7 +4,7 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/notes" (click)="drawer.toggle()" routerLinkActive="active-link">Notes</a>
+      <a mat-list-item routerLink="/notes" (click)="drawer.toggle()" routerLinkActive="active-link">Community</a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -32,7 +32,7 @@
 
           <div class="desktop-menu-area" [class.hidden]="isHandset$ | async">
             <a mat-button color="accent" routerLink="/notes" routerLinkActive="active-link">
-              Notes
+              Community
             </a>
           </div>
         </div>

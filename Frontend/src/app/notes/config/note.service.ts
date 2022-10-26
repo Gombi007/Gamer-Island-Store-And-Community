@@ -14,7 +14,7 @@ export class NoteService {
 
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 
-    getNotes() {
+    getPublicNotes() {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), this.authorServie.headerWithTokenForRequests());
     }
 
