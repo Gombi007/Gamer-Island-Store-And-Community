@@ -93,22 +93,18 @@ export class ShowNotesComponent implements OnInit {
     }
   }
 
-  changeUrgentOrNotNoteStatus(note: noteDto, noteId: string) {
+  addOrRemoveToFavoriteList(noteId: string) {
     if (!this.isPending) {
       this.isPending = true;
-      let noteForm: FormGroup = new FormGroup({
-        'title': new FormControl(note.title),
-        'text': new FormControl(note.text),
-        'imgUrl': new FormControl(note.imgUrl),
-        'isFavorite': new FormControl(!note.isFavorite),
-      });
-      this.noteService.modifyNote(noteForm, noteId)
+      this.noteService.addOrRemoveNoteToUserFavList(noteId, true)
         .subscribe({
           next: () => {
             this.showNotes(this.currentlyRouteAfterNotesTag);
             this.isPending = false;
           },
           error: (response) => {
+            console.log(response);
+
             this.globalService.isExpiredToken(response);
             this.isPending = false;
           }
