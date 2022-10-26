@@ -3,7 +3,7 @@
     padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
 }
 
 
@@ -16,7 +16,7 @@
     align-items: center;
     border-radius: 1rem;
     background-color: var(--color-primary);
-    color: var(--color-accent); 
+    color: var(--color-accent);
 }
 
 .created {
@@ -28,11 +28,12 @@
     max-width: 100%;
 }
 
-.title{
-margin-top: 0.4rem;
+.title {
+    margin-top: 0.4rem;
 }
 
-.note-text,.title{
+.note-text,
+.title {
     max-width: 100%;
     text-align: center;
 }
@@ -40,18 +41,24 @@ margin-top: 0.4rem;
 
 
 .mat-divider {
-    width: 95%;  
+    width: 95%;
 }
 
-.edit-row{
-    width: 95%;  
+.edit-row {
+    width: 95%;
     display: flex;
-    justify-content: space-between;  
-    padding: 0.4rem;
+    justify-content: flex-end;
+    padding-top: 0.5rem;
 }
-.non-urgent-icon{
-   color: var(--color-disabled);
+
+.edit-row div {
+    margin-left: 3rem;
 }
-.control{
+
+.non-urgent-icon {
+    color: var(--color-disabled);
+}
+
+.control {
     cursor: pointer;
 }

@@ -8,5 +8,6 @@ export class noteDto {
     isFavorite: boolean = false;
     created: string = "";
     lastModified: string = "";
+    creatorId: string = "";
 }
 

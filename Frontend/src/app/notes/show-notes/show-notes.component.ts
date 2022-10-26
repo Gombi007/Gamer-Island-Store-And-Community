@@ -15,10 +15,12 @@ export class ShowNotesComponent implements OnInit {
   currentlyRouteAfterNotesTag = '';
   notes: noteDto[] = [];
   isPending: boolean = false;
+  currentUserId: string | null = "";
 
   constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    this.currentUserId = localStorage.getItem('user_id');
     this.route.params.subscribe(
       (param: Params) => {
         this.noteService.cancelModifyOrSubmitAndGoBack = this.router.url;
@@ -79,6 +81,7 @@ export class ShowNotesComponent implements OnInit {
           this.isPending = false;
         },
         error: (response) => {
+          console.log(response);
           this.globalService.isExpiredToken(response);
           this.isPending = false;
         }
@@ -93,18 +96,16 @@ export class ShowNotesComponent implements OnInit {
     }
   }
 
-  addOrRemoveToFavoriteList(noteId: string) {
+  addOrRemoveToFavoriteList(noteDto: noteDto) {
     if (!this.isPending) {
       this.isPending = true;
-      this.noteService.addOrRemoveNoteToUserFavList(noteId, true)
+      this.noteService.addOrRemoveNoteToUserFavList(noteDto.id, !noteDto.isFavorite)
         .subscribe({
           next: () => {
             this.showNotes(this.currentlyRouteAfterNotesTag);
             this.isPending = false;
           },
           error: (response) => {
-            console.log(response);
-
             this.globalService.isExpiredToken(response);
             this.isPending = false;
           }
