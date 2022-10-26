@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular
 import { Router } from '@angular/router';
 import { tap, timer } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
-import { noteDto, noteDtoToPost } from '../config/note.model';
+import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 
 @Component({
