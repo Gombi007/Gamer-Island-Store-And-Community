@@ -119,9 +119,6 @@ public class NoteServiceImpl implements NoteService {
         User user = userService.getUserById(userId);
         Note originalNote = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
         List<String> userFavoriteNotes = user.getFavoriteNotesIds();
-        if (userFavoriteNotes == null) {
-            user.setFavoriteNotesIds(new ArrayList<>());
-        }
 
         if (userFavoriteNotes.contains(originalNote.getId()) && !isNoteFavorite) {
             userFavoriteNotes.remove(originalNote.getId());
