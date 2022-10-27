@@ -2,6 +2,8 @@
     <div class="note" *ngFor="let note of notes">
         <h3 class="title">{{note.title}}</h3>
         <p class="note-text">{{note.text}}</p>
+        <a class="link" href="{{note.link}}" target="_blank" *ngIf="note.link !== null && note.link.length> 1">
+            Check It</a>
         <img *ngIf="note.imgUrl !== null && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
         <p class="created">Created: {{note.created}}</p>
         <mat-divider></mat-divider>
@@ -11,6 +13,14 @@
             </div>
             <div class="control" (click)="editNote(note)" *ngIf="note.creatorId ===currentUserId">
                 <mat-icon aria-hidden="false" fontIcon="edit" color="accent"></mat-icon>
+            </div>
+            <div class="control" (click)="editNote(note)"
+                *ngIf="!note.visibilityOnlyForMe && note.creatorId ===currentUserId">
+                <mat-icon aria-hidden="false" fontIcon="visibility" color="accent"></mat-icon>
+            </div>
+            <div class="control" (click)="editNote(note)"
+                *ngIf="note.visibilityOnlyForMe && note.creatorId ===currentUserId">
+                <mat-icon aria-hidden="false" fontIcon="visibility_off" color="accent"></mat-icon>
             </div>
             <div class="control" (click)="addOrRemoveToFavoriteList(note)">
                 <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isFavorite"></mat-icon>

@@ -13,15 +13,3 @@ p {
 .active-link-icon .mat-icon {
     color: var(--color-success);
 }
-
-a,
-a:visited,
-a:hover,
-a:active {
-    color: inherit;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
