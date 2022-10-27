@@ -1,5 +1,8 @@
 <div class="container">
-    <div class="note" *ngFor="let note of notes">
+    <div class="note" *ngFor="let note of notes; let i = index">
+        <div class="creator-info">
+            <img src="" alt="hello">
+        </div>
         <h3 class="title">{{note.title}}</h3>
         <p class="note-text">{{note.text}}</p>
         <a class="link" href="{{note.link}}" target="_blank" *ngIf="note.link !== null && note.link.length> 1">

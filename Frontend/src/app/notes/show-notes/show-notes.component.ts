@@ -1,7 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { tap } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
@@ -128,7 +126,5 @@ export class ShowNotesComponent implements OnInit {
           }
         });
     }
-
   }
-
 }
