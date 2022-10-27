@@ -1,10 +1,11 @@
-# My-Notes
+# My-Notes Community App
 
-This is a mobile first notes or todo application with Angular and Springboot.
+This is a mobile first Community App where You can create posts(notes) with link and image and texts.
 
-You can create your own list and sort that by urgent/non-urgent.
-You can remove or modify your note.
-Add an image your note if you want.
+Change the visibility your note and make them public or private like a facebook post.
+You can remove or modify your note easily.
+Browse between other user public notes.
+Add your or other user public notes your favorite list that you find them easily.
 
 - Java Springboot Backend
 - MongoDB
