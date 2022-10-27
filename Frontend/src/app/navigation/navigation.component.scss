@@ -2,6 +2,10 @@
   height: 100%;
 }
 
+.mat-sidenav {
+  background-color: var(--color-primary);
+}
+
 .sidenav {
   width: 200px;
 }
@@ -11,6 +15,7 @@
 }
 
 .mat-toolbar.mat-primary {
+  background-color: var(--color-primary);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -42,7 +47,6 @@
   display: flex;
   justify-content: center;
   padding: 0.3rem;
-
 }
 
 .menu-navigation {
