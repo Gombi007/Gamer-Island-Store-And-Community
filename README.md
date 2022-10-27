@@ -15,8 +15,8 @@ Add your or other user public notes your favorite list that you find them easily
 - Angular Material
 
  <p align="center">  
-  <img width="50%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic001.JPG">
-  <img width="50%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic002.JPG"> 
+  <img width="40%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic001.JPG">
+  <img width="40%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic002.JPG"> 
   <img width="50%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic003.JPG"> 
   <img width="50%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic004.JPG"> 
   <img width="50%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic005.JPG">
