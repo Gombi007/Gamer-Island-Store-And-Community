@@ -89,9 +89,7 @@ public class NoteServiceImpl implements NoteService {
         note.setCreated(Instant.now());
         note.setCreatorId(user.getId());
         Note savedNote = noteRepository.save(note);
-        user.getNoteIds().add(savedNote.getId());
         changeFavoriteState(noteDto.getIsFavorite(), savedNote.getId(), user.getId());
-        userService.updateUser(user);
     }
 
     @Override
