@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         newUser.setCreated(Instant.now());
         newUser.setIsDisabled(false);
         newUser.setFavoriteNotesIds(new ArrayList<>());
+        newUser.setNoteIds(new ArrayList<>());
         newUser.setRoles(new ArrayList<>());
         Role role = roleRepository.findRoleByRoleName("ROLE_USER").get();
         log.warn("Add basic role {} to the new user {} to the DB", role.getRoleName(), newUser.getUsername());

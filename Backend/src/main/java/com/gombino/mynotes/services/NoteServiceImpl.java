@@ -89,7 +89,9 @@ public class NoteServiceImpl implements NoteService {
         note.setCreated(Instant.now());
         note.setCreatorId(user.getId());
         Note savedNote = noteRepository.save(note);
+        user.getNoteIds().add(savedNote.getId());
         changeFavoriteState(noteDto.getIsFavorite(), savedNote.getId(), user.getId());
+        userService.updateUser(user);
     }
 
     @Override
@@ -134,18 +136,22 @@ public class NoteServiceImpl implements NoteService {
     public void removeNoteById(String noteId, String userId) {
         User user = userService.getUserById(userId);
         Note note = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this id"));
-        if (user.getId().equals(note.getCreatorId())) {
-            user.getNoteIds().remove(noteId);
-            userService.getUsers().forEach(u -> {
-                if (u.getFavoriteNotesIds().contains(noteId)) {
-                    u.getFavoriteNotesIds().remove(noteId);
-                    userService.updateUser(u);
-                }
-            });
-            noteRepository.delete(note);
-        } else {
+
+        if (!user.getId().equals(note.getCreatorId())) {
             throw new PermissionDeniedException("You can delete just your own notes");
         }
+
+        userService.getUsers().forEach(u -> {
+            if (u.getFavoriteNotesIds().contains(noteId)) {
+                u.getFavoriteNotesIds().remove(noteId);
+                userService.updateUser(u);
+            }
+            if (u.getId().equals(note.getCreatorId())) {
+                u.getNoteIds().remove(noteId);
+                userService.updateUser(u);
+            }
+        });
+        noteRepository.delete(note);
     }
 
 
