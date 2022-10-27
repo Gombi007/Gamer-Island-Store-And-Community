@@ -14,13 +14,11 @@
             <div class="control" (click)="editNote(note)" *ngIf="note.creatorId ===currentUserId">
                 <mat-icon aria-hidden="false" fontIcon="edit" color="accent"></mat-icon>
             </div>
-            <div class="control" (click)="editNote(note)"
-                *ngIf="!note.visibilityOnlyForMe && note.creatorId ===currentUserId">
-                <mat-icon aria-hidden="false" fontIcon="visibility" color="accent"></mat-icon>
-            </div>
-            <div class="control" (click)="editNote(note)"
-                *ngIf="note.visibilityOnlyForMe && note.creatorId ===currentUserId">
-                <mat-icon aria-hidden="false" fontIcon="visibility_off" color="accent"></mat-icon>
+            <div class="control" (click)="changeVisibility(note)">
+                <mat-icon aria-hidden="false" fontIcon="visibility" color="accent"
+                    *ngIf="!note.visibilityOnlyForMe && note.creatorId ===currentUserId"></mat-icon>
+                <mat-icon aria-hidden="false" fontIcon="visibility_off" color="accent"
+                    *ngIf="note.visibilityOnlyForMe && note.creatorId ===currentUserId"></mat-icon>
             </div>
             <div class="control" (click)="addOrRemoveToFavoriteList(note)">
                 <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isFavorite"></mat-icon>

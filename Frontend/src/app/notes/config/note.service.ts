@@ -26,6 +26,11 @@ export class NoteService {
         return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_ADD_OR_REMOVE_NOTE_TO_USER_FAV_LIST + noteId + "/" + this.authorServie.getUserID() + '?isNoteFavorite=' + isFavorite, {}, this.authorServie.headerWithTokenForRequests());
     }
 
+    changeVisibility(noteId: string, visibility: boolean) {
+        return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES_CHANGE_VISIBILITY + noteId + "/" + this.authorServie.getUserID() + '?visibility=' + visibility, {}, this.authorServie.headerWithTokenForRequests());
+    }
+
+
     createNote(noteForm: FormGroup) {
         return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), noteForm.value, this.authorServie.headerWithTokenForRequests());
     }

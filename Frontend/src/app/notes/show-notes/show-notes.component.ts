@@ -113,4 +113,22 @@ export class ShowNotesComponent implements OnInit {
     }
   }
 
+  changeVisibility(noteDto: noteDto) {
+    if (!this.isPending) {
+      this.isPending = true;
+      this.noteService.changeVisibility(noteDto.id, !noteDto.visibilityOnlyForMe)
+        .subscribe({
+          next: () => {
+            this.showNotes(this.currentlyRouteAfterNotesTag);
+            this.isPending = false;
+          },
+          error: (response) => {
+            this.globalService.isExpiredToken(response);
+            this.isPending = false;
+          }
+        });
+    }
+
+  }
+
 }
