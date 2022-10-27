@@ -9,5 +9,7 @@ export class noteDto {
     created: string = "";
     lastModified: string = "";
     creatorId: string = "";
+    creatorAvatar: string = "";
+    creatorUsername: string = "";
 }
 

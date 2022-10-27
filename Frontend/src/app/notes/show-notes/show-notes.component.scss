@@ -28,31 +28,18 @@
     max-width: 100%;
 }
 
-.title {
-    margin-top: 0.4rem;
-}
-
 .note-text,
 .title {
     max-width: 100%;
     text-align: center;
 }
 
-
-
-.mat-divider {
-    width: 95%;
-}
-
 .edit-row {
-    width: 95%;
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
-    padding-top: 0.5rem;
-}
+    justify-content: space-around;
+    padding-top: 0.3rem;
 
-.edit-row div {
-    margin-left: 3rem;
 }
 
 .non-urgent-icon {
@@ -76,5 +63,25 @@
 }
 
 .creator-info {
-    background-color: cadetblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    width: 95%;
+}
+
+.creator {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.creator img {
+    border-radius: 50%;
+    width: 3rem;
+}
+
+.creator p {
+    margin: 0.5rem;
+    font-size: large;
 }

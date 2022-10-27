@@ -1,15 +1,22 @@
 <div class="container">
     <div class="note" *ngFor="let note of notes; let i = index">
         <div class="creator-info">
-            <img src="" alt="hello">
+            <div class="creator">
+                <img src="{{note.creatorAvatar}}" alt="hello">
+                <p>{{note.creatorUsername}}</p>
+            </div>
+            <div class="control" (click)="addOrRemoveToFavoriteList(note)">
+                <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isFavorite"></mat-icon>
+                <mat-icon aria-hidden="false" class="non-urgent-icon" fontIcon="star_outline" *ngIf="!note.isFavorite">
+                </mat-icon>
+            </div>
         </div>
         <h3 class="title">{{note.title}}</h3>
         <p class="note-text">{{note.text}}</p>
         <a class="link" href="{{note.link}}" target="_blank" *ngIf="note.link !== null && note.link.length> 1">
             Check It</a>
         <img *ngIf="note.imgUrl !== null && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
-        <p class="created">Created: {{note.created}}</p>
-        <mat-divider></mat-divider>
+        <p class="created">{{note.created}}</p>
         <div class="edit-row">
             <div class="control" (click)="removeNote(note.id)" *ngIf="note.creatorId ===currentUserId">
                 <mat-icon aria-hidden="false" fontIcon="delete_forever" color="accent"></mat-icon>
@@ -22,11 +29,6 @@
                     *ngIf="!note.visibilityOnlyForMe && note.creatorId ===currentUserId"></mat-icon>
                 <mat-icon aria-hidden="false" fontIcon="visibility_off" color="accent"
                     *ngIf="note.visibilityOnlyForMe && note.creatorId ===currentUserId"></mat-icon>
-            </div>
-            <div class="control" (click)="addOrRemoveToFavoriteList(note)">
-                <mat-icon aria-hidden="false" fontIcon="star" color="accent" *ngIf="note.isFavorite"></mat-icon>
-                <mat-icon aria-hidden="false" class="non-urgent-icon" fontIcon="star_outline" *ngIf="!note.isFavorite">
-                </mat-icon>
             </div>
         </div>
     </div>
