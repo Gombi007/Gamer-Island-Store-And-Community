@@ -3,8 +3,11 @@
 This is a mobile first Community App where You can create posts(notes) with link and image and texts.
 
 Change the visibility your note and make them public or private like a facebook post.
+
 You can remove or modify your note easily.
+
 Browse between other user public notes.
+
 Add your or other user public notes your favorite list that you find them easily.
 
 - Java Springboot Backend
