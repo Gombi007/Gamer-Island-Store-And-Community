@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -36,11 +35,12 @@ public class NoteServiceImpl implements NoteService {
         User user = userService.getUserById(userId);
 
         if (favOrMyNotes == null) {
-            List<NoteDto> noteDtoLis = noteRepository.findAllPublicNotes()
-                    .stream()
-                    .map(this::convertToNoteDto)
-                    .collect(Collectors.toList());
-            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoLis);
+            List<Note> noteList = noteRepository.findAllPublicNotes();
+            List<NoteDto> noteDtoList = new ArrayList<>();
+            for (Note note : noteList) {
+                noteDtoList.add(addCreatorInfoToNoteDto(note));
+            }
+            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList);
         }
 
         if (favOrMyNotes.equals("favorites")) {
@@ -49,10 +49,10 @@ public class NoteServiceImpl implements NoteService {
             for (String noteId : favoriteNotes) {
                 Note note = noteRepository.findById(noteId).get();
                 if (note.getCreatorId().equals(user.getId())) {
-                    noteDtoList.add(convertToNoteDto(note));
+                    noteDtoList.add(addCreatorInfoToNoteDto(note));
                 } else {
                     if (!note.getVisibilityOnlyForMe()) {
-                        noteDtoList.add(convertToNoteDto(note));
+                        noteDtoList.add(addCreatorInfoToNoteDto(note));
                     }
                 }
             }
@@ -60,13 +60,22 @@ public class NoteServiceImpl implements NoteService {
         }
 
         if (favOrMyNotes.equals("my-notes")) {
-            List<NoteDto> noteDtoLis = noteRepository.findAllAllNotesByUser(user.getId())
-                    .stream()
-                    .map(this::convertToNoteDto)
-                    .collect(Collectors.toList());
-            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoLis);
+            List<Note> noteList = noteRepository.findAllAllNotesByUser(user.getId());
+            List<NoteDto> noteDtoList = new ArrayList<>();
+            for (Note note : noteList) {
+                noteDtoList.add(addCreatorInfoToNoteDto(note));
+            }
+            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList);
         }
         return null;
+    }
+
+    private NoteDto addCreatorInfoToNoteDto(Note note) {
+        NoteDto noteDto = convertToNoteDto(note);
+        User creator = userService.getUserById(note.getCreatorId());
+        noteDto.setCreatorUsername(creator.getUsername());
+        noteDto.setCreatorAvatar(creator.getAvatar());
+        return noteDto;
     }
 
     private List<NoteDto> setTheNoteDtoFavoriteIfThatOnTheUserFavList(User user, List<NoteDto> noteDtoList) {
@@ -162,7 +171,6 @@ public class NoteServiceImpl implements NoteService {
         });
         noteRepository.delete(note);
     }
-
 
     //Converters
     private NoteDto convertToNoteDto(Note note) {

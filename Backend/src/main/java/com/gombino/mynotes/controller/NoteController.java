@@ -62,6 +62,7 @@ public class NoteController {
 
     }
 
+
     @Operation(description = "Remove a note")
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasRole('USER')")

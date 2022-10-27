@@ -18,4 +18,6 @@ public class NoteDto {
     private String created;
     private String lastModified;
     private String creatorId;
+    private String creatorAvatar;
+    private String creatorUsername;
 }
