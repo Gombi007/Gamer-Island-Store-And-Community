@@ -17,4 +17,6 @@ public interface NoteService {
 
     void changeFavoriteState(Boolean isNoteFavorite, String noteId, String userId);
 
+    void changeVisibility(Boolean visibility, String noteId, String userId);
+
 }

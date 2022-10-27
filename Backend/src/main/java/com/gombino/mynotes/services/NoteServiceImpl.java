@@ -131,6 +131,17 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public void changeVisibility(Boolean visibility, String noteId, String userId) {
+        User user = userService.getUserById(userId);
+        Note originalNote = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
+        if (user.getId().equals(originalNote.getCreatorId())) {
+            originalNote.setVisibilityOnlyForMe(visibility);
+            noteRepository.save(originalNote);
+        }
+
+    }
+
+    @Override
     public void removeNoteById(String noteId, String userId) {
         User user = userService.getUserById(userId);
         Note note = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this id"));

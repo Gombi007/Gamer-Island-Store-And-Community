@@ -52,6 +52,16 @@ public class NoteController {
 
     }
 
+    @Operation(description = "Change note visibility")
+    @PutMapping("/change-visibility/{noteId}/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> changeVisibility(@PathVariable(required = true) String noteId, @PathVariable(required = true) String userId, @RequestParam(required = true) String visibility) {
+        Boolean visibilityBoolean = Boolean.parseBoolean(visibility);
+        noteService.changeVisibility(visibilityBoolean, noteId, userId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
     @Operation(description = "Remove a note")
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasRole('USER')")
