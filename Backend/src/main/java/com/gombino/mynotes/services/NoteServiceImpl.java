@@ -136,7 +136,12 @@ public class NoteServiceImpl implements NoteService {
         Note note = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this id"));
         if (user.getId().equals(note.getCreatorId())) {
             user.getNoteIds().remove(noteId);
-            userService.updateUser(user);
+            userService.getUsers().forEach(u -> {
+                if (u.getFavoriteNotesIds().contains(noteId)) {
+                    u.getFavoriteNotesIds().remove(noteId);
+                    userService.updateUser(u);
+                }
+            });
             noteRepository.delete(note);
         } else {
             throw new PermissionDeniedException("You can delete just your own notes");
