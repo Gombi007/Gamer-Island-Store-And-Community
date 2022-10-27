@@ -1,21 +1,21 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
-$primary: mat-palette($mat-grey,900);
-$accent: mat-palette($mat-lime,100);
-$warn: mat-palette($mat-red,900);
+$primary: mat-palette($mat-grey, 900);
+$accent: mat-palette($mat-lime, 100);
+$warn: mat-palette($mat-red, 900);
 
 $success: mat-palette($mat-lime);
-$disabled: mat-palette($mat-grey,700);
+$disabled: mat-palette($mat-grey, 700);
 
 $my-custom-theme: mat-dark-theme($primary, $accent, $warn);
 
 @include angular-material-theme($my-custom-theme);
 
 :root {
-    --color-primary: #{mat-color($primary)};
-    --color-accent: #{mat-color($accent)};
-    --color-warn: #{mat-color($warn)};  
-    --color-success: #{mat-color($success)};  
-    --color-disabled: #{mat-color($disabled)};  
-  }
+  --color-primary: #{mat-color($primary)};
+  --color-accent: #{mat-color($accent)};
+  --color-warn: #{mat-color($warn)};
+  --color-success: #{mat-color($success)};
+  --color-disabled: #{mat-color($disabled)};
+}
