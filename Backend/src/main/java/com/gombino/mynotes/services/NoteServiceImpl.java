@@ -29,6 +29,8 @@ public class NoteServiceImpl implements NoteService {
     private final ModelMapper modelMapper;
     private final UserService userService;
 
+    private final WebSocketService webSocketService;
+
 
     @Override
     public List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId) {
@@ -98,7 +100,11 @@ public class NoteServiceImpl implements NoteService {
         note.setCreated(Instant.now());
         note.setCreatorId(user.getId());
         Note savedNote = noteRepository.save(note);
+        user.getNoteIds().add(savedNote.getId());
+        userService.updateUser(user);
         changeFavoriteState(noteDto.getIsFavorite(), savedNote.getId(), user.getId());
+        // send a message to frontend, update the note list due to the list was modified
+        webSocketService.notifyFrontend();
     }
 
     @Override
@@ -116,8 +122,10 @@ public class NoteServiceImpl implements NoteService {
             originalNote.setLastModified(Instant.now());
 
             changeFavoriteState(noteDto.getIsFavorite(), noteId, userId);
-
             Note modifiedNote = noteRepository.save(originalNote);
+
+            // send a message to frontend, update the note list due to the list was modified
+            webSocketService.notifyFrontend();
             return convertToNoteDto(modifiedNote);
         }
         throw new PermissionDeniedException("You can modify just your own notes");
@@ -147,6 +155,8 @@ public class NoteServiceImpl implements NoteService {
             originalNote.setVisibilityOnlyForMe(visibility);
             noteRepository.save(originalNote);
         }
+        // send a message to frontend, update the note list due to the list was modified
+        webSocketService.notifyFrontend();
 
     }
 
@@ -170,6 +180,8 @@ public class NoteServiceImpl implements NoteService {
             }
         });
         noteRepository.delete(note);
+        // send a message to frontend, update the note list due to the list was modified
+        webSocketService.notifyFrontend();
     }
 
     //Converters
