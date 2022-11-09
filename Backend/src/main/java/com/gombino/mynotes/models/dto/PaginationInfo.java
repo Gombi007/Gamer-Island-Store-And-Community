@@ -5,9 +5,8 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class PaginationSorterDto {
-    private int page;
-    private int size;
-    private String sortBy;
+public class PaginationInfo {
+    private int actualPage;
+    private int totalPages;
+    private long totalElements;
 }
-

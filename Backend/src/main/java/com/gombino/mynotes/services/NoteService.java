@@ -3,12 +3,12 @@ package com.gombino.mynotes.services;
 import com.gombino.mynotes.models.dto.NoteDto;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 
-import java.util.List;
+import java.util.HashMap;
 
 
 public interface NoteService {
 
-    List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId, PaginationSorterDto paginationSorterDto);
+    HashMap<String, Object> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId, PaginationSorterDto paginationSorterDto);
 
     void createNote(NoteDto noteDto, String userID);
 

@@ -2,6 +2,7 @@ package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.exceptions.PermissionDeniedException;
 import com.gombino.mynotes.models.dto.NoteDto;
+import com.gombino.mynotes.models.dto.PaginationInfo;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.models.entities.Note;
 import com.gombino.mynotes.models.entities.User;
@@ -22,6 +23,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -38,34 +40,37 @@ public class NoteServiceImpl implements NoteService {
 
 
     @Override
-    public List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId, PaginationSorterDto paginationSorterDto) {
+    public HashMap<String, Object> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId, PaginationSorterDto paginationSorterDto) {
         User user = userService.getUserById(userId);
         Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).ascending());
         List<NoteDto> noteDtoList = new ArrayList<>();
 
         if (favOrMyNotes == null) {
             Page<Note> noteList = noteRepository.findByVisibilityOnlyForMe(false, paging);
+            PaginationInfo paginationInfo = new PaginationInfo(noteList.getNumber(), noteList.getTotalPages(), noteList.getTotalElements());
             for (Note note : noteList) {
                 noteDtoList.add(addCreatorInfoToNoteDto(note));
             }
-            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList);
+            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList, paginationInfo);
         }
 
         if (favOrMyNotes.equals("favorites")) {
             List<String> favoriteNotes = user.getFavoriteNotesIds();
             Page<Note> noteList = noteRepository.findFavoriteNotes(favoriteNotes, user.getId(), paging);
+            PaginationInfo paginationInfo = new PaginationInfo(noteList.getNumber(), noteList.getTotalPages(), noteList.getTotalElements());
             for (Note note : noteList) {
                 noteDtoList.add(addCreatorInfoToNoteDto(note));
             }
-            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList);
+            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList, paginationInfo);
         }
 
         if (favOrMyNotes.equals("my-notes")) {
             Page<Note> noteList = noteRepository.findAllAllNotesByUser(user.getId(), paging);
+            PaginationInfo paginationInfo = new PaginationInfo(noteList.getNumber(), noteList.getTotalPages(), noteList.getTotalElements());
             for (Note note : noteList) {
                 noteDtoList.add(addCreatorInfoToNoteDto(note));
             }
-            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList);
+            return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList, paginationInfo);
         }
         return null;
     }
@@ -78,7 +83,8 @@ public class NoteServiceImpl implements NoteService {
         return noteDto;
     }
 
-    private List<NoteDto> setTheNoteDtoFavoriteIfThatOnTheUserFavList(User user, List<NoteDto> noteDtoList) {
+    private HashMap<String, Object> setTheNoteDtoFavoriteIfThatOnTheUserFavList(User user, List<NoteDto> noteDtoList, PaginationInfo paginationInfo) {
+        HashMap<String, Object> result = new HashMap<>();
         for (NoteDto noteDto : noteDtoList) {
             if (user.getFavoriteNotesIds().contains(noteDto.getId())) {
                 noteDto.setIsFavorite(true);
@@ -86,7 +92,9 @@ public class NoteServiceImpl implements NoteService {
                 noteDto.setIsFavorite(false);
             }
         }
-        return noteDtoList;
+        result.put("page", noteDtoList);
+        result.put("paginationInfo", paginationInfo);
+        return result;
     }
 
 
