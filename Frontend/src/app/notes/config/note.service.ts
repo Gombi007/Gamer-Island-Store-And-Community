@@ -4,7 +4,7 @@ import { STRINGS } from "../../config/strings.enum";
 import { noteDto } from "./note.model";
 import { AuthorizationService } from "src/app/config/authorization.service";
 import { FormGroup } from "@angular/forms";
-import { paginationDto } from "src/app/config/pagination.model";
+import { PagQuerry } from "src/app/config/pag-query.model";
 
 @Injectable({
     providedIn: 'root'
@@ -12,24 +12,24 @@ import { paginationDto } from "src/app/config/pagination.model";
 export class NoteService {
     noteToModify?: noteDto = undefined;
     cancelModifyOrSubmitAndGoBack = '';
-    paginationDto: paginationDto = new paginationDto(0, 3, "created");
+    pagQuerry: PagQuerry = new PagQuerry(0, 3, "created");
 
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 
     getPublicNotes() {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() +
-            '?page=' + this.paginationDto.$page +
-            '&size=' + this.paginationDto.$size +
-            '&sortBy=' + this.paginationDto.$sortBy,
+            '?page=' + this.pagQuerry.$page +
+            '&size=' + this.pagQuerry.$size +
+            '&sortBy=' + this.pagQuerry.$sortBy,
             this.authorServie.headerWithTokenForRequests());
     }
 
     getFavoriteNotesOrMyNotes(favOrMyNotes: string) {
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() +
             '?favOrMyNotes=' + favOrMyNotes +
-            '&page=' + this.paginationDto.$page +
-            '&size=' + this.paginationDto.$size +
-            '&sortBy=' + this.paginationDto.$sortBy,
+            '&page=' + this.pagQuerry.$page +
+            '&size=' + this.pagQuerry.$size +
+            '&sortBy=' + this.pagQuerry.$sortBy,
             this.authorServie.headerWithTokenForRequests());
     }
 

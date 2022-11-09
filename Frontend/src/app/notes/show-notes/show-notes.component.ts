@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GlobalService } from 'src/app/config/global.service';
+import { PagInfo } from 'src/app/config/pag-info.model';
 import { WebsocketService } from 'src/app/config/websocket.service';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
@@ -15,6 +16,8 @@ export class ShowNotesComponent implements OnInit {
   notes: noteDto[] = [];
   isPending: boolean = false;
   currentUserId: string | null = "";
+  pagInfo: PagInfo;
+
 
   constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private webSocketService: WebsocketService) { }
 
@@ -38,9 +41,9 @@ export class ShowNotesComponent implements OnInit {
     if (favOrMyNotes === '' || favOrMyNotes === 'community') {
       this.noteService.getPublicNotes().subscribe({
         next: (data) => {
-          this.notes = data;
+          this.notes = data.page;
+          this.pagInfo = data.paginationInfo;
           this.isPending = false;
-
         },
         error: (response) => {
           this.globalService.isExpiredToken(response);
@@ -52,7 +55,8 @@ export class ShowNotesComponent implements OnInit {
     if (favOrMyNotes === 'favorites') {
       this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes).subscribe({
         next: (data) => {
-          this.notes = data;
+          this.notes = data.page;
+          this.pagInfo = data.paginationInfo;
           this.isPending = false;
         },
         error: (response) => {
@@ -64,7 +68,8 @@ export class ShowNotesComponent implements OnInit {
     if (favOrMyNotes === 'my-notes') {
       this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes).subscribe({
         next: (data) => {
-          this.notes = data;
+          this.notes = data.page;
+          this.pagInfo = data.paginationInfo;
           this.isPending = false;
         },
         error: (response) => {
@@ -131,5 +136,12 @@ export class ShowNotesComponent implements OnInit {
           }
         });
     }
+  }
+
+  onScrollDown(event: any) {
+    console.log(event);
+  }
+  onScrollUp(event: any) {
+    console.log(event);
   }
 }
