@@ -1,10 +1,9 @@
 .container {
-    padding-top: 1rem;
-    padding-bottom: 3rem;
-    margin: 1rem;
+    width: 100%;
+    height: calc(100% - 64px);
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
@@ -12,6 +11,7 @@ img {
     width: min(50%, 300px);
     border-radius: 50%;
     box-shadow: 0 0 7px 5px var(--color-disabled);
+    margin-bottom: 2rem;
 }
 
 form {
@@ -19,8 +19,8 @@ form {
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-    margin-top: 2rem;
-    width: min(97%, 450px);
+    margin-bottom: 2rem;
+    width: min(88%, 450px);
     background-color: var(--color-primary);
     box-shadow: 0 0 2px 1px var(--color-disabled);
     border-radius: 0.5rem;
@@ -33,4 +33,10 @@ mat-form-field {
 mat-chip-list {
     margin-top: 1rem;
     height: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        height: calc(100% - 56px);
+    }
 }

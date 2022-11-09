@@ -1,9 +1,10 @@
 .container {
     width: 100%;
-    padding-bottom: 5rem;
+    height: calc(100% - 64px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: auto;
 }
 
 
@@ -84,4 +85,10 @@
 .creator p {
     margin: 0.5rem;
     font-size: large;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        height: calc(100% - 56px);
+    }
 }
