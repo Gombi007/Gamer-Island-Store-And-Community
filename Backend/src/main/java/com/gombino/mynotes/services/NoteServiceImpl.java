@@ -2,6 +2,7 @@ package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.exceptions.PermissionDeniedException;
 import com.gombino.mynotes.models.dto.NoteDto;
+import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.models.entities.Note;
 import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.repositories.NoteRepository;
@@ -10,6 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,12 +38,13 @@ public class NoteServiceImpl implements NoteService {
 
 
     @Override
-    public List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId) {
+    public List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId, PaginationSorterDto paginationSorterDto) {
         User user = userService.getUserById(userId);
+        Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).ascending());
+        List<NoteDto> noteDtoList = new ArrayList<>();
 
         if (favOrMyNotes == null) {
-            List<Note> noteList = noteRepository.findAllPublicNotes();
-            List<NoteDto> noteDtoList = new ArrayList<>();
+            Page<Note> noteList = noteRepository.findByVisibilityOnlyForMe(false, paging);
             for (Note note : noteList) {
                 noteDtoList.add(addCreatorInfoToNoteDto(note));
             }
@@ -46,24 +52,16 @@ public class NoteServiceImpl implements NoteService {
         }
 
         if (favOrMyNotes.equals("favorites")) {
-            List<NoteDto> noteDtoList = new ArrayList<>();
             List<String> favoriteNotes = user.getFavoriteNotesIds();
-            for (String noteId : favoriteNotes) {
-                Note note = noteRepository.findById(noteId).get();
-                if (note.getCreatorId().equals(user.getId())) {
-                    noteDtoList.add(addCreatorInfoToNoteDto(note));
-                } else {
-                    if (!note.getVisibilityOnlyForMe()) {
-                        noteDtoList.add(addCreatorInfoToNoteDto(note));
-                    }
-                }
+            Page<Note> noteList = noteRepository.findFavoriteNotes(favoriteNotes, user.getId(), paging);
+            for (Note note : noteList) {
+                noteDtoList.add(addCreatorInfoToNoteDto(note));
             }
             return setTheNoteDtoFavoriteIfThatOnTheUserFavList(user, noteDtoList);
         }
 
         if (favOrMyNotes.equals("my-notes")) {
-            List<Note> noteList = noteRepository.findAllAllNotesByUser(user.getId());
-            List<NoteDto> noteDtoList = new ArrayList<>();
+            Page<Note> noteList = noteRepository.findAllAllNotesByUser(user.getId(), paging);
             for (Note note : noteList) {
                 noteDtoList.add(addCreatorInfoToNoteDto(note));
             }

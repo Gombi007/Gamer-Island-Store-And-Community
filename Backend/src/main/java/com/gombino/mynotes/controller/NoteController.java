@@ -1,6 +1,7 @@
 package com.gombino.mynotes.controller;
 
 import com.gombino.mynotes.models.dto.NoteDto;
+import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.services.NoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,8 +23,14 @@ public class NoteController {
     @Operation(description = "List all notes Or Just favorites or my notes")
     @GetMapping("/{userId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> getNotesByUrgentOrNotOrAll(@RequestParam(required = false) String favOrMyNotes, @PathVariable String userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(noteService.getPublicOrFavoritesOrMyNotes(favOrMyNotes, userId));
+    public ResponseEntity<Object> getNotesByUrgentOrNotOrAll(
+            @RequestParam(required = false) String favOrMyNotes,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "1") int size,
+            @RequestParam(name = "sortBy", defaultValue = "") String sortBy,
+            @PathVariable String userId) {
+        PaginationSorterDto paginationSorterDto = new PaginationSorterDto(page, size, sortBy);
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.getPublicOrFavoritesOrMyNotes(favOrMyNotes, userId, paginationSorterDto));
     }
 
     @Operation(description = "Create a new note")

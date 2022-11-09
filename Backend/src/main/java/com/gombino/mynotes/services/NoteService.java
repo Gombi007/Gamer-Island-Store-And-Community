@@ -1,13 +1,14 @@
 package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.models.dto.NoteDto;
+import com.gombino.mynotes.models.dto.PaginationSorterDto;
 
 import java.util.List;
 
 
 public interface NoteService {
 
-    List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId);
+    List<NoteDto> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId, PaginationSorterDto paginationSorterDto);
 
     void createNote(NoteDto noteDto, String userID);
 
