@@ -16,6 +16,7 @@ import { PendingComponent } from './pending/pending.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/navigation-profile/profile.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
     BrowserAnimationsModule,
     LayoutModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]

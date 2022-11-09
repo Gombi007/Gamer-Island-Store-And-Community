@@ -1,4 +1,4 @@
-export class paginationDto {
+export class PagQuerry {
     private page: number = 0;
     private size: number = 0;
     private sortBy: string = "";
