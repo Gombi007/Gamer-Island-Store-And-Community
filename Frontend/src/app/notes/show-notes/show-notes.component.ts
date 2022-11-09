@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GlobalService } from 'src/app/config/global.service';
+import { WebsocketService } from 'src/app/config/websocket.service';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 
@@ -15,7 +16,7 @@ export class ShowNotesComponent implements OnInit {
   isPending: boolean = false;
   currentUserId: string | null = "";
 
-  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService) { }
+  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private webSocketService: WebsocketService) { }
 
   ngOnInit(): void {
     this.currentUserId = localStorage.getItem('user_id');
@@ -26,6 +27,10 @@ export class ShowNotesComponent implements OnInit {
         this.showNotes(this.currentlyRouteAfterNotesTag);
       }
     );
+
+    this.webSocketService.subscribe('/topic/notes', (): void => {
+      this.showNotes(this.currentlyRouteAfterNotesTag);
+    });
   }
 
   showNotes(favOrMyNotes: string = '') {

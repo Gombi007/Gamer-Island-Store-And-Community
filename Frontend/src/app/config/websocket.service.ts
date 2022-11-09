@@ -23,7 +23,7 @@ export class WebsocketService {
       return;
     }
 
-    //If not connected
+    //If not connected 
     this.stompClient.connect({}, (): any => {
       this.subscribeToTopic(topic, callback);
     });
