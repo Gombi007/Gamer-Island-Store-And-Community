@@ -1,5 +1,5 @@
-<div class="container firefox-scrollbar" infinite-scroll [alwaysCallback]="true" [scrollWindow]="false"
-    (scrolled)="onScrollDown($event)" (scrolledUp)="onScrollUp($event)">
+<div class="container firefox-scrollbar" infinite-scroll [scrollWindow]="false" (scrolled)="onScrollDown($event)"
+    (scrolledUp)="onScrollUp($event)">
     <div class="note" *ngFor="let note of notes; let i = index">
         <div class="creator-info">
             <div class="creator">
@@ -33,6 +33,7 @@
             </div>
         </div>
     </div>
+    <div class="just-bottom-margin"></div>
 </div>
 <app-pending *ngIf="isPending"></app-pending>
 <app-navigation-mobile-notes></app-navigation-mobile-notes>

@@ -5,13 +5,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2rem 2rem;
 }
 
 img {
     width: min(50%, 300px);
     border-radius: 50%;
     box-shadow: 0 0 7px 5px var(--color-disabled);
-    margin-bottom: 2rem;
 }
 
 form {
@@ -19,7 +19,6 @@ form {
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-    margin-bottom: 2rem;
     width: min(88%, 450px);
     background-color: var(--color-primary);
     box-shadow: 0 0 2px 1px var(--color-disabled);
@@ -30,13 +29,22 @@ mat-form-field {
     width: min(85%, 380px);
 }
 
-mat-chip-list {
-    margin-top: 1rem;
-    height: 1rem;
+.just-bottom-margin {
+    margin-bottom: 4rem;
 }
+
 
 @media only screen and (max-width: 600px) {
     .container {
         height: calc(100% - 56px);
+        -ms-overflow-style: none;
+        /* Internet Explorer 10+ */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .container::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
     }
 }

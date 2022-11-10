@@ -88,8 +88,21 @@
     font-size: large;
 }
 
+.just-bottom-margin {
+    margin-bottom: 4rem;
+}
+
 @media only screen and (max-width: 600px) {
     .container {
         height: calc(100% - 56px);
+        -ms-overflow-style: none;
+        /* Internet Explorer 10+ */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .container::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
     }
 }
