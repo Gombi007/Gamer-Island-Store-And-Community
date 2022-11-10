@@ -51,7 +51,6 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
             this.notes = data.page;
           }
           this.pagInfo = data.paginationInfo;
-          console.log(this.pagInfo);
           this.isPending = false;
         },
         error: (response) => {
@@ -182,10 +181,12 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   }
 
   onScrollUp(event: any) {
+    /*
     if (this.pagInfo.actualPage > 0) {
       this.pagInfo.actualPage--;
       this.notes.splice(this.notes.length - 3, 3);
     }
+    */
   }
 
   ngOnDestroy(): void {
