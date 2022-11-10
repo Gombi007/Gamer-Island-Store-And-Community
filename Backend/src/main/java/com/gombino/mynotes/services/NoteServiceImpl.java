@@ -22,10 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -109,8 +106,6 @@ public class NoteServiceImpl implements NoteService {
         user.getNoteIds().add(savedNote.getId());
         userService.updateUser(user);
         changeFavoriteState(noteDto.getIsFavorite(), savedNote.getId(), user.getId());
-        // send a message to frontend, update the note list due to the list was modified
-        webSocketService.notifyFrontend();
     }
 
     @Override
@@ -131,7 +126,9 @@ public class NoteServiceImpl implements NoteService {
             Note modifiedNote = noteRepository.save(originalNote);
 
             // send a message to frontend, update the note list due to the list was modified
-            webSocketService.notifyFrontend();
+            Map<String, String> messageToFrontend = new HashMap<>();
+            messageToFrontend.put("modify", modifiedNote.getId());
+            webSocketService.notifyFrontend(messageToFrontend);
             return convertToNoteDto(modifiedNote);
         }
         throw new PermissionDeniedException("You can modify just your own notes");
@@ -162,7 +159,10 @@ public class NoteServiceImpl implements NoteService {
             noteRepository.save(originalNote);
         }
         // send a message to frontend, update the note list due to the list was modified
-        webSocketService.notifyFrontend();
+        Map<String, String> messageToFrontend = new HashMap<>();
+        messageToFrontend.put("noteId", originalNote.getId());
+        messageToFrontend.put("operation", "visibilityChange");
+        webSocketService.notifyFrontend(messageToFrontend);
 
     }
 
@@ -187,7 +187,10 @@ public class NoteServiceImpl implements NoteService {
         });
         noteRepository.delete(note);
         // send a message to frontend, update the note list due to the list was modified
-        webSocketService.notifyFrontend();
+        Map<String, String> messageToFrontend = new HashMap<>();
+        messageToFrontend.put("noteId", note.getId());
+        messageToFrontend.put("operation", "remove");
+        webSocketService.notifyFrontend(messageToFrontend);
     }
 
     //Converters
