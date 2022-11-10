@@ -30,8 +30,8 @@ export class WebsocketService {
   }
 
   private subscribeToTopic(topic: string, callback: any): void {
-    this.stompClient.subscribe(topic, (): any => {
-      callback();
+    this.stompClient.subscribe(topic, (message: any) => {
+      callback(message)
     })
   }
 }
