@@ -16,7 +16,8 @@ export class NoteService {
 
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 
-    getPublicNotes() {
+    getPublicNotes(page: number) {
+        this.pagQuerry.$page = page;
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() +
             '?page=' + this.pagQuerry.$page +
             '&size=' + this.pagQuerry.$size +
@@ -24,7 +25,8 @@ export class NoteService {
             this.authorServie.headerWithTokenForRequests());
     }
 
-    getFavoriteNotesOrMyNotes(favOrMyNotes: string) {
+    getFavoriteNotesOrMyNotes(favOrMyNotes: string, page: number) {
+        this.pagQuerry.$page = page;
         return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() +
             '?favOrMyNotes=' + favOrMyNotes +
             '&page=' + this.pagQuerry.$page +

@@ -1,5 +1,5 @@
-<div class="container firefox-scrollbar" infinite-scroll [scrollWindow]="false" (scrolled)="onScrollDown($event)"
-    (scrolledUp)="onScrollUp($event)">
+<div class="container firefox-scrollbar" infinite-scroll [alwaysCallback]="true" [scrollWindow]="false"
+    (scrolled)="onScrollDown($event)" (scrolledUp)="onScrollUp($event)">
     <div class="note" *ngFor="let note of notes; let i = index">
         <div class="creator-info">
             <div class="creator">
@@ -19,7 +19,7 @@
         <img *ngIf="note.imgUrl !== null && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
         <p class="created">{{note.created}}</p>
         <div class="edit-row">
-            <div class="control" (click)="removeNote(note.id)" *ngIf="note.creatorId ===currentUserId">
+            <div class="control" (click)="removeNote(note)" *ngIf="note.creatorId ===currentUserId">
                 <mat-icon aria-hidden="false" fontIcon="delete_forever" color="accent"></mat-icon>
             </div>
             <div class="control" (click)="editNote(note)" *ngIf="note.creatorId ===currentUserId">
