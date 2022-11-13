@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
 import { PagInfo } from 'src/app/config/pag-info.model';
 import { WebsocketService } from 'src/app/config/websocket.service';
@@ -17,6 +18,8 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   isPending: boolean = false;
   currentUserId: string | null = "";
   pagInfo: PagInfo;
+  noteSub: Subscription;
+  noteSubscriptions: Subscription[] = [];
 
 
   constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private webSocketService: WebsocketService) { }
@@ -39,10 +42,13 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     });
   }
 
+
   showNotes(favOrMyNotes: string = '', page: number) {
     this.isPending = true;
+    this.cancelAllLiveSubs(this.noteSubscriptions);
+
     if (favOrMyNotes === '' || favOrMyNotes === 'community') {
-      this.noteService.getPublicNotes(page).subscribe({
+      this.noteSub = this.noteService.getPublicNotes(page).subscribe({
         next: (data) => {
           if (this.notes.length > 0) {
             this.notes = this.notes.concat(data.page);
@@ -58,10 +64,11 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
           this.isPending = false;
         }
       });
+      this.noteSubscriptions.push(this.noteSub);
     }
 
     if (favOrMyNotes === 'favorites') {
-      this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes, page).subscribe({
+      this.noteSub = this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes, page).subscribe({
         next: (data) => {
           if (this.notes.length > 0) {
             this.notes = this.notes.concat(data.page);
@@ -77,9 +84,11 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
           this.isPending = false;
         }
       });
+      this.noteSubscriptions.push(this.noteSub);
     }
+
     if (favOrMyNotes === 'my-notes') {
-      this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes, page).subscribe({
+      this.noteSub = this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes, page).subscribe({
         next: (data) => {
           if (this.notes.length > 0) {
             this.notes = this.notes.concat(data.page);
@@ -94,6 +103,16 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
           this.globalService.isExpiredToken(response);
           this.isPending = false;
         }
+      });
+      this.noteSubscriptions.push(this.noteSub);
+    }
+  }
+
+  cancelAllLiveSubs(noteSubs: Subscription[]) {
+    if (noteSubs.length > 0) {
+      noteSubs.forEach((sub, index) => {
+        sub.unsubscribe();
+        noteSubs.splice(index, 1);
       });
     }
   }
@@ -104,7 +123,6 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
       this.router.navigate(['/notes/add/create-note'])
     }
   }
-
 
   findByIdFromNotesAndModify(operation: string, noteId: string) {
     this.isPending = true;
