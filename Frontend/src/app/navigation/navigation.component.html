@@ -16,7 +16,7 @@
           <app-profile class="profile"></app-profile>
         </div>
 
-        <div class="menu-navigation-submenu" [class.hidden]="isHandset$ | async">
+        <div class="menu-navigation-submenu" [class.hidden]="!isNotesRoute || (isHandset$ | async)">
           <app-navigation-desktop-notes></app-navigation-desktop-notes>
         </div>
 
