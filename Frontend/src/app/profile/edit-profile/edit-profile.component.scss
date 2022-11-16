@@ -8,10 +8,17 @@
     gap: 2rem 2rem;
 }
 
+.profile-pic {
+    display: flex;
+    justify-content: center;
+}
+
 img {
-    width: min(50%, 300px);
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    box-shadow: 0 0 7px 5px var(--color-disabled);
+    box-shadow: 0 0 8px 8px var(--color-primary);
+    object-fit: cover;
 }
 
 form {

@@ -3,7 +3,9 @@
     <div class="note" *ngFor="let note of notes; let i = index">
         <div class="creator-info">
             <div class="creator">
-                <img src="{{note.creatorAvatar}}" alt="hello">
+                <div class="profile-pic">
+                    <img src="{{note.creatorAvatar}}" alt="hello">
+                </div>
                 <p>{{note.creatorUsername}}</p>
             </div>
             <div class="control" (click)="addOrRemoveToFavoriteList(note)">

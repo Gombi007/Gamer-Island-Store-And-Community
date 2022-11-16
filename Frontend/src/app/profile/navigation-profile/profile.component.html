@@ -1,5 +1,7 @@
 <div class="container">
-    <img src="{{profileData.avatar}}" alt="profile-pic" [matMenuTriggerFor]="menuProfile">
+    <div class="profile-pic">
+        <img src="{{profileData.avatar}}" alt="avatar" [matMenuTriggerFor]="menuProfile">
+    </div>
     <mat-menu #menuProfile="matMenu" class="menu-user">
         <button mat-menu-item routerLink="/profile/edit-profile" routerLinkActive="active-link"> Edit
             Profile </button>

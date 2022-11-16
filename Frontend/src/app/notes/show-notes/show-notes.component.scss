@@ -80,8 +80,11 @@
 }
 
 .creator img {
-    border-radius: 50%;
     width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 2px var(--color-disabled);
+    object-fit: cover;
 }
 
 .creator p {

@@ -1,6 +1,8 @@
 <div class="container firefox-scrollbar">
     <h3>Hello, {{profileData.username}}</h3>
-    <img src={{profileData.avatar}} alt=" profile-picture">
+    <div class="profile-pic">
+        <img src={{profileData.avatar}} alt=" profile-picture">
+    </div>
 
     <form [formGroup]="profileForm">
         <h3>Update your personal info</h3>
