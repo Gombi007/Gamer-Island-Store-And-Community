@@ -20,8 +20,8 @@ form {
     align-items: center;
     padding: 1rem;
     width: min(88%, 450px);
-    background-color: var(--color-primary);
-    box-shadow: 0 0 2px 1px var(--color-disabled);
+    background-color: var(--color-content-bg);
+    box-shadow: 0 0 4px 4px var(--color-primary);
     border-radius: 0.5rem;
 }
 
