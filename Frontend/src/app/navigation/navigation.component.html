@@ -1,5 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
 
+  <!-- Hamburger menu only appear only mobile view -->
   <mat-sidenav position="end" #drawer class="sidenav" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'">
     <mat-toolbar>Menu</mat-toolbar>
@@ -10,34 +11,36 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="primary" *ngIf="isLoggedIn()">
+
       <div class="menu">
-
-        <div class="menu-profile" [class.menu-profile-mobile]="isHandset$ | async">
-          <app-profile class="profile"></app-profile>
-        </div>
-
-        <div class="menu-navigation-submenu" [class.hidden]="!isNotesRoute || (isHandset$ | async)">
-          <app-navigation-desktop-notes></app-navigation-desktop-notes>
+        <div class="menu-left">
+          <app-profile></app-profile>
+          <div class="menu-submenu" [class.hidden]="!isNotesRoute || (isHandset$ | async)">
+            <app-navigation-desktop-notes></app-navigation-desktop-notes>
+          </div>
         </div>
 
         <div class="menu-logo">
           <img src="/assets/img/logo.png" alt="logo" style="width: 3.4rem;">
         </div>
 
-        <div class="menu-navigation">
-          <button class="hamburger" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-            *ngIf="isHandset$ | async">
-            <mat-icon aria-label="Side nav toggle icon" color="accent">menu</mat-icon>
-          </button>
-
-          <div class="desktop-menu-area" [class.hidden]="isHandset$ | async">
+        <div class="menu-right">
+          <div class="menu-main" [class.hidden]="isHandset$ | async">
             <a mat-button color="accent" routerLink="/notes" routerLinkActive="active-link">
               Community
             </a>
           </div>
-        </div>
 
+          <!-- Hamburger menu button, only appear only mobile view -->
+          <div class="menu-navigation">
+            <button class="hamburger" type="button" aria-label="Toggle sidenav" mat-icon-button
+              (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+              <mat-icon aria-label="Side nav toggle icon" color="accent">menu</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
+
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

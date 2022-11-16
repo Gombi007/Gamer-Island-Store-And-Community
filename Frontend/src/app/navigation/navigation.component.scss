@@ -1,5 +1,6 @@
 .sidenav-container {
   height: 100%;
+  padding: 0;
 }
 
 .mat-sidenav-content {
@@ -25,40 +26,42 @@
   z-index: 1;
 }
 
+//menu
 .menu {
   width: 100%;
   display: flex;
-}
-
-.menu-profile {
-  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.menu-profile-mobile {
-  width: 50%;
-}
-
-.menu-navigation-submenu {
-  width: 50%;
+.menu-left {
+  width: 47%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  gap: 0.3rem;
 }
-
 
 .menu-logo {
+  width: 6%;
   display: flex;
   justify-content: center;
-  padding: 0.3rem;
+  align-items: center;
 }
 
-.menu-navigation {
-  width: 50%;
+.menu-right {
+  width: 47%;
   display: flex;
-  align-items: center;
   justify-content: flex-end;
 }
+
+.menu-submenu {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+// menu end
 
 .hamburger .mat-icon {
   font-size: 2rem;
