@@ -17,3 +17,8 @@ img:hover {
     font-weight: bold;
 
 }
+
+::ng-deep .menu-user {
+    background-color: var(--color-primary);
+    box-shadow: 0 0 4px 4px var(--color-primary);
+}
