@@ -12,7 +12,7 @@ import { PagQuerry } from "src/app/config/pag-query.model";
 export class NoteService {
     noteToModify?: noteDto = undefined;
     cancelModifyOrSubmitAndGoBack = '';
-    pagQuerry: PagQuerry = new PagQuerry(0, 3, "created");
+    pagQuerry: PagQuerry = new PagQuerry(0, 4, "created");
 
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 
