@@ -162,6 +162,7 @@ public class NoteServiceImpl implements NoteService {
         Map<String, String> messageToFrontend = new HashMap<>();
         messageToFrontend.put("noteId", originalNote.getId());
         messageToFrontend.put("operation", "visibilityChange");
+        log.info("Notify fronted method was called: {}", messageToFrontend.get("operation"));
         webSocketService.notifyFrontend(messageToFrontend);
 
     }
