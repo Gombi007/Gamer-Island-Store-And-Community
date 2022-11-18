@@ -9,7 +9,7 @@ export class AuthorizationService {
     constructor() { }
 
     headerWithTokenForRequests() {
-        let auth_token = localStorage.getItem('token');
+        let auth_token = sessionStorage.getItem('token');
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${auth_token}`
@@ -19,10 +19,10 @@ export class AuthorizationService {
     }
 
     getToken() {
-        return localStorage.getItem('token');
+        return sessionStorage.getItem('token');
     }
 
     getUserID() {
-        return localStorage.getItem('user_id');
+        return sessionStorage.getItem('user_id');
     }
 }

@@ -10,7 +10,7 @@ export class AuthenticateService {
     constructor(private http: HttpClient) { }
 
     isLoggedIn() {
-        return localStorage.getItem('token') != null;
+        return sessionStorage.getItem('token') != null;
     }
 
     loginViaBackend(userCredential: any) {

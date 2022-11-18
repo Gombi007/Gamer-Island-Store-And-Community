@@ -71,8 +71,8 @@ export class LoginComponent implements OnInit {
       this.isPending = true;
       this.authService.loginViaBackend(this.loginForm.value).subscribe({
         next: (data: any) => {
-          localStorage.setItem('user_id', data.user_id);
-          localStorage.setItem('token', data.token);
+          sessionStorage.setItem('user_id', data.user_id);
+          sessionStorage.setItem('token', data.token);
           this.loginForm.reset();
           this.isPending = false;
           this.router.navigate(['']);

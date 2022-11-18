@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthorizationService } from 'src/app/config/authorization.service';
 import { GlobalService } from 'src/app/config/global.service';
 import { PagInfo } from 'src/app/config/pag-info.model';
 import { WebsocketService } from 'src/app/config/websocket.service';
@@ -22,10 +23,10 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   noteSubscriptions: Subscription[] = [];
 
 
-  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private webSocketService: WebsocketService) { }
+  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private webSocketService: WebsocketService, private authService: AuthorizationService) { }
 
   ngOnInit(): void {
-    this.currentUserId = localStorage.getItem('user_id');
+    this.currentUserId = this.authService.getUserID();
     this.route.params.subscribe(
       (param: Params) => {
         this.pagInfo = new PagInfo(0, 0, 0);
