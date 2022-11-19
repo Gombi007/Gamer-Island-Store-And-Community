@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { Subscription } from 'rxjs';
 import { AuthorizationService } from 'src/app/config/authorization.service';
 import { GlobalService } from 'src/app/config/global.service';
@@ -22,13 +23,21 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   noteSub: Subscription;
   noteSubscriptions: Subscription[] = [];
 
-
   constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private webSocketService: WebsocketService, private authService: AuthorizationService) { }
+
+  @ViewChild(InfiniteScrollDirective) infiniteScrollDirective: any;
+  resetInfiniteScrollerWhenRouteChanges() {
+    if (this.infiniteScrollDirective) {
+      this.infiniteScrollDirective.disposeScroller.unsubscribe();
+      this.infiniteScrollDirective.setup();
+    }
+  }
 
   ngOnInit(): void {
     this.currentUserId = this.authService.getUserID();
     this.route.params.subscribe(
       (param: Params) => {
+        this.resetInfiniteScrollerWhenRouteChanges();
         this.pagInfo = new PagInfo(0, 0, 0);
         this.notes = [];
         this.noteService.cancelModifyOrSubmitAndGoBack = this.router.url;
@@ -42,7 +51,6 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
       this.findByIdFromNotesAndModify(messageJsonFromBackend["operation"], messageJsonFromBackend["noteId"])
     });
   }
-
 
   showNotes(favOrMyNotes: string = '', page: number) {
     this.isPending = true;
