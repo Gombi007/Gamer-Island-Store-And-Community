@@ -202,22 +202,12 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   }
 
   onScrollDown(event: any) {
-    if (this.pagInfo.totalPages - this.pagInfo.actualPage >= 2) {
+    if (this.pagInfo.totalPages - this.pagInfo.actualPage > 1) {
       this.showNotes(this.currentlyRouteAfterNotesTag, ++this.pagInfo.actualPage);
     }
   }
 
-  onScrollUp(event: any) {
-    /*
-    if (this.pagInfo.actualPage > 0) {
-      this.pagInfo.actualPage--;
-      this.notes.splice(this.notes.length - 3, 3);
-    }
-    */
-  }
-
   ngOnDestroy(): void {
-
   }
 
 }
