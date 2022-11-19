@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   isPending = false;
 
   constructor(private authService: AuthenticateService, private router: Router, private route: ActivatedRoute) {
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   ngOnInit(): void {
