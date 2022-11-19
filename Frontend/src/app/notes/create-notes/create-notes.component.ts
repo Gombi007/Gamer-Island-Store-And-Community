@@ -66,7 +66,7 @@ export class CreateNotesComponent implements OnInit {
       this.noteService.createNote(this.createNoteForm).subscribe(
         {
           next: () => {
-            this.createNoteForm.reset();
+            this.createTheForm();
             this.form.resetForm();
             this.isPending = false;
             this.isSuccess = true;
@@ -84,9 +84,10 @@ export class CreateNotesComponent implements OnInit {
       this.noteService.modifyNote(this.createNoteForm, this.noteService.noteToModify.id).subscribe(
         {
           next: () => {
-            this.createNoteForm.reset();
+            this.createTheForm();
             this.form.resetForm();
             this.noteService.noteToModify = undefined;
+            this.buttonLabel = 'Create'
             this.isPending = false;
             this.isModifySuccess = true;
             timer(2000).subscribe(
