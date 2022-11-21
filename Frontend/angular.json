@@ -19,7 +19,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "sockjs-client"
+              "angular2-uuid"
             ],
             "outputPath": "dist/my-notes",
             "index": "src/index.html",

@@ -17,6 +17,10 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/navigation-profile/profile.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { RxStompService } from './config/websocket/rx-stomp.service';
+import { rxStompServiceFactory } from './config/websocket/rx-stomp-service-factory';
+
+
 
 @NgModule({
   declarations: [
@@ -41,7 +45,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     ReactiveFormsModule,
     InfiniteScrollModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: RxStompService,
+      useFactory: rxStompServiceFactory,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
