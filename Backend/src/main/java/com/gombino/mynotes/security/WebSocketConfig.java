@@ -27,7 +27,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws-server").setAllowedOrigins(cors1, cors2, cors3).withSockJS();
         registry.addEndpoint("/ws-server").setAllowedOrigins(cors1, cors2, cors3);
-
-
     }
 }

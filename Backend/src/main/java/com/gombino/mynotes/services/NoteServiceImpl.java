@@ -98,7 +98,14 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteDto getNoteById(String userId, String noteId) {
         Note note = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
-        return addCreatorInfoToNoteDto(note);
+
+        if (!note.getVisibilityOnlyForMe()) {
+            return addCreatorInfoToNoteDto(note);
+        }
+        if (note.getCreatorId().equals(userId)) {
+            return addCreatorInfoToNoteDto(note);
+        }
+        return null;
     }
 
     @Override
