@@ -55,4 +55,8 @@ export class NoteService {
     removeNote(noteId: string) {
         return this.http.delete<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?noteId=' + noteId, this.authorServie.headerWithTokenForRequests());
     }
+
+    getNoteById(noteId: string) {
+        return this.http.get<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '/' + noteId, this.authorServie.headerWithTokenForRequests());
+    }
 }
