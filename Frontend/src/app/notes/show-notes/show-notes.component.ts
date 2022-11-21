@@ -50,26 +50,10 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     //websocket watcher
     this.topicSubscription = this.rxStompService.watch('/topic/notes').subscribe((message: any) => {
       let messageJsonFromBackend = JSON.parse(message.body)
-      console.log(messageJsonFromBackend);
+      this.findNoteByIdAndDoTheOperationsWithIt(messageJsonFromBackend["operation"], messageJsonFromBackend["noteId"])
     });
-
-
-
-    /*
-        this.webSocketService.subscribe('/topic/notes', (message: any): void => {
-          let messageJsonFromBackend = JSON.parse(message.body)
-          this.findByIdFromNotesAndModify(messageJsonFromBackend["operation"], messageJsonFromBackend["noteId"])
-    
-          console.log(messageJsonFromBackend);
-    
-          //let modifiedNote = this.notes.find(note => note.id === messageJsonFromBackend["noteId"]);
-          if (true) {
-            console.log(true);
-    
-          }
-        });
-        */
   }
+
   showNotes(favOrMyNotes: string = '', page: number) {
     this.isPending = true;
     this.cancelAllLiveSubs(this.noteSubscriptions);
@@ -144,9 +128,10 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     }
   }
 
-  findByIdFromNotesAndModify(operation: string, noteId: string) {
+  findNoteByIdAndDoTheOperationsWithIt(operation: string, noteId: string) {
     this.isPending = true;
     let noteDto = this.notes.find(note => note.id === noteId)
+
     if (noteDto !== undefined) {
       operation === 'favoriteChange' ? noteDto.isFavorite = !noteDto.isFavorite : '';
       operation === 'visibilityChange' ? noteDto.visibilityOnlyForMe = !noteDto.visibilityOnlyForMe : '';
@@ -156,22 +141,27 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
         operation === 'favoriteChange' && this.currentlyRouteAfterNotesTag === 'favorites' ? this.notes.splice(noteDtoIndex, 1) : '';
         operation === 'visibilityChange' && this.currentlyRouteAfterNotesTag === 'community' ? this.notes.splice(noteDtoIndex, 1) : '';
         operation === 'visibilityChange' && this.currentlyRouteAfterNotesTag === 'favorites' && this.currentUserId !== noteDto?.creatorId ? this.notes.splice(noteDtoIndex, 1) : '';
-
         operation === 'remove' ? this.notes.splice(noteDtoIndex, 1) : '';
       }
+      //update current note in the list if it contains and not favorite change
+      operation !== 'favoriteChange' ? this.updateNoteListAfterAnyChanges(noteId) : '';
     }
     this.isPending = false;
   }
 
-  updateNoteListAfterAnyChanges(noteDto: noteDto) {
-    this.noteService.getNoteById(noteDto.id).subscribe({
-      next: (dto: any) => {
-        if (this.notes.includes(noteDto)) {
-          console.log(dto);
+  updateNoteListAfterAnyChanges(noteId: string) {
+    let noteDto = this.notes.find(note => note.id === noteId)
+    if (noteDto !== undefined) {
+      this.noteService.getNoteById(noteDto.id).subscribe({
+        next: (dto: noteDto) => {
+          if (dto !== null && noteDto) {
+            let savedUserFavState = noteDto.isFavorite;
+            noteDto = Object.assign(noteDto, dto);
+            noteDto.isFavorite = savedUserFavState;
+          }
         }
-      }
-
-    });
+      });
+    }
   }
 
   editNote(note: noteDto) {
@@ -203,7 +193,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
       this.noteService.addOrRemoveNoteToUserFavList(noteDto.id, !noteDto.isFavorite)
         .subscribe({
           next: () => {
-            this.findByIdFromNotesAndModify('favoriteChange', noteDto.id);
+            this.findNoteByIdAndDoTheOperationsWithIt('favoriteChange', noteDto.id);
             this.isPending = false;
           },
           error: (response) => {
@@ -238,6 +228,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.topicSubscription.unsubscribe();
+    this.cancelAllLiveSubs(this.noteSubscriptions);
   }
 
 }
