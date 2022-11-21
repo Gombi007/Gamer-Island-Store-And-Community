@@ -33,6 +33,15 @@ public class NoteController {
         return ResponseEntity.status(HttpStatus.OK).body(noteService.getPublicOrFavoritesOrMyNotes(favOrMyNotes, userId, paginationSorterDto));
     }
 
+    @Operation(description = "Get a note by note id")
+    @GetMapping("/{userId}/{noteId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> getNoteById(
+            @PathVariable String userId, @PathVariable String noteId) {
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.getNoteById(userId, noteId));
+    }
+
+
     @Operation(description = "Create a new note")
     @PostMapping("/{userId}")
     @PreAuthorize("hasRole('USER')")

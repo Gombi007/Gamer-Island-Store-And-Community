@@ -72,6 +72,7 @@ public class NoteServiceImpl implements NoteService {
         return null;
     }
 
+
     private NoteDto addCreatorInfoToNoteDto(Note note) {
         NoteDto noteDto = convertToNoteDto(note);
         User creator = userService.getUserById(note.getCreatorId());
@@ -94,6 +95,11 @@ public class NoteServiceImpl implements NoteService {
         return result;
     }
 
+    @Override
+    public NoteDto getNoteById(String userId, String noteId) {
+        Note note = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
+        return addCreatorInfoToNoteDto(note);
+    }
 
     @Override
     public void createNote(NoteDto noteDto, String userId) {
@@ -127,7 +133,9 @@ public class NoteServiceImpl implements NoteService {
 
             // send a message to frontend, update the note list due to the list was modified
             Map<String, String> messageToFrontend = new HashMap<>();
-            messageToFrontend.put("modify", modifiedNote.getId());
+            messageToFrontend.put("noteId", originalNote.getId());
+            messageToFrontend.put("operation", "modify");
+            log.info("Notify fronted method was called: {}", messageToFrontend.get("operation"));
             webSocketService.notifyFrontend(messageToFrontend);
             return convertToNoteDto(modifiedNote);
         }

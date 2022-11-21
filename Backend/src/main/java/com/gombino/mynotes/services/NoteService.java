@@ -10,6 +10,8 @@ public interface NoteService {
 
     HashMap<String, Object> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId, PaginationSorterDto paginationSorterDto);
 
+    NoteDto getNoteById(String userId, String noteId);
+
     void createNote(NoteDto noteDto, String userID);
 
     NoteDto modifyNote(NoteDto noteDto, String noteId, String userId);
