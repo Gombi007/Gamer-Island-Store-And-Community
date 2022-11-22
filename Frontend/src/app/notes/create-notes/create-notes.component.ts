@@ -30,6 +30,7 @@ export class CreateNotesComponent implements OnInit {
     if (this.noteService.noteToModify !== undefined) {
       this.buttonLabel = 'Modify';
       this.modifyNoteFormSetter(this.noteService.noteToModify, this.createNoteForm)
+      this.clickedUrlBtn = this.checkWhatUrlIsPresent();
     }
 
   }
@@ -53,8 +54,8 @@ export class CreateNotesComponent implements OnInit {
       'text': modifyNote.text,
       'link': modifyNote.link,
       'imgUrl': modifyNote.imgUrl,
-      'ytUrl': new FormControl(null),
-      'videoUrl': new FormControl(null),
+      'ytUrl': modifyNote.ytUrl,
+      'videoUrl': modifyNote.videoUrl,
       'isFavorite': modifyNote.isFavorite,
       'visibilityOnlyForMe': modifyNote.visibilityOnlyForMe
     });
@@ -109,9 +110,10 @@ export class CreateNotesComponent implements OnInit {
     }
 
   }
+
   addImageOrVideoLink(label: string) {
-    //set link to empty when the button was click
-    //only one saveable of these 3 options
+    //set link to empty when the button was click, only if not a modify progress
+    //only one saveable of these 3 options  
     this.createNoteForm.controls['imgUrl'].setValue('');
     this.createNoteForm.controls['ytUrl'].setValue('');
     this.createNoteForm.controls['videoUrl'].setValue('');
@@ -121,9 +123,24 @@ export class CreateNotesComponent implements OnInit {
     } else {
       this.clickedUrlBtn = label;
     }
-
-
   }
+
+  checkWhatUrlIsPresent() {
+    let givenUrlFieldName = '';
+    if (this.createNoteForm.controls['imgUrl'].value !== '') {
+      givenUrlFieldName = 'imgUrl';
+    }
+
+    if (this.createNoteForm.controls['ytUrl'].value !== '') {
+      givenUrlFieldName = 'ytUrl';
+    }
+
+    if (this.createNoteForm.controls['videoUrl'].value !== '') {
+      givenUrlFieldName = 'videoUrl';
+    }
+    return givenUrlFieldName;
+  }
+
 
 
 }
