@@ -57,7 +57,7 @@ export class CreateNotesComponent implements OnInit {
       'imgUrl': modifyNote.imgUrl,
       'ytUrl': modifyNote.ytUrl,
       'videoUrl': modifyNote.videoUrl,
-      'videoPosterUrl': modifyNote.videoUrl,
+      'videoPosterUrl': modifyNote.videoPosterUrl,
       'isFavorite': modifyNote.isFavorite,
       'visibilityOnlyForMe': modifyNote.visibilityOnlyForMe
     });
@@ -129,15 +129,20 @@ export class CreateNotesComponent implements OnInit {
 
   checkWhatUrlIsPresent() {
     let givenUrlFieldName = '';
-    if (this.createNoteForm.controls['imgUrl'].value !== '') {
+    let imgUrlFieldValue = this.createNoteForm.controls['imgUrl'].value;
+    let ytUrlFieldValue = this.createNoteForm.controls['ytUrl'].value;
+    let videoUrlFieldValue = this.createNoteForm.controls['videoUrl'].value;
+    let videoPosterUrlFieldValue = this.createNoteForm.controls['videoPosterUrl'].value;
+
+    if (imgUrlFieldValue !== null && imgUrlFieldValue !== '') {
       givenUrlFieldName = 'imgUrl';
     }
 
-    if (this.createNoteForm.controls['ytUrl'].value !== '') {
+    if (ytUrlFieldValue !== null && ytUrlFieldValue !== '') {
       givenUrlFieldName = 'ytUrl';
     }
 
-    if (this.createNoteForm.controls['videoUrl'].value !== '') {
+    if ((videoUrlFieldValue !== null && videoUrlFieldValue !== '') || (videoPosterUrlFieldValue !== null && videoPosterUrlFieldValue !== '')) {
       givenUrlFieldName = 'videoUrl';
     }
     return givenUrlFieldName;
