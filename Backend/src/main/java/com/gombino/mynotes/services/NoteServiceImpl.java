@@ -39,10 +39,10 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public HashMap<String, Object> getPublicOrFavoritesOrMyNotes(String favOrMyNotes, String userId, PaginationSorterDto paginationSorterDto) {
         User user = userService.getUserById(userId);
-        Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).ascending());
         List<NoteDto> noteDtoList = new ArrayList<>();
 
         if (favOrMyNotes == null) {
+            Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).ascending());
             Page<Note> noteList = noteRepository.findByVisibilityOnlyForMe(false, paging);
             PaginationInfo paginationInfo = new PaginationInfo(noteList.getNumber(), noteList.getTotalPages(), noteList.getTotalElements());
             for (Note note : noteList) {
@@ -52,6 +52,7 @@ public class NoteServiceImpl implements NoteService {
         }
 
         if (favOrMyNotes.equals("favorites")) {
+            Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).descending());
             List<String> favoriteNotes = user.getFavoriteNotesIds();
             Page<Note> noteList = noteRepository.findFavoriteNotes(favoriteNotes, user.getId(), paging);
             PaginationInfo paginationInfo = new PaginationInfo(noteList.getNumber(), noteList.getTotalPages(), noteList.getTotalElements());
@@ -62,6 +63,7 @@ public class NoteServiceImpl implements NoteService {
         }
 
         if (favOrMyNotes.equals("my-notes")) {
+            Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).descending());
             Page<Note> noteList = noteRepository.findAllAllNotesByUser(user.getId(), paging);
             PaginationInfo paginationInfo = new PaginationInfo(noteList.getNumber(), noteList.getTotalPages(), noteList.getTotalElements());
             for (Note note : noteList) {
