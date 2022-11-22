@@ -20,6 +20,27 @@ form {
 
 }
 
+.img-video-url {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.img-video-url-input {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+.mat-icon {
+    transform: scale(1.5);
+    color: var(--color-accent);
+}
+
+.selected-url-btn {
+    color: var(--color-success);
+}
+
 .mat-form-field {
     width: min(97%, 400px);
 }

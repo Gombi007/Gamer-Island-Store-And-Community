@@ -1,5 +1,12 @@
 <div class="container firefox-scrollbar" infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="3"
     (scrolled)="onScrollDown($event)">
+
+    <video width="320" height="240" controls preload="none"
+        poster="https://cdn.akamai.steamstatic.com/steam/apps/256914660/movie.293x165.jpg?t=1668537010" src="">
+    </video>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/HWYs4Ll2e5M">
+    </iframe>
+
     <div class="note" *ngFor="let note of notes; let i = index">
         <div class="creator-info">
             <div class="creator">

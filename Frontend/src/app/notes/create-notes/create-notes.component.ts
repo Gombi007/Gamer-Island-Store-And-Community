@@ -20,6 +20,8 @@ export class CreateNotesComponent implements OnInit {
   isModifySuccess = false;
   buttonLabel = 'Create';
   createNoteForm: FormGroup;
+  clickedUrlBtn = "";
+
 
   constructor(private noteService: NoteService, private router: Router, private globalService: GlobalService) { }
 
@@ -38,6 +40,8 @@ export class CreateNotesComponent implements OnInit {
       'text': new FormControl(null, [Validators.required, Validators.maxLength(160)]),
       'link': new FormControl(null),
       'imgUrl': new FormControl(null),
+      'ytUrl': new FormControl(null),
+      'videoUrl': new FormControl(null),
       'isFavorite': new FormControl(false),
       'visibilityOnlyForMe': new FormControl(true),
     });
@@ -49,6 +53,8 @@ export class CreateNotesComponent implements OnInit {
       'text': modifyNote.text,
       'link': modifyNote.link,
       'imgUrl': modifyNote.imgUrl,
+      'ytUrl': new FormControl(null),
+      'videoUrl': new FormControl(null),
       'isFavorite': modifyNote.isFavorite,
       'visibilityOnlyForMe': modifyNote.visibilityOnlyForMe
     });
@@ -103,5 +109,15 @@ export class CreateNotesComponent implements OnInit {
     }
 
   }
+  addImageOrVideoLink(label: string) {
+    if (label === this.clickedUrlBtn) {
+      this.clickedUrlBtn = "";
+    } else {
+      this.clickedUrlBtn = label;
+    }
+
+
+  }
+
 
 }
