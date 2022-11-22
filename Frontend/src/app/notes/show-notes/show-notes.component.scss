@@ -96,6 +96,20 @@
     margin-bottom: 4rem;
 }
 
+iframe {
+    width: 100%;
+    height: 24rem;
+    border: none;
+}
+
+video {
+    width: 100%;
+    height: auto;
+
+}
+
+
+
 @media only screen and (max-width: 600px) {
     .container {
         height: calc(100% - 56px);
@@ -108,5 +122,23 @@
     .container::-webkit-scrollbar {
         display: none;
         /* Safari and Chrome */
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    iframe {
+        height: 20rem;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    iframe {
+        height: 16rem;
+    }
+}
+
+@media only screen and (max-width: 430px) {
+    iframe {
+        height: 14rem;
     }
 }

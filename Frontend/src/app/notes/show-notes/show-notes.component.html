@@ -1,12 +1,6 @@
 <div class="container firefox-scrollbar" infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="3"
     (scrolled)="onScrollDown($event)">
 
-    <video width="320" height="240" controls preload="none"
-        poster="https://cdn.akamai.steamstatic.com/steam/apps/256914660/movie.293x165.jpg?t=1668537010" src="">
-    </video>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/HWYs4Ll2e5M">
-    </iframe>
-
     <div class="note" *ngFor="let note of notes; let i = index">
         <div class="creator-info">
             <div class="creator">
@@ -25,7 +19,22 @@
         <p class="note-text">{{note.text}}</p>
         <a class="link" href="{{note.link}}" target="_blank" *ngIf="note.link !== null && note.link.length> 1">
             Check It</a>
+
+
+
         <img *ngIf="note.imgUrl !== null && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
+
+        <ng-container class="iframe-container" *ngIf="note.ytUrl !== null && note.ytUrl.length> 1">
+            <iframe [src]="note.ytUrl | safe"> </iframe>
+        </ng-container>
+
+        <ng-container *ngIf="note.videoUrl !== null && note.videoUrl.length> 1">
+            <video controls preload="none" src="{{note.videoUrl}}">
+            </video>
+        </ng-container>
+
+
+
         <p class="created">{{note.created}}</p>
         <div class="edit-row">
             <div class="control" (click)="removeNote(note)" *ngIf="note.creatorId ===currentUserId">

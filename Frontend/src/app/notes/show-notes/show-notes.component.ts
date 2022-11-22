@@ -14,6 +14,7 @@ import { RxStompService } from '../../config/websocket/rx-stomp.service';
   templateUrl: './show-notes.component.html',
   styleUrls: ['./show-notes.component.scss']
 })
+
 export class ShowNotesComponent implements OnInit, OnDestroy {
   currentlyRouteAfterNotesTag = '';
   notes: noteDto[];
@@ -225,6 +226,8 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
       this.showNotes(this.currentlyRouteAfterNotesTag, ++this.pagInfo.actualPage);
     }
   }
+
+
 
   ngOnDestroy(): void {
     this.topicSubscription.unsubscribe();
