@@ -5,7 +5,6 @@ $primary: mat.define-palette(mat.$grey-palette, 900);
 $accent: mat.define-palette(mat.$lime-palette, 100);
 $warn: mat.define-palette(mat.$red-palette, 900);
 
-$content-bg: mat.define-palette(mat.$blue-grey-palette, 900);
 $success: mat.define-palette(mat.$lime-palette);
 $disabled: mat.define-palette(mat.$grey-palette, 700);
 
@@ -17,10 +16,23 @@ $my-theme-dark: mat.define-dark-theme((color: (primary: $primary,
 @include mat.all-component-themes($my-theme-dark);
 
 :root {
+  //color schema
   --color-primary: #{mat.get-color-from-palette($primary)};
   --color-accent: #{mat.get-color-from-palette($accent)};
   --color-warn: #{mat.get-color-from-palette($warn)};
   --color-success: #{mat.get-color-from-palette($success)};
   --color-disabled: #{mat.get-color-from-palette($disabled)};
-  --color-content-bg: #{mat.get-color-from-palette($content-bg)};
+
+  //background setup
+  --bg-color: rgb(31, 30, 30);
+  --bg-url: url("../src/assets/img/background.jpg");
+  --bg-repeat: no-repeat;
+  --bg-size: cover;
+  --bg-attachment: fixed;
+
+  //content background
+  --content-bg-color-1: rgb(45, 50, 53);
+  --content-bg-color-2: rgb(32, 32, 32);
+  --content-bg-deg: 90deg;
+  --content-shadow-color: rgb(17, 17, 17);
 }

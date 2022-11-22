@@ -17,8 +17,8 @@
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
-    background-color: var(--color-content-bg);
-    box-shadow: 0 0 4px 4px var(--color-primary);
+    background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
+    box-shadow: 0 0 6px 5px var(--content-shadow-color);
     color: var(--color-accent);
 }
 
