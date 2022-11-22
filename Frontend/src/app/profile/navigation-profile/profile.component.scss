@@ -15,6 +15,16 @@ img {
 }
 
 ::ng-deep .menu-user {
-    background-color: var(--color-primary);
-    box-shadow: 0 0 4px 4px var(--color-primary);
+    margin-top: 0.3rem;
+    margin-left: -1rem;
+    background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
+    box-shadow: 3px 4px 8px 1px var(--content-shadow-color);
+}
+
+
+@media only screen and (max-width: 600px) {
+    ::ng-deep .menu-user {
+        margin-top: 0.1rem;
+        margin-left: -1rem;
+    }
 }

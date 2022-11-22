@@ -1,14 +1,20 @@
 .sidenav-container {
+  //background-color: var(--bg-color);
+
   height: 100%;
   padding: 0;
+  background-image: var(--bg-url);
+  background-repeat: var(--bg-repeat);
+  background-size: var(--bg-size);
+  background-attachment: var(--bg-attachment);
 }
 
 .mat-sidenav-content {
   overflow: hidden;
 }
 
-.mat-sidenav {
-  background-color: var(--color-primary);
+.mat-toolbar {
+  background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
 }
 
 .sidenav {

@@ -30,16 +30,57 @@
         </mat-form-field>
 
         <mat-form-field appearance="standard" color="accent">
-            <mat-label>Image Url</mat-label>
-            <input type="url" matInput placeholder="Add an image link if you want" id="imgUrl" name="imgUrl"
-                formControlName="imgUrl">
-        </mat-form-field>
-
-        <mat-form-field appearance="standard" color="accent">
-            <mat-label>Link</mat-label>
-            <input type="url" matInput placeholder="Add an link if you want" id="link" name="link"
+            <mat-label>Website Url</mat-label>
+            <input type="url" matInput placeholder="Add a website url if you want" id="link" name="link"
                 formControlName="link">
         </mat-form-field>
+
+        <div class="img-video-url">
+
+            <button mat-icon-button color="primary" type="button" (click)="addImageOrVideoLink('imgUrl')">
+                <mat-icon [class.selected-url-btn]="clickedUrlBtn ==='imgUrl'">imagesmode</mat-icon>
+            </button>
+
+            <button mat-icon-button color="primary" type="button" (click)="addImageOrVideoLink('ytUrl')">
+                <mat-icon [class.selected-url-btn]="clickedUrlBtn ==='ytUrl'">smart_display</mat-icon>
+            </button>
+
+            <button mat-icon-button color="primary" type="button" (click)="addImageOrVideoLink('videoUrl')">
+                <mat-icon [class.selected-url-btn]="clickedUrlBtn ==='videoUrl'">movie</mat-icon>
+            </button>
+        </div>
+
+        <div class="img-video-url-input">
+
+            <mat-form-field appearance="standard" color="accent" *ngIf="clickedUrlBtn ==='imgUrl'">
+                <mat-label>Image Url</mat-label>
+                <input type="url" matInput placeholder="Add an image url from web if you want" id="imgUrl" name="imgUrl"
+                    formControlName="imgUrl">
+            </mat-form-field>
+
+            <mat-form-field appearance="standard" color="accent" *ngIf="clickedUrlBtn ==='ytUrl'">
+                <mat-label>YouTube Url</mat-label>
+                <input type="url" matInput placeholder="Add a YouTube url if you want" id="ytUrl" name="ytUrl"
+                    formControlName="ytUrl">
+            </mat-form-field>
+
+            <div *ngIf="clickedUrlBtn ==='videoUrl'" style="width: 100%">
+                <mat-form-field appearance="standard" color="accent">
+                    <mat-label>Video Thumbnail</mat-label>
+                    <input type="url" matInput placeholder="Add a Video thumbnail url if you want" id="videoPosterUrl"
+                        name="videoPosterUrl" formControlName="videoPosterUrl">
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" color="accent">
+                    <mat-label>Video Url</mat-label>
+                    <input type="url" matInput placeholder="Add a Video url if you want. For example: Steam"
+                        id="videoUrl" name="videoUrl" formControlName="videoUrl">
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <br>
 
         <mat-checkbox class="example-margin" name="visibilityOnlyForMe" id="visibilityOnlyForMe"
             formControlName="visibilityOnlyForMe">

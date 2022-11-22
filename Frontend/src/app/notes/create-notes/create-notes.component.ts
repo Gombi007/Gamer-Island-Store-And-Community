@@ -20,6 +20,8 @@ export class CreateNotesComponent implements OnInit {
   isModifySuccess = false;
   buttonLabel = 'Create';
   createNoteForm: FormGroup;
+  clickedUrlBtn = "";
+
 
   constructor(private noteService: NoteService, private router: Router, private globalService: GlobalService) { }
 
@@ -28,6 +30,7 @@ export class CreateNotesComponent implements OnInit {
     if (this.noteService.noteToModify !== undefined) {
       this.buttonLabel = 'Modify';
       this.modifyNoteFormSetter(this.noteService.noteToModify, this.createNoteForm)
+      this.clickedUrlBtn = this.checkWhatUrlIsPresent();
     }
 
   }
@@ -38,6 +41,9 @@ export class CreateNotesComponent implements OnInit {
       'text': new FormControl(null, [Validators.required, Validators.maxLength(160)]),
       'link': new FormControl(null),
       'imgUrl': new FormControl(null),
+      'ytUrl': new FormControl(null),
+      'videoUrl': new FormControl(null),
+      'videoPosterUrl': new FormControl(null),
       'isFavorite': new FormControl(false),
       'visibilityOnlyForMe': new FormControl(true),
     });
@@ -49,6 +55,9 @@ export class CreateNotesComponent implements OnInit {
       'text': modifyNote.text,
       'link': modifyNote.link,
       'imgUrl': modifyNote.imgUrl,
+      'ytUrl': modifyNote.ytUrl,
+      'videoUrl': modifyNote.videoUrl,
+      'videoPosterUrl': modifyNote.videoPosterUrl,
       'isFavorite': modifyNote.isFavorite,
       'visibilityOnlyForMe': modifyNote.visibilityOnlyForMe
     });
@@ -103,5 +112,42 @@ export class CreateNotesComponent implements OnInit {
     }
 
   }
+
+  addImageOrVideoLink(label: string) {
+    //set link to empty when the button was click, only if not a modify progress
+    //only one saveable of these 3 options  
+    this.createNoteForm.controls['imgUrl'].setValue('');
+    this.createNoteForm.controls['ytUrl'].setValue('');
+    this.createNoteForm.controls['videoUrl'].setValue('');
+
+    if (label === this.clickedUrlBtn) {
+      this.clickedUrlBtn = "";
+    } else {
+      this.clickedUrlBtn = label;
+    }
+  }
+
+  checkWhatUrlIsPresent() {
+    let givenUrlFieldName = '';
+    let imgUrlFieldValue = this.createNoteForm.controls['imgUrl'].value;
+    let ytUrlFieldValue = this.createNoteForm.controls['ytUrl'].value;
+    let videoUrlFieldValue = this.createNoteForm.controls['videoUrl'].value;
+    let videoPosterUrlFieldValue = this.createNoteForm.controls['videoPosterUrl'].value;
+
+    if (imgUrlFieldValue !== null && imgUrlFieldValue !== '') {
+      givenUrlFieldName = 'imgUrl';
+    }
+
+    if (ytUrlFieldValue !== null && ytUrlFieldValue !== '') {
+      givenUrlFieldName = 'ytUrl';
+    }
+
+    if ((videoUrlFieldValue !== null && videoUrlFieldValue !== '') || (videoPosterUrlFieldValue !== null && videoPosterUrlFieldValue !== '')) {
+      givenUrlFieldName = 'videoUrl';
+    }
+    return givenUrlFieldName;
+  }
+
+
 
 }

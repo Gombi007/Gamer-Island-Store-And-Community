@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, SafePipe } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -33,7 +33,8 @@ import { rxStompServiceFactory } from './config/websocket/rx-stomp-service-facto
     PendingComponent,
     LoginComponent,
     ProfileComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,

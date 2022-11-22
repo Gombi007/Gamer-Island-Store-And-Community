@@ -13,6 +13,9 @@ public class NoteDto {
     private String text;
     private String link;
     private String imgUrl;
+    private String ytUrl;
+    private String videoUrl;
+    private String videoPosterUrl;
     private Boolean visibilityOnlyForMe;
     private Boolean isFavorite;
     private String created;

@@ -14,6 +14,7 @@ import { RxStompService } from '../../config/websocket/rx-stomp.service';
   templateUrl: './show-notes.component.html',
   styleUrls: ['./show-notes.component.scss']
 })
+
 export class ShowNotesComponent implements OnInit, OnDestroy {
   currentlyRouteAfterNotesTag = '';
   notes: noteDto[];
@@ -223,6 +224,15 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   onScrollDown(event: any) {
     if (this.pagInfo.totalPages - this.pagInfo.actualPage > 1) {
       this.showNotes(this.currentlyRouteAfterNotesTag, ++this.pagInfo.actualPage);
+    }
+  }
+
+  playVideo(event: any) {
+    let video = event.target;
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause()
     }
   }
 
