@@ -110,6 +110,12 @@ export class CreateNotesComponent implements OnInit {
 
   }
   addImageOrVideoLink(label: string) {
+    //set link to empty when the button was click
+    //only one saveable of these 3 options
+    this.createNoteForm.controls['imgUrl'].setValue('');
+    this.createNoteForm.controls['ytUrl'].setValue('');
+    this.createNoteForm.controls['videoUrl'].setValue('');
+
     if (label === this.clickedUrlBtn) {
       this.clickedUrlBtn = "";
     } else {
