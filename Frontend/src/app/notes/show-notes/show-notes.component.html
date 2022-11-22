@@ -20,20 +20,17 @@
         <a class="link" href="{{note.link}}" target="_blank" *ngIf="note.link !== null && note.link.length> 1">
             Check It</a>
 
-
-
         <img *ngIf="note.imgUrl !== null && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
 
-        <ng-container class="iframe-container" *ngIf="note.ytUrl !== null && note.ytUrl.length> 1">
+        <ng-container *ngIf="note.ytUrl !== null && note.ytUrl.length> 1">
             <iframe [src]="note.ytUrl | safe"> </iframe>
         </ng-container>
 
         <ng-container *ngIf="note.videoUrl !== null && note.videoUrl.length> 1">
-            <video controls preload="none" src="{{note.videoUrl}}">
+            <video controls preload="none" src="{{note.videoUrl}}" poster="{{note.videoPosterUrl}}"
+                (click)="playVideo($event)">
             </video>
         </ng-container>
-
-
 
         <p class="created">{{note.created}}</p>
         <div class="edit-row">

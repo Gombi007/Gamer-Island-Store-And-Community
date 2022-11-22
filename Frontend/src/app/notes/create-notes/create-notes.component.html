@@ -64,11 +64,20 @@
                     formControlName="ytUrl">
             </mat-form-field>
 
-            <mat-form-field appearance="standard" color="accent" *ngIf="clickedUrlBtn ==='videoUrl'">
-                <mat-label>Video Url</mat-label>
-                <input type="url" matInput placeholder="Add a Video link if you want. For example: Steam" id="videoUrl"
-                    name="videoUrl" formControlName="videoUrl">
-            </mat-form-field>
+            <div *ngIf="clickedUrlBtn ==='videoUrl'" style="width: 100%">
+                <mat-form-field appearance="standard" color="accent">
+                    <mat-label>Video Thumbnail</mat-label>
+                    <input type="url" matInput placeholder="Add a Video thumbnail url if you want" id="videoPosterUrl"
+                        name="videoPosterUrl" formControlName="videoPosterUrl">
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" color="accent">
+                    <mat-label>Video Url</mat-label>
+                    <input type="url" matInput placeholder="Add a Video url if you want. For example: Steam"
+                        id="videoUrl" name="videoUrl" formControlName="videoUrl">
+                </mat-form-field>
+            </div>
+
         </div>
 
         <br>

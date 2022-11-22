@@ -227,7 +227,14 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  playVideo(event: any) {
+    let video = event.target;
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause()
+    }
+  }
 
   ngOnDestroy(): void {
     this.topicSubscription.unsubscribe();

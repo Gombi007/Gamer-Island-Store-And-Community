@@ -43,6 +43,7 @@ export class CreateNotesComponent implements OnInit {
       'imgUrl': new FormControl(null),
       'ytUrl': new FormControl(null),
       'videoUrl': new FormControl(null),
+      'videoPosterUrl': new FormControl(null),
       'isFavorite': new FormControl(false),
       'visibilityOnlyForMe': new FormControl(true),
     });
@@ -56,6 +57,7 @@ export class CreateNotesComponent implements OnInit {
       'imgUrl': modifyNote.imgUrl,
       'ytUrl': modifyNote.ytUrl,
       'videoUrl': modifyNote.videoUrl,
+      'videoPosterUrl': modifyNote.videoUrl,
       'isFavorite': modifyNote.isFavorite,
       'visibilityOnlyForMe': modifyNote.visibilityOnlyForMe
     });

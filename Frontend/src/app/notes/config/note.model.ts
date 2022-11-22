@@ -6,6 +6,7 @@ export class noteDto {
     imgUrl: string = "";
     ytUrl: string = "";
     videoUrl: string = "";
+    videoPosterUrl: string = "";
     visibilityOnlyForMe: boolean = true;
     isFavorite: boolean = false;
     created: string = "";
