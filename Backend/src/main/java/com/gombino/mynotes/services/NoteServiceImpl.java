@@ -144,6 +144,7 @@ public class NoteServiceImpl implements NoteService {
             originalNote.setImgUrl(noteDto.getImgUrl());
             originalNote.setYtUrl(changeYoutubeUrlToEmbeddedMode(noteDto.getYtUrl()));
             originalNote.setVideoUrl(noteDto.getVideoUrl());
+            originalNote.setVideoPosterUrl(noteDto.getVideoPosterUrl());
             originalNote.setVisibilityOnlyForMe(noteDto.getVisibilityOnlyForMe());
             originalNote.setIsFavorite(noteDto.getIsFavorite());
             originalNote.setLastModified(Instant.now());
