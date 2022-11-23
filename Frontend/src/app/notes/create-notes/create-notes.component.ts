@@ -42,10 +42,10 @@ export class CreateNotesComponent implements OnInit {
       'title': new FormControl(null, [Validators.required, Validators.maxLength(30)]),
       'text': new FormControl(null, [Validators.required, Validators.maxLength(160)]),
       'link': new FormControl(null),
-      'imgUrl': new FormControl(null),
-      'ytUrl': new FormControl(null),
-      'videoUrl': new FormControl(null),
-      'videoPosterUrl': new FormControl(null),
+      'imgUrl': new FormControl(''),
+      'ytUrl': new FormControl(''),
+      'videoUrl': new FormControl(''),
+      'videoPosterUrl': new FormControl(''),
       'isFavorite': new FormControl(false),
       'visibilityOnlyForMe': new FormControl(true),
     });
@@ -135,18 +135,34 @@ export class CreateNotesComponent implements OnInit {
   }
 
   addImageOrVideoLink(label: string) {
-    //set link to empty when the button was click, only if not a modify progress
-    //only one saveable of these 3 options  
-    this.createNoteForm.controls['imgUrl'].setValue('');
-    this.createNoteForm.controls['ytUrl'].setValue('');
-    this.createNoteForm.controls['videoUrl'].setValue('');
+    let imgUrlField = this.createNoteForm.controls['imgUrl'];
+    let ytUrlField = this.createNoteForm.controls['ytUrl'];
+    let videoUrlField = this.createNoteForm.controls['videoUrl'];
+    let videoPosterUrlField = this.createNoteForm.controls['videoPosterUrl'];
+    let warningText1 = 'If you switch other media tab,<br>You will lost the unsaved media data.';
+    let warningText2 = 'Are you sure to swicth media tab?';
 
-    if (label === this.clickedUrlBtn) {
-      this.clickedUrlBtn = "";
+    //Only one option is selectable from image/youtube/other-video and all other will be removed 
+    // Reminding the user about this info
+    if (imgUrlField.value !== '' || ytUrlField.value !== '' || videoUrlField.value !== '' || videoPosterUrlField.value !== '') {
+      this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm: boolean) => {
+        if (userConfirm) {
+          imgUrlField.setValue('');
+          ytUrlField.setValue('');
+          videoUrlField.setValue('');
+          videoPosterUrlField.setValue('');
+        }
+      });
+
     } else {
-      this.clickedUrlBtn = label;
+      if (label === this.clickedUrlBtn) {
+        this.clickedUrlBtn = "";
+      } else {
+        this.clickedUrlBtn = label;
+      }
     }
   }
+
   private checkWhatUrlIsPresent() {
     let givenUrlFieldName = '';
     let imgUrlFieldValue = this.createNoteForm.controls['imgUrl'].value;
