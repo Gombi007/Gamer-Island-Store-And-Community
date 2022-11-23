@@ -1,1 +1,10 @@
-<p>warn-dialog works!</p>
+<div class="dialog">
+    <div class="warning-text">
+        <p>{{warningText1}}</p>
+        <p>{{warningText2}}</p>
+    </div>
+    <div class="buttons">
+        <button mat-stroked-button (click)="closeWithOK()">OK</button>
+        <button mat-stroked-button (click)="closeWithCancel()">Cancel</button>
+    </div>
+</div>
