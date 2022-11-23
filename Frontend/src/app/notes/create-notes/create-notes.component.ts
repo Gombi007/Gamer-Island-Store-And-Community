@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { tap, timer } from 'rxjs';
+import { Observable, Subscription, tap, timer } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
+import { WarnDialogComponent } from 'src/app/warn-dialog/warn-dialog.component';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 
@@ -23,7 +25,7 @@ export class CreateNotesComponent implements OnInit {
   clickedUrlBtn = "";
 
 
-  constructor(private noteService: NoteService, private router: Router, private globalService: GlobalService) { }
+  constructor(private noteService: NoteService, private router: Router, private globalService: GlobalService, private dialogRef: MatDialog) { }
 
   ngOnInit(): void {
     this.createTheForm();
@@ -65,8 +67,12 @@ export class CreateNotesComponent implements OnInit {
 
 
   cancelModifyAndBack() {
-    this.noteService.noteToModify = undefined;
-    this.router.navigate([this.noteService.cancelModifyOrSubmitAndGoBack]);
+    this.openWarnDialog().subscribe((userConfirm) => {
+      if (userConfirm) {
+        this.noteService.noteToModify = undefined;
+        this.router.navigate([this.noteService.cancelModifyOrSubmitAndGoBack]);
+      }
+    });
   }
 
   onSubmit() {
@@ -146,6 +152,20 @@ export class CreateNotesComponent implements OnInit {
       givenUrlFieldName = 'videoUrl';
     }
     return givenUrlFieldName;
+  }
+
+  openWarnDialog(): Observable<any> {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.panelClass = '';
+
+    dialogConfig.data = {
+      warningText1: 'You will lost the all unsaved data!',
+      warningText2: 'Are you sure to go back?'
+    }
+
+    let dialog = this.dialogRef.open(WarnDialogComponent, dialogConfig);
+    return dialog.afterClosed();
   }
 
 
