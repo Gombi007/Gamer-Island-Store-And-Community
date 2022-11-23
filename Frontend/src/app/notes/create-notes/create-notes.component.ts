@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, Subscription, tap, timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
 import { WarnDialogComponent } from 'src/app/warn-dialog/warn-dialog.component';
 import { noteDto } from '../config/note.model';
@@ -67,7 +67,10 @@ export class CreateNotesComponent implements OnInit {
 
 
   cancelModifyAndBack() {
-    this.openWarnDialog().subscribe((userConfirm) => {
+    let warningText1 = 'You will lost the all unsaved data!';
+    let warningText2 = 'Are you sure to go back?';
+
+    this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm) => {
       if (userConfirm) {
         this.noteService.noteToModify = undefined;
         this.router.navigate([this.noteService.cancelModifyOrSubmitAndGoBack]);
@@ -114,9 +117,21 @@ export class CreateNotesComponent implements OnInit {
             this.isPending = false;
           }
         });
+    }
+  }
 
+  openWarnDialog(warningText1: string, warningText2: string): Observable<any> {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.panelClass = '';
+
+    dialogConfig.data = {
+      warningText1: warningText1,
+      warningText2: warningText2
     }
 
+    let dialog = this.dialogRef.open(WarnDialogComponent, dialogConfig);
+    return dialog.afterClosed();
   }
 
   addImageOrVideoLink(label: string) {
@@ -132,8 +147,7 @@ export class CreateNotesComponent implements OnInit {
       this.clickedUrlBtn = label;
     }
   }
-
-  checkWhatUrlIsPresent() {
+  private checkWhatUrlIsPresent() {
     let givenUrlFieldName = '';
     let imgUrlFieldValue = this.createNoteForm.controls['imgUrl'].value;
     let ytUrlFieldValue = this.createNoteForm.controls['ytUrl'].value;
@@ -153,21 +167,4 @@ export class CreateNotesComponent implements OnInit {
     }
     return givenUrlFieldName;
   }
-
-  openWarnDialog(): Observable<any> {
-    let dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.panelClass = '';
-
-    dialogConfig.data = {
-      warningText1: 'You will lost the all unsaved data!',
-      warningText2: 'Are you sure to go back?'
-    }
-
-    let dialog = this.dialogRef.open(WarnDialogComponent, dialogConfig);
-    return dialog.afterClosed();
-  }
-
-
-
 }
