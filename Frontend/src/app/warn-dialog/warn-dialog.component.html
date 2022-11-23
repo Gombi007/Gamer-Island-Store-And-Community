@@ -1,0 +1,10 @@
+<div class="dialog">
+    <div class="warning-text">
+        <p [innerHTML]="warningText1"></p>
+        <p [innerHTML]="warningText2"></p>
+    </div>
+    <div class="buttons">
+        <button mat-stroked-button (click)="closeWithOK()">OK</button>
+        <button mat-stroked-button (click)="closeWithCancel()">Cancel</button>
+    </div>
+</div>

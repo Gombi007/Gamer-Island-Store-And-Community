@@ -19,6 +19,7 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RxStompService } from './config/websocket/rx-stomp.service';
 import { rxStompServiceFactory } from './config/websocket/rx-stomp-service-factory';
+import { WarnDialogComponent } from './warn-dialog/warn-dialog.component';
 
 
 
@@ -34,7 +35,8 @@ import { rxStompServiceFactory } from './config/websocket/rx-stomp-service-facto
     LoginComponent,
     ProfileComponent,
     EditProfileComponent,
-    SafePipe
+    SafePipe,
+    WarnDialogComponent
   ],
   imports: [
     BrowserModule,
