@@ -1,0 +1,27 @@
+.container {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0.5rem;
+    width: max-content;
+    border-radius: 3rem;
+    background-color: var(--color-success);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+.warn {
+    background-color: var(--color-warn);
+}
+
+.warn p {
+    color: var(--color-bright);
+}
