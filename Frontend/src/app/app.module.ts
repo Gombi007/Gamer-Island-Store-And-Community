@@ -20,6 +20,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RxStompService } from './config/websocket/rx-stomp.service';
 import { rxStompServiceFactory } from './config/websocket/rx-stomp-service-factory';
 import { WarnDialogComponent } from './warn-dialog/warn-dialog.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 
@@ -36,7 +37,8 @@ import { WarnDialogComponent } from './warn-dialog/warn-dialog.component';
     ProfileComponent,
     EditProfileComponent,
     SafePipe,
-    WarnDialogComponent
+    WarnDialogComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
