@@ -100,14 +100,7 @@
     </form>
 </div>
 
-<div class="success">
-    <ng-container *ngIf="!isPending && (isSuccess || isModifySuccess)">
-        <mat-icon aria-hidden="false" fontIcon="done"></mat-icon>
-        <ng-container>
-            <p *ngIf="!isPending && isSuccess">The note was created successfully!</p>
-            <p *ngIf="!isPending && isModifySuccess">The note was modified successfully!</p>
-        </ng-container>
-    </ng-container>
-</div>
+<app-notification [text]="notifyUserText" [isWarnNotification]="false" *ngIf="notifyUserText.length>0">
+</app-notification>
 <app-pending *ngIf="isPending"></app-pending>
 <app-navigation-mobile-notes></app-navigation-mobile-notes>

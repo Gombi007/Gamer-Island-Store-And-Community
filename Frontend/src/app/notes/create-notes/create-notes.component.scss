@@ -72,18 +72,6 @@ label {
     justify-content: space-around;
 }
 
-.success {
-    color: var(--color-accent);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.success .mat-icon {
-    color: var(--color-success);
-    font-size: 1.5rem;
-}
 
 @media only screen and (max-width: 600px) {
     .form {

@@ -18,8 +18,7 @@ export class CreateNotesComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: FormGroupDirective;
 
   isPending = false;
-  isSuccess = false;
-  isModifySuccess = false;
+  notifyUserText: string = '';
   buttonLabel = 'Create';
   createNoteForm: FormGroup;
   clickedUrlBtn = "";
@@ -74,9 +73,9 @@ export class CreateNotesComponent implements OnInit, OnDestroy {
             this.createTheForm();
             this.form.resetForm();
             this.isPending = false;
-            this.isSuccess = true;
+            this.notifyUserText = 'The note was created successfully!';
             timer(2000).subscribe(
-              () => this.isSuccess = false
+              () => this.notifyUserText = ''
             );
           },
           error: (response) => {
@@ -94,9 +93,9 @@ export class CreateNotesComponent implements OnInit, OnDestroy {
             this.noteService.noteToModify = undefined;
             this.buttonLabel = 'Create'
             this.isPending = false;
-            this.isModifySuccess = true;
+            this.notifyUserText = 'The note was modified successfully!';
             timer(2000).subscribe(
-              () => this.isModifySuccess = false
+              () => this.notifyUserText = ''
             );
           },
           error: (response) => {
