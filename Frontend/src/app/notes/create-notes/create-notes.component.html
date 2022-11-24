@@ -81,17 +81,16 @@
         </div>
 
         <br>
+        <div class="checkboxes">
+            <mat-checkbox class="example-margin" name="visibilityOnlyForMe" id="visibilityOnlyForMe"
+                formControlName="visibilityOnlyForMe">
+                Visibility private
+            </mat-checkbox>
 
-        <mat-checkbox class="example-margin" name="visibilityOnlyForMe" id="visibilityOnlyForMe"
-            formControlName="visibilityOnlyForMe">
-            Visibility private
-        </mat-checkbox>
-
-        <br>
-
-        <mat-checkbox class="example-margin" name="isFavorite" id="isFavorite" formControlName="isFavorite">
-            Add to favorites
-        </mat-checkbox>
+            <mat-checkbox class="example-margin" name="isFavorite" id="isFavorite" formControlName="isFavorite">
+                Add to favorites
+            </mat-checkbox>
+        </div>
 
         <div class="btn-area">
             <button mat-raised-button type="submit" [disabled]="!createNoteForm.valid">{{buttonLabel}}</button>
