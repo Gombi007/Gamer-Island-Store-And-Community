@@ -17,13 +17,13 @@ export class NotificationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.deviceHeight = window.innerHeight - 115;
+    this.deviceHeight = window.innerHeight - 100;
   }
 
   // update value when resize
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.deviceHeight = window.innerHeight - 115;
+    this.deviceHeight = window.innerHeight - 100;
   }
 
 }
