@@ -65,7 +65,7 @@
     <app-notification [text]="errorResponse" [isWarnNotification]="true" *ngIf="errorResponse.length>0">
     </app-notification>
     <app-notification [text]="expiredSession || ''" [isWarnNotification]="true"
-        *ngIf="expiredSession !==null && showLoginForm">
+        *ngIf="expiredSession.length>0 && showLoginForm">
     </app-notification>
 
     <app-pending *ngIf="isPending"></app-pending>
