@@ -4,7 +4,6 @@
     overflow: auto;
 }
 
-
 form {
     margin: 0 auto;
     display: flex;
@@ -15,20 +14,41 @@ form {
     width: min(88%, 450px);
     border-radius: 0.5rem;
     padding: 1rem;
-    margin-top: 30px;
-    margin-bottom: 150px;
+    margin-top: 75px;
+    margin-bottom: 120px;
 }
 
-.img-video-url {
+.media-tab-label {
+    padding-top: 0.3rem;
+    margin: 0;
+    text-align: center;
+    color: var(--color-accent);
+}
+
+.media-tab {
     width: 100%;
+    box-shadow: 0 0 5px 1px var(--color-disabled);
+    border-radius: 0.5rem;
+}
+
+.img-yt-video-btns {
     display: flex;
     justify-content: space-around;
 }
 
-.img-video-url-input {
-    width: 90%;
+.img-yt-video-input {
     display: flex;
     justify-content: center;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
+.other-video-tab {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .mat-icon {

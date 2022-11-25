@@ -136,7 +136,7 @@ export class CreateNotesComponent implements OnInit, OnDestroy {
 
 
   addImageOrVideoLink(label: string) {
-    let warningText1 = 'If you switch other media tab,<br>You will lost the current media data.';
+    let warningText1 = 'If you switch the media tab..<br>You will lost the current media data.';
     let warningText2 = 'Are you sure to swicth media tab?';
     let isEmptyAllMediaUrlField = true;
 
