@@ -23,7 +23,7 @@
         <img *ngIf="note.imgUrl !== null && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
 
         <ng-container *ngIf="note.ytUrl !== null && note.ytUrl.length> 1">
-            <iframe [src]="note.ytUrl | safe"> </iframe>
+            <iframe [src]="note.ytUrl | safe" allowfullscreen> </iframe>
         </ng-container>
 
         <ng-container *ngIf="note.videoUrl !== null && note.videoUrl.length> 1">
