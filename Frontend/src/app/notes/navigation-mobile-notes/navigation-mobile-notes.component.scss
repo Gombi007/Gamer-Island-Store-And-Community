@@ -12,7 +12,7 @@
     color: var(--color-accent);
     border: 1px solid var(--color-disabled);
     background-color: var(--color-primary);
-    display: flex;
+    display: none;
     justify-content: space-around;
     align-items: center;
 }
@@ -28,9 +28,6 @@ p {
     color: var(--color-success);
 }
 
-
-@media only screen and (min-width: 600px) {
-    .mat-card {
-        display: none;
-    }
+.display {
+    display: flex;
 }

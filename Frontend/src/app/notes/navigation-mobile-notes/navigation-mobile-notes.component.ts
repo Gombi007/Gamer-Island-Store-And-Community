@@ -1,4 +1,6 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { map, Observable, shareReplay } from 'rxjs';
 
 @Component({
   selector: 'app-navigation-mobile-notes',
@@ -7,7 +9,13 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class NavigationMobileNotesComponent implements OnInit {
   deviceHeight = 0;
-  constructor() { }
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  constructor(private breakpointObserver: BreakpointObserver,) { }
 
   ngOnInit(): void {
     this.deviceHeight = window.innerHeight - 60;

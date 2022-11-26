@@ -1,4 +1,4 @@
-<mat-card [ngStyle]="{'top': deviceHeight+'px'}">
+<mat-card [ngStyle]="{'top': deviceHeight+'px'}" [class.display]="isHandset$ | async">
     <a routerLink="/notes/show/community" routerLinkActive="active-link-icon">
         <mat-icon aria-hidden="false" fontIcon="public"></mat-icon>
         <p>Public</p>
