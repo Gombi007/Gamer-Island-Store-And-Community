@@ -152,6 +152,7 @@ public class NoteServiceImpl implements NoteService {
             originalNote.setVisibilityOnlyForMe(noteDto.getVisibilityOnlyForMe());
             originalNote.setIsFavorite(noteDto.getIsFavorite());
             originalNote.setLastModified(Instant.now());
+            originalNote.setHashtags(noteDto.getHashtags());
 
             changeFavoriteState(noteDto.getIsFavorite(), noteId, userId);
             Note modifiedNote = noteRepository.save(originalNote);
