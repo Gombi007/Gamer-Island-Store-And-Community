@@ -44,12 +44,12 @@ export class NoteService {
     }
 
 
-    createNote(noteForm: FormGroup) {
-        return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), noteForm.value, this.authorServie.headerWithTokenForRequests());
+    createNote(note: noteDto) {
+        return this.http.post<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID(), note, this.authorServie.headerWithTokenForRequests());
     }
 
-    modifyNote(noteForm: FormGroup, noteId: string) {
-        return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?noteId=' + noteId, noteForm.value, this.authorServie.headerWithTokenForRequests());
+    modifyNote(note: noteDto, noteId: string) {
+        return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_NOTES + this.authorServie.getUserID() + '?noteId=' + noteId, note, this.authorServie.headerWithTokenForRequests());
     }
 
     removeNote(noteId: string) {
