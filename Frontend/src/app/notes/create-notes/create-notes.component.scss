@@ -92,6 +92,47 @@ label {
     justify-content: space-around;
 }
 
+.hashtag {
+    width: min(97%, 400px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.hashtag p {
+    margin: 0;
+    padding: 0;
+    margin-bottom: -0.4rem;
+}
+
+.show-hashtags {
+    width: min(97%, 400px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.show-hashtag-container {
+    display: flex;
+}
+
+.show-hashtags p {
+    border: 1px solid var(--color-accent);
+    margin: 0;
+    padding: 0 0.3rem 0 0.3rem;
+    border-radius: 1rem 0 0 1rem;
+}
+
+.show-hashtags .hashtag-remove {
+    border: 1px solid var(--color-accent);
+    padding: 0 0.3rem 0 0.3rem;
+    border-radius: 0 1rem 1rem 0;
+
+}
 
 @media only screen and (max-width: 600px) {
     .form {

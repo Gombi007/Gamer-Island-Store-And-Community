@@ -35,6 +35,23 @@
                 formControlName="link">
         </mat-form-field>
 
+        <div class="hashtag">
+            <p>#</p>
+            <mat-form-field appearance="standard" color="accent">
+                <mat-label>Hashtag</mat-label>
+                <input type="text" matInput placeholder="Add a hashtag if you want" id="hashtag" name="hashtag"
+                    [(ngModel)]="hashtag" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+            <mat-icon aria-hidden="false" fontIcon="add_circle" (click)="addHashtag()"></mat-icon>
+        </div>
+        <div class="show-hashtags">
+            <div class="show-hashtag-container" *ngFor="let hashtag of hashtags; let i = index">
+                <p>#{{hashtag}}</p>
+                <div class="hashtag-remove" (click)="removeHashtag(hashtag)">x</div>
+            </div>
+        </div>
+
+
         <div class="media-tab">
             <p class="media-tab-label">Media Tab</p>
 

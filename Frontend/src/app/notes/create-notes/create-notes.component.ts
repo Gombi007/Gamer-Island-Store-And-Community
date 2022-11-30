@@ -22,6 +22,8 @@ export class CreateNotesComponent implements OnInit, OnDestroy {
   buttonLabel = 'Create';
   createNoteForm: FormGroup;
   clickedUrlBtn = "";
+  hashtag = '';
+  hashtags: string[] = [];
 
 
   constructor(private noteService: NoteService, private router: Router, private globalService: GlobalService, private dialogRef: MatDialog) { }
@@ -62,16 +64,21 @@ export class CreateNotesComponent implements OnInit, OnDestroy {
       'isFavorite': modifyNote.isFavorite,
       'visibilityOnlyForMe': modifyNote.visibilityOnlyForMe
     });
+    this.hashtags = modifyNote.hashtags;
   }
 
   onSubmit() {
     this.isPending = true;
     if (this.createNoteForm.valid && this.noteService.noteToModify === undefined) {
-      this.noteService.createNote(this.createNoteForm).subscribe(
+      let note: noteDto = this.createNoteForm.value;
+      note.hashtags = this.hashtags;
+
+      this.noteService.createNote(note).subscribe(
         {
           next: () => {
             this.createTheForm();
             this.form.resetForm();
+            this.hashtags = [];
             this.isPending = false;
             this.notifyUserText = 'The note was created successfully!';
             timer(2000).subscribe(
@@ -85,11 +92,14 @@ export class CreateNotesComponent implements OnInit, OnDestroy {
         });
     }
     if (this.createNoteForm.valid && this.noteService.noteToModify !== undefined) {
-      this.noteService.modifyNote(this.createNoteForm, this.noteService.noteToModify.id).subscribe(
+      let note: noteDto = this.createNoteForm.value;
+      note.hashtags = this.hashtags;
+      this.noteService.modifyNote(note, this.noteService.noteToModify.id).subscribe(
         {
           next: () => {
             this.createTheForm();
             this.form.resetForm();
+            this.hashtags = [];
             this.noteService.noteToModify = undefined;
             this.buttonLabel = 'Create'
             this.isPending = false;
@@ -161,6 +171,18 @@ export class CreateNotesComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  addHashtag() {
+    if (this.hashtag.length > 0 && !this.hashtags.includes(this.hashtag)) {
+      this.hashtags.push(this.hashtag.replace(/#|\s/g, ''));
+    }
+    this.hashtag = '';
+  }
+
+  removeHashtag(hashtag: string) {
+    let hashtagIndex = this.hashtags.indexOf(hashtag);
+    hashtagIndex >= 0 ? this.hashtags.splice(hashtagIndex, 1) : '';
   }
 
   private openWarnDialog(warningText1: string, warningText2: string): Observable<any> {
