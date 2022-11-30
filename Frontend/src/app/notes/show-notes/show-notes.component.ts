@@ -199,24 +199,33 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
 
   addOrRemoveToFavoriteList(noteDto: noteDto) {
     if (!this.isPending) {
-      this.isPending = true;
-      this.noteService.addOrRemoveNoteToUserFavList(noteDto.id, !noteDto.isFavorite)
-        .subscribe({
-          next: () => {
-            this.findNoteByIdAndDoTheOperationsWithIt('favoriteChange', noteDto.id);
-            this.isPending = false;
-          },
-          error: (response) => {
-            this.globalService.isExpiredToken(response);
-            this.isPending = false;
-          }
-        });
+      let warningText1 = 'Favorite Change';
+      let warningText2 = noteDto.isFavorite ?
+        'Are you sure to remove this note from your favorites?'
+        :
+        'Are you sure to add this note to your favorites?';
+
+      this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm: boolean) => {
+        if (userConfirm) {
+          this.noteService.addOrRemoveNoteToUserFavList(noteDto.id, !noteDto.isFavorite)
+            .subscribe({
+              next: () => {
+                this.findNoteByIdAndDoTheOperationsWithIt('favoriteChange', noteDto.id);
+                this.isPending = false;
+              },
+              error: (response) => {
+                this.globalService.isExpiredToken(response);
+                this.isPending = false;
+              }
+            });
+        }
+      });
     }
   }
 
   changeVisibility(noteDto: noteDto) {
     if (!this.isPending) {
-      let warningText1 = 'Visibility change';
+      let warningText1 = 'Visibility Change';
       let warningText2 = noteDto.visibilityOnlyForMe ?
         'If you set the visibility to PUBLIC<br>Every user will able to see this note'
         :
