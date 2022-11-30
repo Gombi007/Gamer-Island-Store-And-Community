@@ -14,5 +14,6 @@ export class noteDto {
     creatorId: string = "";
     creatorAvatar: string = "";
     creatorUsername: string = "";
+    hashtags: string[] = [];
 }
 
