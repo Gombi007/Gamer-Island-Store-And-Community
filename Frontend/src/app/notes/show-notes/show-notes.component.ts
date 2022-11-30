@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from 'src/app/config/authorization.service';
 import { GlobalService } from 'src/app/config/global.service';
 import { PagInfo } from 'src/app/config/pag-info.model';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 import { RxStompService } from '../../config/websocket/rx-stomp.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { WarnDialogComponent } from 'src/app/warn-dialog/warn-dialog.component';
 
 @Component({
   selector: 'app-show-notes',
@@ -25,7 +27,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   noteSubscriptions: Subscription[] = [];
   private topicSubscription: Subscription;
 
-  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private authService: AuthorizationService, private rxStompService: RxStompService) { }
+  constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private authService: AuthorizationService, private rxStompService: RxStompService, private dialogRef: MatDialog) { }
 
   @ViewChild(InfiniteScrollDirective) infiniteScrollDirective: any;
   resetInfiniteScrollerWhenRouteChanges() {
@@ -174,15 +176,22 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
 
   removeNote(noteDto: noteDto) {
     if (!this.isPending) {
-      this.isPending = true;
-      this.noteService.removeNote(noteDto.id).subscribe({
-        next: () => {
-          this.isPending = false;
-        },
-        error: (response) => {
-          console.log(response);
-          this.globalService.isExpiredToken(response);
-          this.isPending = false;
+      let warningText1 = 'Remove';
+      let warningText2 = 'Are you sure to remove this note?<br>This note will not be recoverable!'
+
+      this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm: boolean) => {
+        if (userConfirm) {
+          this.isPending = true;
+          this.noteService.removeNote(noteDto.id).subscribe({
+            next: () => {
+              this.isPending = false;
+            },
+            error: (response) => {
+              console.log(response);
+              this.globalService.isExpiredToken(response);
+              this.isPending = false;
+            }
+          });
         }
       });
     }
@@ -190,34 +199,53 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
 
   addOrRemoveToFavoriteList(noteDto: noteDto) {
     if (!this.isPending) {
-      this.isPending = true;
-      this.noteService.addOrRemoveNoteToUserFavList(noteDto.id, !noteDto.isFavorite)
-        .subscribe({
-          next: () => {
-            this.findNoteByIdAndDoTheOperationsWithIt('favoriteChange', noteDto.id);
-            this.isPending = false;
-          },
-          error: (response) => {
-            this.globalService.isExpiredToken(response);
-            this.isPending = false;
-          }
-        });
+      let warningText1 = 'Favorite Change';
+      let warningText2 = noteDto.isFavorite ?
+        'Are you sure to remove this note from your favorites?'
+        :
+        'Are you sure to add this note to your favorites?';
+
+      this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm: boolean) => {
+        if (userConfirm) {
+          this.noteService.addOrRemoveNoteToUserFavList(noteDto.id, !noteDto.isFavorite)
+            .subscribe({
+              next: () => {
+                this.findNoteByIdAndDoTheOperationsWithIt('favoriteChange', noteDto.id);
+                this.isPending = false;
+              },
+              error: (response) => {
+                this.globalService.isExpiredToken(response);
+                this.isPending = false;
+              }
+            });
+        }
+      });
     }
   }
 
   changeVisibility(noteDto: noteDto) {
     if (!this.isPending) {
-      this.isPending = true;
-      this.noteService.changeVisibility(noteDto.id, !noteDto.visibilityOnlyForMe)
-        .subscribe({
-          next: () => {
-            this.isPending = false;
-          },
-          error: (response) => {
-            this.globalService.isExpiredToken(response);
-            this.isPending = false;
-          }
-        });
+      let warningText1 = 'Visibility Change';
+      let warningText2 = noteDto.visibilityOnlyForMe ?
+        'If you set the visibility to PUBLIC<br>Every user will able to see this note'
+        :
+        'If you set the visibility to PRIVATE<br>Only you will able to see this note';
+
+      this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm: boolean) => {
+        if (userConfirm) {
+          this.isPending = true;
+          this.noteService.changeVisibility(noteDto.id, !noteDto.visibilityOnlyForMe)
+            .subscribe({
+              next: () => {
+                this.isPending = false;
+              },
+              error: (response) => {
+                this.globalService.isExpiredToken(response);
+                this.isPending = false;
+              }
+            });
+        }
+      });
     }
   }
 
@@ -234,6 +262,20 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     } else {
       video.pause()
     }
+  }
+
+  private openWarnDialog(warningText1: string, warningText2: string): Observable<any> {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.panelClass = '';
+
+    dialogConfig.data = {
+      warningText1: warningText1,
+      warningText2: warningText2
+    }
+
+    let dialog = this.dialogRef.open(WarnDialogComponent, dialogConfig);
+    return dialog.afterClosed();
   }
 
   ngOnDestroy(): void {
