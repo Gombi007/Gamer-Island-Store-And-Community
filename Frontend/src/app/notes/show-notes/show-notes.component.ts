@@ -176,15 +176,22 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
 
   removeNote(noteDto: noteDto) {
     if (!this.isPending) {
-      this.isPending = true;
-      this.noteService.removeNote(noteDto.id).subscribe({
-        next: () => {
-          this.isPending = false;
-        },
-        error: (response) => {
-          console.log(response);
-          this.globalService.isExpiredToken(response);
-          this.isPending = false;
+      let warningText1 = 'Remove';
+      let warningText2 = 'Are you sure to remove this note?<br>This note will not be recoverable!'
+
+      this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm: boolean) => {
+        if (userConfirm) {
+          this.isPending = true;
+          this.noteService.removeNote(noteDto.id).subscribe({
+            next: () => {
+              this.isPending = false;
+            },
+            error: (response) => {
+              console.log(response);
+              this.globalService.isExpiredToken(response);
+              this.isPending = false;
+            }
+          });
         }
       });
     }
