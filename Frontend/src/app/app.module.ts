@@ -11,7 +11,7 @@ import { ShowNotesComponent } from './notes/show-notes/show-notes.component';
 import { CreateNotesComponent } from './notes/create-notes/create-notes.component';
 import { NavigationMobileNotesComponent } from './notes/navigation-mobile-notes/navigation-mobile-notes.component';
 import { NavigationDesktopNotesComponent } from './notes/navigation-desktop-notes/navigation-desktop-notes.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PendingComponent } from './pending/pending.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/navigation-profile/profile.component';
@@ -20,6 +20,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RxStompService } from './config/websocket/rx-stomp.service';
 import { rxStompServiceFactory } from './config/websocket/rx-stomp-service-factory';
 import { WarnDialogComponent } from './warn-dialog/warn-dialog.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 
@@ -36,7 +37,8 @@ import { WarnDialogComponent } from './warn-dialog/warn-dialog.component';
     ProfileComponent,
     EditProfileComponent,
     SafePipe,
-    WarnDialogComponent
+    WarnDialogComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +48,7 @@ import { WarnDialogComponent } from './warn-dialog/warn-dialog.component';
     LayoutModule,
     MaterialModule,
     ReactiveFormsModule,
+    FormsModule,
     InfiniteScrollModule
   ],
   providers: [

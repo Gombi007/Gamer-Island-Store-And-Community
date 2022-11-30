@@ -11,7 +11,7 @@
 .note {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    width: min(97%, 680px);
+    width: min(96%, 680px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,7 +41,7 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
-    padding-top: 0.3rem;
+    margin-top: 1rem;
 
 }
 
@@ -77,6 +77,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
 }
 
 .creator img {
@@ -108,7 +109,22 @@ video {
 
 }
 
+.show-hashtags {
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+}
 
+.hashtag {
+    width: fit-content;
+    background-color: var(--color-disabled);
+    margin: 0;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 600px) {
     .container {

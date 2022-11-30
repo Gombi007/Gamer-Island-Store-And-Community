@@ -61,13 +61,12 @@
         </div>
     </form>
 
-    <mat-chip-list>
-        <mat-chip *ngIf="errorResponse !==''" color="warn" selected>{{errorResponse}}</mat-chip>
-        <mat-chip *ngIf="registrationOk!==''" color="accent" selected>{{registrationOk}}</mat-chip>
-    </mat-chip-list>
+    <app-notification [text]="registrationOk" *ngIf="registrationOk.length>0"></app-notification>
+    <app-notification [text]="errorResponse" [isWarnNotification]="true" *ngIf="errorResponse.length>0">
+    </app-notification>
+    <app-notification [text]="expiredSession || ''" [isWarnNotification]="true"
+        *ngIf="expiredSession.length>0 && showLoginForm">
+    </app-notification>
 
-    <mat-chip-list>
-        <mat-chip *ngIf="expiredSession !==null && showLoginForm" color="warn" selected>{{expiredSession}}</mat-chip>
-    </mat-chip-list>
     <app-pending *ngIf="isPending"></app-pending>
 </div>

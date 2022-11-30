@@ -27,11 +27,6 @@
         </div>
     </form>
 
-    <mat-chip-list>
-        <mat-chip *ngIf="updateSuccess!==''" color="accent" selected>{{updateSuccess}}</mat-chip>
-        <mat-chip *ngIf="errorResponse !==''" color="warn" selected>{{errorResponse}}</mat-chip>
-    </mat-chip-list>
-
     <form [formGroup]="passChangeForm">
         <h3>Change your password</h3>
 
@@ -60,4 +55,6 @@
     </form>
     <div class="just-bottom-margin"></div>
 </div>
+<app-notification [text]="updateSuccess" *ngIf="updateSuccess.length>0"></app-notification>
+<app-notification [text]="errorResponse" [isWarnNotification]="true" *ngIf="errorResponse.length>0"></app-notification>
 <app-pending *ngIf="isPending"></app-pending>

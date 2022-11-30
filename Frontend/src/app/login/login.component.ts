@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   showLoginForm = true;
   errorResponse = '';
   registrationOk = '';
-  expiredSession: null | string = null;
+  expiredSession: string = '';
   isPending = false;
 
   constructor(private authService: AuthenticateService, private router: Router, private route: ActivatedRoute) {
@@ -26,7 +26,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.createLoginForm();
     this.createRegistrationForm();
-    this.expiredSession = this.route.snapshot.paramMap.get('expiredTokenMessage');
+    let expiredMessageOrNull = this.route.snapshot.paramMap.get('expiredTokenMessage');
+    expiredMessageOrNull !== null ? this.expiredSession = expiredMessageOrNull : '';
+
+    if (this.expiredSession.length > 0) {
+      this.removeErrorMessageFromUI();
+    }
   }
 
   createLoginForm() {
@@ -52,7 +57,11 @@ export class LoginComponent implements OnInit {
 
   removeErrorMessageFromUI() {
     timer(3000).subscribe(
-      () => this.errorResponse = ''
+      () => {
+        this.errorResponse = '';
+        this.registrationOk = '';
+        this.expiredSession = '';
+      }
     );
   }
 
@@ -75,6 +84,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('token', data.token);
           this.loginForm.reset();
           this.isPending = false;
+          this.removeErrorMessageFromUI();
           this.router.navigate(['']);
         },
         error: (response) => {

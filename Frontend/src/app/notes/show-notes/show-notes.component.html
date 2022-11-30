@@ -23,7 +23,7 @@
         <img *ngIf="note.imgUrl !== null && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
 
         <ng-container *ngIf="note.ytUrl !== null && note.ytUrl.length> 1">
-            <iframe [src]="note.ytUrl | safe"> </iframe>
+            <iframe [src]="note.ytUrl | safe" allowfullscreen> </iframe>
         </ng-container>
 
         <ng-container *ngIf="note.videoUrl !== null && note.videoUrl.length> 1">
@@ -33,6 +33,12 @@
         </ng-container>
 
         <p class="created">{{note.created}}</p>
+        <div class="show-hashtags">
+            <ng-container *ngFor="let hashtag of note.hashtags">
+                <p class="hashtag">#{{hashtag}}</p>
+            </ng-container>
+        </div>
+
         <div class="edit-row">
             <div class="control" (click)="removeNote(note)" *ngIf="note.creatorId ===currentUserId">
                 <mat-icon aria-hidden="false" fontIcon="delete_forever" color="accent"></mat-icon>

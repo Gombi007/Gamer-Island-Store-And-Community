@@ -111,12 +111,14 @@ public class NoteServiceImpl implements NoteService {
     }
 
     private String changeYoutubeUrlToEmbeddedMode(String ytUrl) {
-        String replaceThis = "watch?v=";
-        String replaceTo = "embed/";
-        if (ytUrl.contains(replaceThis)) {
-            ytUrl = ytUrl.replace(replaceThis, replaceTo);
+        String youtubeId = "";
+        String youtubeEmbedUrl = "https://www.youtube.com/embed/";
+        String resultYoutubeEmbedUrl = "";
+        if (ytUrl != null && ytUrl.length() >= 11) {
+            youtubeId = ytUrl.substring(ytUrl.length() - 11);
+            resultYoutubeEmbedUrl = youtubeEmbedUrl.concat(youtubeId);
         }
-        return ytUrl;
+        return resultYoutubeEmbedUrl;
 
     }
 
@@ -150,6 +152,7 @@ public class NoteServiceImpl implements NoteService {
             originalNote.setVisibilityOnlyForMe(noteDto.getVisibilityOnlyForMe());
             originalNote.setIsFavorite(noteDto.getIsFavorite());
             originalNote.setLastModified(Instant.now());
+            originalNote.setHashtags(noteDto.getHashtags());
 
             changeFavoriteState(noteDto.getIsFavorite(), noteId, userId);
             Note modifiedNote = noteRepository.save(originalNote);

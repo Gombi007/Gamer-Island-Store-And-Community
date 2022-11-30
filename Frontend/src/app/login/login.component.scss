@@ -1,27 +1,28 @@
 .container {
-    margin: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 .logo {
-    padding: 0;
-    margin: 0;
+    display: block;
+    margin: 0 auto;
     width: min(30%, 80px);
+    margin-top: 20px;
 }
 
 form {
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
     box-shadow: 0 0 6px 5px var(--content-shadow-color);
-    padding: 1rem;
-    margin: 0.5rem;
-    width: min(97%, 450px);
     border-radius: 0.5rem;
+    width: min(88%, 450px);
+    padding: 1rem;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 mat-form-field {
@@ -54,6 +55,16 @@ p {
     justify-content: center;
 }
 
-mat-chip-list {
-    padding-top: 0.5rem;
+@media only screen and (max-width: 600px) {
+    .container {
+        -ms-overflow-style: none;
+        /* Internet Explorer 10+ */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .container::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
+    }
 }

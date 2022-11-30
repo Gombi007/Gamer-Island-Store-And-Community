@@ -22,6 +22,7 @@ $my-theme-dark: mat.define-dark-theme((color: (primary: $primary,
   --color-warn: #{mat.get-color-from-palette($warn)};
   --color-success: #{mat.get-color-from-palette($success)};
   --color-disabled: #{mat.get-color-from-palette($disabled)};
+  --color-bright: rgb(238, 238, 238);
 
   //background setup
   --bg-color: rgb(31, 30, 30);
