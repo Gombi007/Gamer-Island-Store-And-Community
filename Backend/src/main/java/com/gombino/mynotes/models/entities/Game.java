@@ -33,8 +33,8 @@ public class Game {
     private Double price;
     private List<String> platforms;
     private List<String> genres;
-    private Map<String, Object>[] screenshots;
-    private Map<String, Object>[] movies;
+    private List<Map<String, Object>> screenshots;
+    private List<Map<String, Object>> movies;
     private Map<String, Object> releaseDate;
     private String background;
     private String backgroundRaw;
