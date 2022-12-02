@@ -19,6 +19,7 @@ public class Game {
     @Id
     private String id;
     private Long steamAppId;
+    private String type;
     private String name;
     private String requiredAge;
     private Boolean isFree;
