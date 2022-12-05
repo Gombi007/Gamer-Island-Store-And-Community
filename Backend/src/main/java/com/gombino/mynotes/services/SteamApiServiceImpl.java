@@ -35,6 +35,8 @@ public class SteamApiServiceImpl implements SteamApiService {
 
     private final GameRepository gameRepository;
 
+    private Boolean isTooManyRequest = false;
+
     @Override
     public void saveAllSteamProductsInTheDB() {
         RestTemplate template = new RestTemplate();
@@ -62,7 +64,9 @@ public class SteamApiServiceImpl implements SteamApiService {
 
     @Override
     public List<String> getSteamGames(Integer page, Integer size) {
+        isTooManyRequest = false;
         List<String> savedGames = new ArrayList<>();
+        List<SteamProduct> removeCheckedGames = new ArrayList<>();
 
         Pageable paging = PageRequest.of(page, size);
         Page<SteamProduct> steamProductPage = steamProductRepository.findAll(paging);
@@ -74,8 +78,13 @@ public class SteamApiServiceImpl implements SteamApiService {
                 Game savedGame = gameRepository.save(game);
                 savedGames.add(savedGame.getName());
             }
+            if (!isTooManyRequest) {
+                removeCheckedGames.add(steamProduct);
+            } else {
+                break;
+            }
         }
-        steamProductRepository.deleteAll(steamProductPage);
+        steamProductRepository.deleteAll(removeCheckedGames);
         savedGames.add(0, "SAVED: " + savedGames.size() + " GAMES");
         return savedGames;
     }
@@ -101,9 +110,17 @@ public class SteamApiServiceImpl implements SteamApiService {
             }
 
         } catch (Exception exception) {
-            //logging only success game errors
-            if (exception.getMessage() != null) {
-                log.error("Error during the get success game method {}", exception.getMessage());
+            if (!(exception instanceof NullPointerException)) {
+
+                //logging only success game errors
+                if (exception.getMessage() != null) {
+                    log.error("Error during the get success game method {}", exception.getMessage());
+                }
+
+                // if steam api throw down the connection, set a break variable
+                if (exception.getMessage().contains("429 Too Many Requests:")) {
+                    isTooManyRequest = true;
+                }
             }
         }
         return null;
