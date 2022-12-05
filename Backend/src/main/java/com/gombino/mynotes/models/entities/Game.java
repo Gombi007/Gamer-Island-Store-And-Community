@@ -21,7 +21,7 @@ public class Game {
     private Long steamAppId;
     private String type;
     private String name;
-    private String requiredAge;
+    private Integer requiredAge;
     private Boolean isFree;
     private String detailedDescription;
     private String aboutTheGame;
@@ -31,14 +31,15 @@ public class Game {
     private String website;
     private List<String> developers;
     private List<String> publishers;
-    private Double price;
     private List<String> platforms;
     private List<String> genres;
-    private List<Map<String, Object>> screenshots;
-    private List<Map<String, Object>> movies;
+    private List<String> screenshots;
+    private List<String> movies;
     private Map<String, Object> releaseDate;
+    private Double price;
     private String background;
     private String backgroundRaw;
+    private Boolean isAdult;
     private List<String> users;
     private List<String> wishlistUsers;
 }
