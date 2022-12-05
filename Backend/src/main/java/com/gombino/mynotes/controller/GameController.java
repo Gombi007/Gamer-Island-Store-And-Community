@@ -1,7 +1,6 @@
 package com.gombino.mynotes.controller;
 
 import com.gombino.mynotes.services.GameService;
-import com.gombino.mynotes.services.SteamApiService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "GameController", description = "Manages games")
 public class GameController {
     private final GameService gameService;
-    private final SteamApiService steamApiService;
 
     @Operation(description = "List all games")
     @GetMapping
