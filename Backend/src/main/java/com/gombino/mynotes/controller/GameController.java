@@ -26,7 +26,6 @@ public class GameController {
     @GetMapping
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> getAllGame() {
-        steamApiService.saveAllSteamProductsInTheDB();
         return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGame());
     }
 
