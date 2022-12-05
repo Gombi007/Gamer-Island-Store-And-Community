@@ -1,6 +1,7 @@
 package com.gombino.mynotes;
 
 import com.gombino.mynotes.models.entities.Role;
+import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -50,6 +51,11 @@ public class MyNotesApplication {
             if (userService.getRoles().isEmpty()) {
                 userService.saveRole(new Role(null, "ROLE_USER"));
                 userService.saveRole(new Role(null, "ROLE_ADMIN"));
+            }
+            User user = userService.getUser("admin");
+            if (user != null && user.getRoles().isEmpty()) {
+                userService.addRoleToUser("admin", "ROLE_USER");
+                userService.addRoleToUser("admin", "ROLE_ADMIN");
             }
         };
     }
