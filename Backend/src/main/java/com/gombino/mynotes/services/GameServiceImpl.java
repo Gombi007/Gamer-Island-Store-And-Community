@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Map<String, Object> findAllGame() {
-        Pageable paging = PageRequest.of(0, 5);
+        Pageable paging = PageRequest.of(0, 600, Sort.by("name").ascending());
         Page<Game> gamePage = gameRepository.findAll(paging);
         List<Game> gameList = new ArrayList<>();
         for (Game game : gamePage) {
