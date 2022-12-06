@@ -31,10 +31,24 @@ public class GameController {
     }
 
     @Operation(description = "Get game by ID")
-    @GetMapping("/{gameId}")
+    @GetMapping("/game/{gameId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> getGameById(@PathVariable String gameId) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.findGameById(gameId));
+    }
+
+    @Operation(description = "Check the user is own or wishlisted this game")
+    @GetMapping("/check-wishlist-or-owner/{gameId}/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> isUserOwnOrWishlistedGame(@PathVariable String gameId, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.isUserOwnOrWishlistedGame(gameId, userId));
+    }
+
+    @Operation(description = "Add a gem to user wishlist")
+    @GetMapping("/add-to-wishlist/{gameId}/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> addGameToUserWishlist(@PathVariable String gameId, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.addGameToUserWishlist(gameId, userId));
     }
 
 
