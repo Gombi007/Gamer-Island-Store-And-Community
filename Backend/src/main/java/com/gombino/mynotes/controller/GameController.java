@@ -44,11 +44,18 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.isUserOwnOrWishlistedGame(gameId, userId));
     }
 
-    @Operation(description = "Add a gem to user wishlist")
+    @Operation(description = "Add a game to user wishlist")
     @GetMapping("/add-to-wishlist/{gameId}/{userId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> addGameToUserWishlist(@PathVariable String gameId, @PathVariable String userId) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.addGameToUserWishlist(gameId, userId));
+    }
+
+    @Operation(description = "Remove a game from user wishlist")
+    @DeleteMapping("/remove-from-wishlist/{gameId}/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> removeGameFromUserWishlist(@PathVariable String gameId, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.removeGameFromUserWishlist(gameId, userId));
     }
 
 

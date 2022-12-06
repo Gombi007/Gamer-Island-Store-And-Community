@@ -14,4 +14,6 @@ public interface GameService {
     Map<String, Boolean> isUserOwnOrWishlistedGame(String gameId, String userId);
 
     String addGameToUserWishlist(String gameId, String userId);
+
+    String removeGameFromUserWishlist(String gameId, String userId);
 }

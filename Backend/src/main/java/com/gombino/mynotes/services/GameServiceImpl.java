@@ -75,6 +75,21 @@ public class GameServiceImpl implements GameService {
         return "'" + game.getName() + "'" + " is already on your wishlist";
     }
 
+    @Override
+    public String removeGameFromUserWishlist(String gameId, String userId) {
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
+        User user = userService.getUserById(userId);
+        Boolean isOnWishlist = game.getWishlistUsers().contains(user.getId());
+        if (isOnWishlist) {
+            game.getWishlistUsers().remove(user.getId());
+            user.getWishlistGames().remove(game.getId());
+            gameRepository.save(game);
+            userService.updateUser(user);
+            return "'" + game.getName() + "'" + " was removed from your wishlist";
+        }
+        return "'" + game.getName() + "'" + " is not on your wishlist";
+    }
+
     private GameDto convertToGameDto(Game game) {
         return modelMapper.map(game, GameDto.class);
     }
