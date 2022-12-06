@@ -9,5 +9,9 @@ public interface GameService {
 
     Map<String, Object> findAllGame(PaginationSorterDto paginationSorterDto);
 
-    GameDto findGameById(String id);
+    GameDto findGameById(String gameId);
+
+    Map<String, Boolean> isUserOwnOrWishlistedGame(String gameId, String userId);
+
+    String addGameToUserWishlist(String gameId, String userId);
 }

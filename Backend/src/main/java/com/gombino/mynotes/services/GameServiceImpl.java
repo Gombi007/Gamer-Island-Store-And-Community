@@ -4,6 +4,7 @@ import com.gombino.mynotes.models.dto.GameDto;
 import com.gombino.mynotes.models.dto.PaginationInfo;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.models.entities.Game;
+import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.repositories.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ import java.util.*;
 @Transactional
 public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
     @Override
@@ -41,9 +43,36 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameDto findGameById(String id) {
-        Game game = gameRepository.findById(id).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
+    public GameDto findGameById(String gameId) {
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
         return convertToGameDto(game);
+    }
+
+    @Override
+    public Map<String, Boolean> isUserOwnOrWishlistedGame(String gameId, String userId) {
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
+        User user = userService.getUserById(userId);
+        Boolean isOwner = game.getUsers().contains(user.getId());
+        Boolean isOnWishlist = game.getWishlistUsers().contains(user.getId());
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("owner", isOwner);
+        result.put("wishlist", isOnWishlist);
+        return result;
+    }
+
+    @Override
+    public String addGameToUserWishlist(String gameId, String userId) {
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
+        User user = userService.getUserById(userId);
+        Boolean isOnWishlist = game.getWishlistUsers().contains(user.getId());
+        if (!isOnWishlist) {
+            game.getWishlistUsers().add(user.getId());
+            user.getWishlistGames().add(game.getId());
+            gameRepository.save(game);
+            userService.updateUser(user);
+            return "'" + game.getName() + "'" + " was added to your wishlist";
+        }
+        return "'" + game.getName() + "'" + " is already on your wishlist";
     }
 
     private GameDto convertToGameDto(Game game) {
