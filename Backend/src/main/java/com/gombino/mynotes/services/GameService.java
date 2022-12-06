@@ -3,6 +3,7 @@ package com.gombino.mynotes.services;
 import com.gombino.mynotes.models.dto.GameDto;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 
+import java.util.List;
 import java.util.Map;
 
 public interface GameService {
@@ -16,4 +17,8 @@ public interface GameService {
     String addGameToUserWishlist(String gameId, String userId);
 
     String removeGameFromUserWishlist(String gameId, String userId);
+
+    String purchaseGames(List<String> gameIds, String userId);
+
+
 }

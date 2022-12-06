@@ -90,6 +90,41 @@ public class GameServiceImpl implements GameService {
         return "'" + game.getName() + "'" + " is not on your wishlist";
     }
 
+    @Override
+    public String purchaseGames(List<String> gameIds, String userId) {
+        User user = userService.getUserById(userId);
+        Set<Game> gameList = new HashSet<>();
+        Double priceOfAllGames = 0.0;
+
+        for (String id : gameIds) {
+            Game game = gameRepository.findById(id).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
+            if (!user.getOwnedGames().contains(game.getId())) {
+                gameList.add(game);
+                priceOfAllGames += game.getPrice();
+            }
+        }
+
+        if (user.getBalance() < priceOfAllGames) {
+            return "Sorry, Not enough money to purchase";
+        }
+
+        if (gameList.size() == 0) {
+            return "You already own all games from cart";
+        }
+
+        if (user.getBalance() >= priceOfAllGames) {
+            for (Game game : gameList) {
+                user.getOwnedGames().add(game.getId());
+                game.getUsers().add(user.getId());
+                gameRepository.save(game);
+                user.setBalance(user.getBalance() - game.getPrice());
+                userService.updateUser(user);
+            }
+            return "Your purchase was successful, Thanks for the purchase";
+        }
+        return null;
+    }
+
     private GameDto convertToGameDto(Game game) {
         return modelMapper.map(game, GameDto.class);
     }

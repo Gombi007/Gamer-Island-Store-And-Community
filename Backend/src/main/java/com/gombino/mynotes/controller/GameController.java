@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/games")
 @Slf4j
@@ -58,5 +60,11 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.removeGameFromUserWishlist(gameId, userId));
     }
 
+    @Operation(description = "Purchase a game")
+    @GetMapping("/purchase-games/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> purchaseGames(@RequestBody List<String> gameIds, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.purchaseGames(gameIds, userId));
+    }
 
 }
