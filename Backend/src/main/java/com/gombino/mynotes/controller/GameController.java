@@ -1,5 +1,6 @@
 package com.gombino.mynotes.controller;
 
+import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.services.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/games")
@@ -23,9 +24,54 @@ public class GameController {
     @Operation(description = "List all games")
     @GetMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> getAllGame() {
-        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGame());
+    public ResponseEntity<Object> getAllGame(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "1") int size,
+            @RequestParam(name = "sortBy", defaultValue = "") String sortBy) {
+        PaginationSorterDto paginationSorterDto = new PaginationSorterDto(page, size, sortBy);
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGame(paginationSorterDto));
     }
 
+    @Operation(description = "Get game by ID")
+    @GetMapping("/game/{gameId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> getGameById(@PathVariable String gameId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.findGameById(gameId));
+    }
+
+    @Operation(description = "Check the user is own or wishlisted this game")
+    @GetMapping("/check-wishlist-or-owner/{gameId}/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> isUserOwnOrWishlistedGame(@PathVariable String gameId, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.isUserOwnOrWishlistedGame(gameId, userId));
+    }
+
+    @Operation(description = "Add a game to user wishlist")
+    @GetMapping("/add-to-wishlist/{gameId}/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> addGameToUserWishlist(@PathVariable String gameId, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.addGameToUserWishlist(gameId, userId));
+    }
+
+    @Operation(description = "Remove a game from user wishlist")
+    @DeleteMapping("/remove-from-wishlist/{gameId}/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> removeGameFromUserWishlist(@PathVariable String gameId, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.removeGameFromUserWishlist(gameId, userId));
+    }
+
+    @Operation(description = "Purchase a game")
+    @GetMapping("/purchase-games/{userId}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> purchaseGames(@RequestBody List<String> gameIds, @PathVariable String userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.purchaseGames(gameIds, userId));
+    }
+
+    @Operation(description = "Remove a game from the DB")
+    @DeleteMapping("/remove-game/{gameId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> removeGameFromDbById(@PathVariable String gameId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.removeGameFromDbById(gameId));
+    }
 
 }

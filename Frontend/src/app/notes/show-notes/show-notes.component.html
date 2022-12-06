@@ -17,16 +17,16 @@
         </div>
         <h3 class="title">{{note.title}}</h3>
         <p class="note-text">{{note.text}}</p>
-        <a class="link" href="{{note.link}}" target="_blank" *ngIf="note.link !== null && note.link.length> 1">
+        <a class="link" href="{{note.link}}" target="_blank" *ngIf="note.link !== undefined && note.link.length> 1">
             Check It</a>
 
-        <img *ngIf="note.imgUrl !== null && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
+        <img *ngIf="note.imgUrl !== undefined && note.imgUrl.length> 1" src="{{note.imgUrl}}" alt="pic">
 
-        <ng-container *ngIf="note.ytUrl !== null && note.ytUrl.length> 1">
+        <ng-container *ngIf="note.ytUrl !== undefined && note.ytUrl.length> 1">
             <iframe [src]="note.ytUrl | safe" allowfullscreen> </iframe>
         </ng-container>
 
-        <ng-container *ngIf="note.videoUrl !== null && note.videoUrl.length> 1">
+        <ng-container *ngIf="note.videoUrl !== undefined && note.videoUrl.length> 1">
             <video controls preload="none" src="{{note.videoUrl}}" poster="{{note.videoPosterUrl}}"
                 (click)="playVideo($event)">
             </video>
