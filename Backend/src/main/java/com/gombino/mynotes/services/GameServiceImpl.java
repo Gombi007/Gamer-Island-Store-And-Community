@@ -15,10 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -41,6 +38,12 @@ public class GameServiceImpl implements GameService {
         map.put("page", gameList);
         map.put("paginationInfo", paginationInfo);
         return map;
+    }
+
+    @Override
+    public GameDto findGameById(String id) {
+        Game game = gameRepository.findById(id).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
+        return convertToGameDto(game);
     }
 
     private GameDto convertToGameDto(Game game) {
