@@ -28,4 +28,7 @@ public class User {
     private List<Role> roles;
     private List<String> noteIds;
     private List<String> favoriteNotesIds;
+    private List<String> wishlistGames;
+    private List<String> ownedGames;
+    private Double balance;
 }

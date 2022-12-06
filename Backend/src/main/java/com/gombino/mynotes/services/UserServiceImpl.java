@@ -73,9 +73,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         newUser.setFavoriteNotesIds(new ArrayList<>());
         newUser.setNoteIds(new ArrayList<>());
         newUser.setRoles(new ArrayList<>());
+        newUser.setWishlistGames(new ArrayList<>());
+        newUser.setOwnedGames(new ArrayList<>());
         Role role = roleRepository.findRoleByRoleName("ROLE_USER").get();
         log.warn("Add basic role {} to the new user {} to the DB", role.getRoleName(), newUser.getUsername());
         newUser.getRoles().add(role);
+        newUser.setBalance(500.0);
         return userRepository.save(newUser);
     }
 
