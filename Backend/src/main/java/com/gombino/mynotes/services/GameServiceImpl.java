@@ -1,5 +1,7 @@
 package com.gombino.mynotes.services;
 
+import com.gombino.mynotes.models.dto.PaginationInfo;
+import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.models.entities.Game;
 import com.gombino.mynotes.repositories.GameRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,15 +26,17 @@ public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
 
     @Override
-    public Map<String, Object> findAllGame() {
-        Pageable paging = PageRequest.of(0, 600, Sort.by("name").ascending());
+    public Map<String, Object> findAllGame(PaginationSorterDto paginationSorterDto) {
+        Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).ascending());
         Page<Game> gamePage = gameRepository.findAll(paging);
         List<Game> gameList = new ArrayList<>();
         for (Game game : gamePage) {
             gameList.add(game);
         }
+        PaginationInfo paginationInfo = new PaginationInfo(gamePage.getNumber(), gamePage.getTotalPages(), gamePage.getTotalElements());
         Map<String, Object> map = new HashMap<>();
-        map.put("result", gameList);
+        map.put("page", gameList);
+        map.put("paginationInfo", paginationInfo);
         return map;
     }
 }
