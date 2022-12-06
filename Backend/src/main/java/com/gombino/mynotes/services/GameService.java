@@ -20,5 +20,7 @@ public interface GameService {
 
     String purchaseGames(List<String> gameIds, String userId);
 
+    String removeGameFromDbById(String gameId);
+
 
 }

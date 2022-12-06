@@ -65,14 +65,21 @@ public class GameServiceImpl implements GameService {
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
         User user = userService.getUserById(userId);
         Boolean isOnWishlist = game.getWishlistUsers().contains(user.getId());
-        if (!isOnWishlist) {
+        Boolean isOwner = game.getUsers().contains(user.getId());
+        if (!isOnWishlist && !isOwner) {
             game.getWishlistUsers().add(user.getId());
             user.getWishlistGames().add(game.getId());
             gameRepository.save(game);
             userService.updateUser(user);
             return "'" + game.getName() + "'" + " was added to your wishlist";
         }
-        return "'" + game.getName() + "'" + " is already on your wishlist";
+        if (isOnWishlist) {
+            return "'" + game.getName() + "'" + " is already on your wishlist";
+        }
+        if (isOwner) {
+            return "'" + game.getName() + "'" + " is already owned";
+        }
+        return null;
     }
 
     @Override
@@ -116,13 +123,37 @@ public class GameServiceImpl implements GameService {
             for (Game game : gameList) {
                 user.getOwnedGames().add(game.getId());
                 game.getUsers().add(user.getId());
+                game.getWishlistUsers().remove(user.getId());
                 gameRepository.save(game);
                 user.setBalance(user.getBalance() - game.getPrice());
+                user.getWishlistGames().remove(game.getId());
                 userService.updateUser(user);
             }
             return "Your purchase was successful, Thanks for the purchase";
         }
         return null;
+    }
+
+    @Override
+    public String removeGameFromDbById(String gameId) {
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
+        List<String> wishlistUsers = game.getWishlistUsers();
+        List<String> ownerUsers = game.getUsers();
+
+        for (String userId : wishlistUsers) {
+            User user = userService.getUserById(userId);
+            user.getWishlistGames().remove(game.getId());
+            userService.updateUser(user);
+        }
+
+        for (String userId : ownerUsers) {
+            User user = userService.getUserById(userId);
+            user.getOwnedGames().remove(game.getId());
+            userService.updateUser(user);
+        }
+        gameRepository.delete(game);
+
+        return "Game was removed";
     }
 
     private GameDto convertToGameDto(Game game) {

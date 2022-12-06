@@ -67,4 +67,11 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.purchaseGames(gameIds, userId));
     }
 
+    @Operation(description = "Remove a game from the DB")
+    @DeleteMapping("/remove-game/{gameId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> removeGameFromDbById(@PathVariable String gameId) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.removeGameFromDbById(gameId));
+    }
+
 }
