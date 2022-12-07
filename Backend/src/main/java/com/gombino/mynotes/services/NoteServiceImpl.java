@@ -191,6 +191,8 @@ public class NoteServiceImpl implements NoteService {
         if (user.getId().equals(originalNote.getCreatorId())) {
             originalNote.setVisibilityOnlyForMe(visibility);
             noteRepository.save(originalNote);
+        }else {
+            throw new PermissionDeniedException("You can modify just your own notes");
         }
         // send a message to frontend, update the note list due to the list was modified
         Map<String, String> messageToFrontend = new HashMap<>();
