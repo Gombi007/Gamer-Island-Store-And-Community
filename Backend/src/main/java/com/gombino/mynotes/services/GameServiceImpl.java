@@ -1,6 +1,7 @@
 package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.models.dto.GameDto;
+import com.gombino.mynotes.models.dto.GameSearchDto;
 import com.gombino.mynotes.models.dto.PaginationInfo;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.models.entities.Game;
@@ -31,13 +32,58 @@ public class GameServiceImpl implements GameService {
     public Map<String, Object> findAllGame(PaginationSorterDto paginationSorterDto) {
         Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).ascending());
         Page<Game> gamePage = gameRepository.findAll(paging);
-        List<GameDto> gameList = new ArrayList<>();
+        return getGameListAndPaginationInfo(gamePage);
+    }
+
+    public Map<String, Object> findAllGameWithFilter(PaginationSorterDto sorterDto, GameSearchDto gameSearchDto) {
+
+        // Sort by field (getSortByField) and sort desc or asc (getSortByDescOrAsc)
+        // Default sorting if something missing from the gameSearchDto
+        Sort sort = Sort.by("name").ascending();
+        if (gameSearchDto.getIsAscending()) {
+            sort = Sort.by(gameSearchDto.getSortByField()).ascending();
+        }
+
+        if (!gameSearchDto.getIsAscending()) {
+            sort = Sort.by(gameSearchDto.getSortByField()).descending();
+        }
+
+        Pageable paging = PageRequest.of(sorterDto.getPage(), sorterDto.getSize(), sort);
+
+        // Filters
+        // Show only free games
+        if (gameSearchDto.getPrice() == 0) {
+            return getGameListAndPaginationInfo(gameRepository.findAllisFree(paging));
+        }
+        // Show games max to 70 euro and  not includes free games
+        if (gameSearchDto.getPrice() > 0 && gameSearchDto.getPrice() <= 70 && gameSearchDto.getIsHideFreeGames()) {
+            return getGameListAndPaginationInfo(gameRepository.findAllByPriceWithoutFree(gameSearchDto.getPrice(), paging));
+        }
+
+        // Show games max to 70 euro and includes free games
+        if (gameSearchDto.getPrice() > 0 && gameSearchDto.getPrice() <= 70 && !gameSearchDto.getIsHideFreeGames()) {
+            return getGameListAndPaginationInfo(gameRepository.findAllByPriceOrFree(gameSearchDto.getPrice(), paging));
+        }
+
+        return null;
+    }
+
+    private Map<String, Object> getGameListAndPaginationInfo(Page<Game> gamePage) {
+        List<Map<String, Object>> resultGameList = new ArrayList<>();
         for (Game game : gamePage) {
-            gameList.add(convertToGameDto(game));
+            //resultGameList.add(convertToGameDto(game));
+
+            Map<String, Object> test = new HashMap<>();
+            test.put("name", game.getName());
+            test.put("isFree", game.getIsFree());
+            test.put("price", game.getPrice());
+            test.put("languages", game.getSupportedLanguages());
+
+            resultGameList.add(test);
         }
         PaginationInfo paginationInfo = new PaginationInfo(gamePage.getNumber(), gamePage.getTotalPages(), gamePage.getTotalElements());
         Map<String, Object> map = new HashMap<>();
-        map.put("page", gameList);
+        map.put("page", resultGameList);
         map.put("paginationInfo", paginationInfo);
         return map;
     }
