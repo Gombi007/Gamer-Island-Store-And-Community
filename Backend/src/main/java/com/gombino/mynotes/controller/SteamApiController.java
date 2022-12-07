@@ -4,7 +4,6 @@ import com.gombino.mynotes.services.SteamApiService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/steam")
-@Slf4j
 @RequiredArgsConstructor
 @Tag(name = "Steam API controller", description = "Manages steam api and save game in the DB")
 public class SteamApiController {

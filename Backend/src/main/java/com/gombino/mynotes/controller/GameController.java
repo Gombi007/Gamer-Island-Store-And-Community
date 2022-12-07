@@ -5,7 +5,6 @@ import com.gombino.mynotes.services.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/games")
-@Slf4j
 @RequiredArgsConstructor
 @Tag(name = "GameController", description = "Manages games")
 public class GameController {
@@ -47,7 +45,7 @@ public class GameController {
     }
 
     @Operation(description = "Add a game to user wishlist")
-    @GetMapping("/add-to-wishlist/{gameId}/{userId}")
+    @PostMapping("/add-to-wishlist/{gameId}/{userId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> addGameToUserWishlist(@PathVariable String gameId, @PathVariable String userId) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.addGameToUserWishlist(gameId, userId));
@@ -61,7 +59,7 @@ public class GameController {
     }
 
     @Operation(description = "Purchase a game")
-    @GetMapping("/purchase-games/{userId}")
+    @PostMapping("/purchase-games/{userId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> purchaseGames(@RequestBody List<String> gameIds, @PathVariable String userId) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.purchaseGames(gameIds, userId));
