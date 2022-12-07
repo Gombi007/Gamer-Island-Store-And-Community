@@ -9,7 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/steam")
@@ -29,8 +32,18 @@ public class SteamApiController {
     @Operation(description = "Save games in the DB")
     @GetMapping("save-games")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Object> saveGames() {
-        return ResponseEntity.status(HttpStatus.OK).body(steamApiService.getSteamGames(0, 50));
+    public ResponseEntity<Object> saveGames(
+            @RequestParam(required = false, defaultValue = "0") String page,
+            @RequestParam(required = false, defaultValue = "50") String size) {
+        Integer pageInt = 0;
+        Integer sizeInt = 0;
+        try {
+            pageInt = Integer.parseInt(page);
+            sizeInt = Integer.parseInt(size);
+        } catch (NumberFormatException exception) {
+            throw new NoSuchElementException("Please add a page and a size params in number format");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(steamApiService.getSteamGames(pageInt, sizeInt));
     }
 
 
