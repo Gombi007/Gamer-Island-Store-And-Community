@@ -1,5 +1,6 @@
 package com.gombino.mynotes.controller;
 
+import com.gombino.mynotes.models.dto.GameSearchDto;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.services.GameService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +29,18 @@ public class GameController {
             @RequestParam(name = "sortBy", defaultValue = "") String sortBy) {
         PaginationSorterDto paginationSorterDto = new PaginationSorterDto(page, size, sortBy);
         return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGame(paginationSorterDto));
+    }
+
+    @Operation(description = "List all games with filter")
+    @PostMapping
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> getAllGameWithFilter(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "1") int size,
+            @RequestParam(name = "sortBy", defaultValue = "") String sortBy,
+            @RequestBody GameSearchDto gameSearchDto) {
+        PaginationSorterDto paginationSorterDto = new PaginationSorterDto(page, size, sortBy);
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGameWithFilter(paginationSorterDto, gameSearchDto));
     }
 
     @Operation(description = "Get game by ID")
