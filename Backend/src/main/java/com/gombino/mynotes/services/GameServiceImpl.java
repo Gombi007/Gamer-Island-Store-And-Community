@@ -55,32 +55,57 @@ public class GameServiceImpl implements GameService {
         }
 
         //Queries by user selected options
-        Query query = new Query();
-        Criteria criteria = new Criteria();
-        List<Criteria> languagesCriteriaList = new ArrayList<>();
+        List<Criteria> criteriaList = new ArrayList<>();
+        Criteria aggregatedCriteria = new Criteria();
 
-        if (gameSearchDto.getLanguages().size() > 0) {
+        List<Criteria> languagesCriteriaList = new ArrayList<>();
+        if (!gameSearchDto.getLanguages().isEmpty()) {
             for (String language : gameSearchDto.getLanguages()) {
                 languagesCriteriaList.add(Criteria.where("supportedLanguages").regex("\\b.*" + language + ".*\\b", "i"));
             }
-            criteria = criteria.orOperator(languagesCriteriaList);
+            Criteria languagesCriteria = new Criteria().orOperator(languagesCriteriaList);
+            criteriaList.add(languagesCriteria);
         }
 
+        List<Criteria> genresCriteriaList = new ArrayList<>();
+        if (!gameSearchDto.getGenres().isEmpty()) {
+            for (String genre : gameSearchDto.getGenres()) {
+                genresCriteriaList.add(Criteria.where("genres").regex("\\b.*" + genre + ".*\\b", "i"));
+            }
+            Criteria genresCriteria = new Criteria().orOperator(genresCriteriaList);
+            criteriaList.add(genresCriteria);
+        }
+
+        List<Criteria> opSystemsCriteriaList = new ArrayList<>();
+        if (!gameSearchDto.getOpSystems().isEmpty()) {
+            for (String platform : gameSearchDto.getOpSystems()) {
+                opSystemsCriteriaList.add(Criteria.where("platforms").regex("\\b.*" + platform + ".*\\b", "i"));
+            }
+            Criteria opSystemsCriteria = new Criteria().orOperator(opSystemsCriteriaList);
+            criteriaList.add(opSystemsCriteria);
+        }
+
+        if (!criteriaList.isEmpty()) {
+            aggregatedCriteria.andOperator(criteriaList);
+        }
+
+
         if (gameSearchDto.getIsHideFreeGames()) {
-            criteria = criteria.and("isFree").is(false);
+            aggregatedCriteria = aggregatedCriteria.and("isFree").is(false);
         }
 
         if (gameSearchDto.getPrice() == 0) {
-            criteria = criteria.and("price").is(0);
+            aggregatedCriteria = aggregatedCriteria.and("price").is(0);
         }
 
         if (gameSearchDto.getPrice() > 0 && gameSearchDto.getPrice() <= 70) {
-            criteria = criteria.and("price").lt(gameSearchDto.getPrice());
+            aggregatedCriteria = aggregatedCriteria.and("price").lt(gameSearchDto.getPrice());
         }
 
         //Create the query
+        Query query = new Query();
         Pageable paging = PageRequest.of(page, size, Sort.by(order));
-        query.addCriteria(criteria).with(paging);
+        query.addCriteria(aggregatedCriteria).with(paging);
 
         List<Game> gameList = mongoTemplate.find(query, Game.class, "games");
         Page<Game> gamePage = PageableExecutionUtils.getPage(
@@ -100,6 +125,8 @@ public class GameServiceImpl implements GameService {
             test.put("isFree", game.getIsFree());
             test.put("price", game.getPrice());
             test.put("genres", game.getGenres());
+            test.put("languages", game.getSupportedLanguages());
+            test.put("platform", game.getPlatforms());
 
             resultGameList.add(test);
         }
