@@ -197,9 +197,14 @@ public class SteamApiServiceImpl implements SteamApiService {
 
         try {
             String supportedLanguages = gameObject.getAsJsonPrimitive("supported_languages").getAsString();
-            game.setSupportedLanguages(supportedLanguages);
+            String[] languagesArray = supportedLanguages.split(",");
+            List<String> supportedLanguagesList = new ArrayList<>();
+            for (String s : languagesArray) {
+                supportedLanguagesList.add(s.trim());
+            }
+            game.setSupportedLanguages(supportedLanguagesList);
         } catch (Exception exception) {
-            game.setSupportedLanguages("");
+            game.setSupportedLanguages(new ArrayList<>());
             log.error("Error during convert ID:{} game field SUPPORTED LANGUAGES{}", steamAppId, exception.getMessage());
         }
         try {
