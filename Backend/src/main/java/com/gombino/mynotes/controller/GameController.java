@@ -37,10 +37,8 @@ public class GameController {
     public ResponseEntity<Object> getAllGameWithFilter(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "1") int size,
-            @RequestParam(name = "sortBy", defaultValue = "") String sortBy,
             @RequestBody GameSearchDto gameSearchDto) {
-        PaginationSorterDto paginationSorterDto = new PaginationSorterDto(page, size, sortBy);
-        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGameWithFilter(paginationSorterDto, gameSearchDto));
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGameWithFilter(page, size, gameSearchDto));
     }
 
     @Operation(description = "Get game by ID")
