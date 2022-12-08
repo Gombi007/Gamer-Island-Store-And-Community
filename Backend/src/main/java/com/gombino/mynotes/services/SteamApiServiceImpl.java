@@ -223,6 +223,42 @@ public class SteamApiServiceImpl implements SteamApiService {
         }
 
         try {
+            JsonObject pcRequirements = gameObject.getAsJsonObject("pc_requirements");
+            String minimum = pcRequirements.get("minimum").getAsString();
+            String recommended = pcRequirements.get("recommended").getAsString();
+            Map<String, String> pcReqMap = new HashMap<>();
+            pcReqMap.put("minimum", minimum);
+            pcReqMap.put("recommended", recommended);
+            game.setPcRequirements(pcReqMap);
+        } catch (Exception exception) {
+            game.setPcRequirements(new HashMap<>());
+        }
+
+        try {
+            JsonObject macRequirements = gameObject.getAsJsonObject("mac_requirements");
+            String minimum = macRequirements.get("minimum").getAsString();
+            String recommended = macRequirements.get("recommended").getAsString();
+            Map<String, String> macReqMap = new HashMap<>();
+            macReqMap.put("minimum", minimum);
+            macReqMap.put("recommended", recommended);
+            game.setMacRequirements(macReqMap);
+        } catch (Exception exception) {
+            game.setMacRequirements(new HashMap<>());
+        }
+
+        try {
+            JsonObject linuxRequirements = gameObject.getAsJsonObject("linux_requirements");
+            String minimum = linuxRequirements.get("minimum").getAsString();
+            String recommended = linuxRequirements.get("recommended").getAsString();
+            Map<String, String> linuxReqMap = new HashMap<>();
+            linuxReqMap.put("minimum", minimum);
+            linuxReqMap.put("recommended", recommended);
+            game.setLinuxRequirements(linuxReqMap);
+        } catch (Exception exception) {
+            game.setLinuxRequirements(new HashMap<>());
+        }
+
+        try {
             List<JsonElement> developersJsonElementList = gameObject.getAsJsonArray("developers").asList();
             List<String> developers = new ArrayList<>();
             developersJsonElementList.forEach(developer -> {
