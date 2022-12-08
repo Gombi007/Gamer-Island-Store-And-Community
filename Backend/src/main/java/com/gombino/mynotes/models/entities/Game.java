@@ -35,6 +35,8 @@ public class Game {
     private List<String> developers;
     private List<String> publishers;
     private List<String> platforms;
+    private Map<String, Object> metacritic;
+    private List<Map<String, Object>> categories;
     private List<String> genres;
     private List<String> screenshots;
     private List<String> movies;

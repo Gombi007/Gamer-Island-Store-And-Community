@@ -224,8 +224,14 @@ public class SteamApiServiceImpl implements SteamApiService {
 
         try {
             JsonObject pcRequirements = gameObject.getAsJsonObject("pc_requirements");
-            String minimum = pcRequirements.get("minimum").getAsString();
-            String recommended = pcRequirements.get("recommended").getAsString();
+            String minimum = "";
+            String recommended = "";
+            if (pcRequirements.get("minimum") != null) {
+                minimum = pcRequirements.get("minimum").getAsString();
+            }
+            if (pcRequirements.get("recommended") != null) {
+                recommended = pcRequirements.get("recommended").getAsString();
+            }
             Map<String, String> pcReqMap = new HashMap<>();
             pcReqMap.put("minimum", minimum);
             pcReqMap.put("recommended", recommended);
@@ -236,8 +242,14 @@ public class SteamApiServiceImpl implements SteamApiService {
 
         try {
             JsonObject macRequirements = gameObject.getAsJsonObject("mac_requirements");
-            String minimum = macRequirements.get("minimum").getAsString();
-            String recommended = macRequirements.get("recommended").getAsString();
+            String minimum = "";
+            String recommended = "";
+            if (macRequirements.get("minimum") != null) {
+                minimum = macRequirements.get("minimum").getAsString();
+            }
+            if (macRequirements.get("recommended") != null) {
+                recommended = macRequirements.get("recommended").getAsString();
+            }
             Map<String, String> macReqMap = new HashMap<>();
             macReqMap.put("minimum", minimum);
             macReqMap.put("recommended", recommended);
@@ -248,8 +260,14 @@ public class SteamApiServiceImpl implements SteamApiService {
 
         try {
             JsonObject linuxRequirements = gameObject.getAsJsonObject("linux_requirements");
-            String minimum = linuxRequirements.get("minimum").getAsString();
-            String recommended = linuxRequirements.get("recommended").getAsString();
+            String minimum = "";
+            String recommended = "";
+            if (linuxRequirements.get("minimum") != null) {
+                minimum = linuxRequirements.get("minimum").getAsString();
+            }
+            if (linuxRequirements.get("recommended") != null) {
+                recommended = linuxRequirements.get("recommended").getAsString();
+            }
             Map<String, String> linuxReqMap = new HashMap<>();
             linuxReqMap.put("minimum", minimum);
             linuxReqMap.put("recommended", recommended);
@@ -301,6 +319,34 @@ public class SteamApiServiceImpl implements SteamApiService {
         } catch (Exception exception) {
             game.setPlatforms(new ArrayList<>());
             log.error("Error during convert ID:{} game field PLATFORMS {}", steamAppId, exception.getMessage());
+        }
+
+
+        try {
+            JsonObject metacritic = gameObject.getAsJsonObject("metacritic");
+            Integer score = metacritic.get("score").getAsInt();
+            String url = metacritic.get("url").getAsString();
+            Map<String, Object> metacriticMap = new HashMap<>();
+            metacriticMap.put("score", score);
+            metacriticMap.put("url", url);
+            game.setMetacritic(metacriticMap);
+        } catch (Exception exception) {
+            game.setMetacritic(new HashMap<>());
+        }
+
+        try {
+            List<JsonElement> categories = gameObject.getAsJsonArray("categories").asList();
+            List<Map<String, Object>> categoriesMap = new ArrayList<>();
+            categories.forEach(category -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", category.getAsJsonObject().get("id").getAsInt());
+                map.put("description", category.getAsJsonObject().get("description").getAsString());
+                categoriesMap.add(map);
+            });
+            game.setCategories(categoriesMap);
+        } catch (Exception exception) {
+            game.setCategories(new ArrayList<>());
+            log.error("Error during convert ID:{} game field CATEGORIES {}", steamAppId, exception.getMessage());
         }
 
         try {
