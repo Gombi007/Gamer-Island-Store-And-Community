@@ -26,9 +26,9 @@ public class Game {
     private String detailedDescription;
     private String aboutTheGame;
     private String shortDescription;
-    private String supportedLanguages;
     private String headerImage;
     private String website;
+    private List<String> supportedLanguages;
     private List<String> developers;
     private List<String> publishers;
     private List<String> platforms;
