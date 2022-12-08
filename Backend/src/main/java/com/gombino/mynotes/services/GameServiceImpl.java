@@ -14,6 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +32,8 @@ public class GameServiceImpl implements GameService {
     private final UserService userService;
     private final ModelMapper modelMapper;
 
+    private final MongoTemplate mongoTemplate;
+
     @Override
     public Map<String, Object> findAllGame(PaginationSorterDto paginationSorterDto) {
         Pageable paging = PageRequest.of(paginationSorterDto.getPage(), paginationSorterDto.getSize(), Sort.by(paginationSorterDto.getSortBy()).ascending());
@@ -35,37 +41,53 @@ public class GameServiceImpl implements GameService {
         return getGameListAndPaginationInfo(gamePage);
     }
 
-    public Map<String, Object> findAllGameWithFilter(PaginationSorterDto sorterDto, GameSearchDto gameSearchDto) {
+    public Map<String, Object> findAllGameWithFilter(Integer page, Integer size, GameSearchDto gameSearchDto) {
 
-        // Sort by field (getSortByField) and sort desc or asc (getSortByDescOrAsc)
-        // Default sorting if something missing from the gameSearchDto
-        Sort sort = Sort.by("name").ascending();
-        if (gameSearchDto.getIsAscending()) {
-            sort = Sort.by(gameSearchDto.getSortByField()).ascending();
+        //Set default sorting or user selected sorting by field name and desc/asc
+        Sort.Order order = new Sort.Order(Sort.Direction.ASC, "name");
+
+        if (gameSearchDto.getIsAscending() && gameSearchDto.getSortByField().length() > 0) {
+            order = new Sort.Order(Sort.Direction.ASC, gameSearchDto.getSortByField());
         }
 
-        if (!gameSearchDto.getIsAscending()) {
-            sort = Sort.by(gameSearchDto.getSortByField()).descending();
+        if (!gameSearchDto.getIsAscending() && gameSearchDto.getSortByField().length() > 0) {
+            order = new Sort.Order(Sort.Direction.DESC, gameSearchDto.getSortByField());
         }
 
-        Pageable paging = PageRequest.of(sorterDto.getPage(), sorterDto.getSize(), sort);
+        //Queries by user selected options
+        Query query = new Query();
+        Criteria criteria = new Criteria();
+        List<Criteria> languagesCriteriaList = new ArrayList<>();
 
-        // Filters
-        // Show only free games
+        if (gameSearchDto.getLanguages().size() > 0) {
+            for (String language : gameSearchDto.getLanguages()) {
+                languagesCriteriaList.add(Criteria.where("supportedLanguages").regex("\\b.*" + language + ".*\\b", "i"));
+            }
+            criteria = criteria.orOperator(languagesCriteriaList);
+        }
+
+        if (gameSearchDto.getIsHideFreeGames()) {
+            criteria = criteria.and("isFree").is(false);
+        }
+
         if (gameSearchDto.getPrice() == 0) {
-            return getGameListAndPaginationInfo(gameRepository.findAllisFree(paging));
-        }
-        // Show games max to 70 euro and  not includes free games
-        if (gameSearchDto.getPrice() > 0 && gameSearchDto.getPrice() <= 70 && gameSearchDto.getIsHideFreeGames()) {
-            return getGameListAndPaginationInfo(gameRepository.findAllByPriceWithoutFree(gameSearchDto.getPrice(), paging));
+            criteria = criteria.and("price").is(0);
         }
 
-        // Show games max to 70 euro and includes free games
-        if (gameSearchDto.getPrice() > 0 && gameSearchDto.getPrice() <= 70 && !gameSearchDto.getIsHideFreeGames()) {
-            return getGameListAndPaginationInfo(gameRepository.findAllByPriceOrFree(gameSearchDto.getPrice(), paging));
+        if (gameSearchDto.getPrice() > 0 && gameSearchDto.getPrice() <= 70) {
+            criteria = criteria.and("price").lt(gameSearchDto.getPrice());
         }
 
-        return null;
+        //Create the query
+        Pageable paging = PageRequest.of(page, size, Sort.by(order));
+        query.addCriteria(criteria).with(paging);
+
+        List<Game> gameList = mongoTemplate.find(query, Game.class, "games");
+        Page<Game> gamePage = PageableExecutionUtils.getPage(
+                gameList,
+                paging,
+                () -> mongoTemplate.count(query.skip(0).limit(0), Game.class));
+        return getGameListAndPaginationInfo(gamePage);
     }
 
     private Map<String, Object> getGameListAndPaginationInfo(Page<Game> gamePage) {
@@ -77,7 +99,7 @@ public class GameServiceImpl implements GameService {
             test.put("name", game.getName());
             test.put("isFree", game.getIsFree());
             test.put("price", game.getPrice());
-            test.put("languages", game.getSupportedLanguages());
+            test.put("genres", game.getGenres());
 
             resultGameList.add(test);
         }
