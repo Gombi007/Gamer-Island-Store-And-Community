@@ -197,9 +197,14 @@ public class SteamApiServiceImpl implements SteamApiService {
 
         try {
             String supportedLanguages = gameObject.getAsJsonPrimitive("supported_languages").getAsString();
-            game.setSupportedLanguages(supportedLanguages);
+            String[] languagesArray = supportedLanguages.split(",");
+            List<String> supportedLanguagesList = new ArrayList<>();
+            for (String s : languagesArray) {
+                supportedLanguagesList.add(s.trim());
+            }
+            game.setSupportedLanguages(supportedLanguagesList);
         } catch (Exception exception) {
-            game.setSupportedLanguages("");
+            game.setSupportedLanguages(new ArrayList<>());
             log.error("Error during convert ID:{} game field SUPPORTED LANGUAGES{}", steamAppId, exception.getMessage());
         }
         try {
@@ -215,6 +220,60 @@ public class SteamApiServiceImpl implements SteamApiService {
             game.setWebsite(website);
         } catch (Exception exception) {
             game.setWebsite("");
+        }
+
+        try {
+            JsonObject pcRequirements = gameObject.getAsJsonObject("pc_requirements");
+            String minimum = "";
+            String recommended = "";
+            if (pcRequirements.get("minimum") != null) {
+                minimum = pcRequirements.get("minimum").getAsString();
+            }
+            if (pcRequirements.get("recommended") != null) {
+                recommended = pcRequirements.get("recommended").getAsString();
+            }
+            Map<String, String> pcReqMap = new HashMap<>();
+            pcReqMap.put("minimum", minimum);
+            pcReqMap.put("recommended", recommended);
+            game.setPcRequirements(pcReqMap);
+        } catch (Exception exception) {
+            game.setPcRequirements(new HashMap<>());
+        }
+
+        try {
+            JsonObject macRequirements = gameObject.getAsJsonObject("mac_requirements");
+            String minimum = "";
+            String recommended = "";
+            if (macRequirements.get("minimum") != null) {
+                minimum = macRequirements.get("minimum").getAsString();
+            }
+            if (macRequirements.get("recommended") != null) {
+                recommended = macRequirements.get("recommended").getAsString();
+            }
+            Map<String, String> macReqMap = new HashMap<>();
+            macReqMap.put("minimum", minimum);
+            macReqMap.put("recommended", recommended);
+            game.setMacRequirements(macReqMap);
+        } catch (Exception exception) {
+            game.setMacRequirements(new HashMap<>());
+        }
+
+        try {
+            JsonObject linuxRequirements = gameObject.getAsJsonObject("linux_requirements");
+            String minimum = "";
+            String recommended = "";
+            if (linuxRequirements.get("minimum") != null) {
+                minimum = linuxRequirements.get("minimum").getAsString();
+            }
+            if (linuxRequirements.get("recommended") != null) {
+                recommended = linuxRequirements.get("recommended").getAsString();
+            }
+            Map<String, String> linuxReqMap = new HashMap<>();
+            linuxReqMap.put("minimum", minimum);
+            linuxReqMap.put("recommended", recommended);
+            game.setLinuxRequirements(linuxReqMap);
+        } catch (Exception exception) {
+            game.setLinuxRequirements(new HashMap<>());
         }
 
         try {
@@ -260,6 +319,34 @@ public class SteamApiServiceImpl implements SteamApiService {
         } catch (Exception exception) {
             game.setPlatforms(new ArrayList<>());
             log.error("Error during convert ID:{} game field PLATFORMS {}", steamAppId, exception.getMessage());
+        }
+
+
+        try {
+            JsonObject metacritic = gameObject.getAsJsonObject("metacritic");
+            Integer score = metacritic.get("score").getAsInt();
+            String url = metacritic.get("url").getAsString();
+            Map<String, Object> metacriticMap = new HashMap<>();
+            metacriticMap.put("score", score);
+            metacriticMap.put("url", url);
+            game.setMetacritic(metacriticMap);
+        } catch (Exception exception) {
+            game.setMetacritic(new HashMap<>());
+        }
+
+        try {
+            List<JsonElement> categories = gameObject.getAsJsonArray("categories").asList();
+            List<Map<String, Object>> categoriesMap = new ArrayList<>();
+            categories.forEach(category -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", category.getAsJsonObject().get("id").getAsInt());
+                map.put("description", category.getAsJsonObject().get("description").getAsString());
+                categoriesMap.add(map);
+            });
+            game.setCategories(categoriesMap);
+        } catch (Exception exception) {
+            game.setCategories(new ArrayList<>());
+            log.error("Error during convert ID:{} game field CATEGORIES {}", steamAppId, exception.getMessage());
         }
 
         try {

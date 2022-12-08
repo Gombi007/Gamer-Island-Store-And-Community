@@ -1,11 +1,11 @@
 package com.gombino.mynotes.controller;
 
+import com.gombino.mynotes.models.dto.GameSearchDto;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.services.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/games")
-@Slf4j
 @RequiredArgsConstructor
 @Tag(name = "GameController", description = "Manages games")
 public class GameController {
@@ -30,6 +29,16 @@ public class GameController {
             @RequestParam(name = "sortBy", defaultValue = "") String sortBy) {
         PaginationSorterDto paginationSorterDto = new PaginationSorterDto(page, size, sortBy);
         return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGame(paginationSorterDto));
+    }
+
+    @Operation(description = "List all games with filter")
+    @PostMapping
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> getAllGameWithFilter(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "1") int size,
+            @RequestBody GameSearchDto gameSearchDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGameWithFilter(page, size, gameSearchDto));
     }
 
     @Operation(description = "Get game by ID")
@@ -47,7 +56,7 @@ public class GameController {
     }
 
     @Operation(description = "Add a game to user wishlist")
-    @GetMapping("/add-to-wishlist/{gameId}/{userId}")
+    @PostMapping("/add-to-wishlist/{gameId}/{userId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> addGameToUserWishlist(@PathVariable String gameId, @PathVariable String userId) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.addGameToUserWishlist(gameId, userId));
@@ -61,7 +70,7 @@ public class GameController {
     }
 
     @Operation(description = "Purchase a game")
-    @GetMapping("/purchase-games/{userId}")
+    @PostMapping("/purchase-games/{userId}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> purchaseGames(@RequestBody List<String> gameIds, @PathVariable String userId) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.purchaseGames(gameIds, userId));

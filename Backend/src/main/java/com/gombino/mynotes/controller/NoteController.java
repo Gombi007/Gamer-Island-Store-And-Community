@@ -6,7 +6,6 @@ import com.gombino.mynotes.services.NoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,16 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/notes")
-@Slf4j
 @RequiredArgsConstructor
 @Tag(name = "NoteController", description = "Manages notes")
 public class NoteController {
     private final NoteService noteService;
 
-    @Operation(description = "List all notes Or Just favorites or my notes")
+    @Operation(description = "List all public notes or just favorites or my notes")
     @GetMapping("/{userId}")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> getNotesByUrgentOrNotOrAll(
+    public ResponseEntity<Object> getPublicOrFavOrMyNotes(
             @RequestParam(required = false) String favOrMyNotes,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "1") int size,

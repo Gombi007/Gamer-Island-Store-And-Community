@@ -1,6 +1,7 @@
 package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.models.dto.GameDto;
+import com.gombino.mynotes.models.dto.GameSearchDto;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 
 import java.util.List;
@@ -10,7 +11,10 @@ public interface GameService {
 
     Map<String, Object> findAllGame(PaginationSorterDto paginationSorterDto);
 
+    Map<String, Object> findAllGameWithFilter(Integer page, Integer size, GameSearchDto gameSearchDto);
+
     GameDto findGameById(String gameId);
+
 
     Map<String, Boolean> isUserOwnOrWishlistedGame(String gameId, String userId);
 

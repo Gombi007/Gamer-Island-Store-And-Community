@@ -56,29 +56,35 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new PermissionDeniedException("Password must be at least six character");
         }
 
-        log.warn("Saving new user {} to the DB", registrationUserDto.getUsername());
-
         User newUser = new User();
-        newUser.setUsername(registrationUserDto.getUsername());
-        if (registrationUserDto.getAvatar() != null && !registrationUserDto.getAvatar().isEmpty()) {
-            newUser.setAvatar(registrationUserDto.getAvatar());
-        } else {
-            newUser.setAvatar("https://www.meme-arsenal.com/memes/1c9bec1c1817f33f756ce195fab4e02f.jpg");
-        }
-        newUser.setEmail(registrationUserDto.getEmail());
-        newUser.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
 
+        if (registrationUserDto.getEmail() == null || registrationUserDto.getEmail().isEmpty()) {
+            newUser.setEmail("");
+        } else {
+            newUser.setEmail(registrationUserDto.getEmail());
+        }
+
+        if (registrationUserDto.getAvatar() == null || registrationUserDto.getAvatar().isEmpty()) {
+            newUser.setAvatar("https://www.meme-arsenal.com/memes/1c9bec1c1817f33f756ce195fab4e02f.jpg");
+        } else {
+            newUser.setAvatar(registrationUserDto.getAvatar());
+        }
+
+        newUser.setUsername(registrationUserDto.getUsername());
+        newUser.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         newUser.setCreated(Instant.now());
         newUser.setIsDisabled(false);
-        newUser.setFavoriteNotesIds(new ArrayList<>());
-        newUser.setNoteIds(new ArrayList<>());
         newUser.setRoles(new ArrayList<>());
+        newUser.setNoteIds(new ArrayList<>());
+        newUser.setFavoriteNotesIds(new ArrayList<>());
         newUser.setWishlistGames(new ArrayList<>());
         newUser.setOwnedGames(new ArrayList<>());
+        newUser.setBalance(500.0);
+
         Role role = roleRepository.findRoleByRoleName("ROLE_USER").get();
         log.warn("Add basic role {} to the new user {} to the DB", role.getRoleName(), newUser.getUsername());
         newUser.getRoles().add(role);
-        newUser.setBalance(500.0);
+        log.warn("Saving new user {} to the DB", registrationUserDto.getUsername());
         return userRepository.save(newUser);
     }
 
