@@ -28,6 +28,9 @@ public class Game {
     private String shortDescription;
     private String headerImage;
     private String website;
+    private Map<String, String> pcRequirements;
+    private Map<String, String> macRequirements;
+    private Map<String, String> linuxRequirements;
     private List<String> supportedLanguages;
     private List<String> developers;
     private List<String> publishers;
