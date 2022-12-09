@@ -1,9 +1,6 @@
 package com.gombino.mynotes.controller;
 
-import com.gombino.mynotes.models.dto.RegistrationUserDto;
-import com.gombino.mynotes.models.dto.RoleToUserFormDto;
-import com.gombino.mynotes.models.dto.UserDto;
-import com.gombino.mynotes.models.dto.UserPasswordDto;
+import com.gombino.mynotes.models.dto.*;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 import com.gombino.mynotes.services.UserService;
@@ -81,4 +78,12 @@ public class UserController {
         userService.changeUserPassword(userId, userPasswordDto);
         return ResponseEntity.ok().build();
     }
+
+    @Operation(description = "Get user transaction history")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/profile/transaction-history/{userId}")
+    public ResponseEntity<List<GamePurchaseDto>> getUserTransactionHistory(@PathVariable String userId) {
+        return ResponseEntity.ok().body(userService.getUserTransactionHistory(userId));
+    }
+
 }
