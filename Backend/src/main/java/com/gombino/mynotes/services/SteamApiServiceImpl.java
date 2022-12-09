@@ -28,12 +28,10 @@ import java.util.stream.Collectors;
 public class SteamApiServiceImpl implements SteamApiService {
     private final SteamProductRepository steamProductRepository;
     private final FilterAdultRepository adultRepository;
-
     private final GameRepository gameRepository;
     private final GameGenreRepository gameGenreRepository;
     private final GameCategoryRepository gameCategoryRepository;
     private final GameLanguageRepository gameLanguageRepository;
-
     private Boolean isTooManyRequest = false;
 
     @Override
