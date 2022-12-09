@@ -2,11 +2,14 @@ package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.exceptions.PermissionDeniedException;
 import com.gombino.mynotes.exceptions.ResourceAlreadyExistsException;
+import com.gombino.mynotes.models.dto.GamePurchaseDto;
 import com.gombino.mynotes.models.dto.RegistrationUserDto;
 import com.gombino.mynotes.models.dto.UserDto;
 import com.gombino.mynotes.models.dto.UserPasswordDto;
+import com.gombino.mynotes.models.entities.GamePurchase;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
+import com.gombino.mynotes.repositories.GamePurchaseRepository;
 import com.gombino.mynotes.repositories.RoleRepository;
 import com.gombino.mynotes.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,6 +37,7 @@ import java.util.NoSuchElementException;
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final GamePurchaseRepository gamePurchaseRepository;
 
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -190,4 +196,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return modelMapper.map(userDto, User.class);
     }
 
+    @Override
+    public List<GamePurchaseDto> getUserTransactionHistory(String userId) {
+        User user = userRepository.findUserById(userId).orElseThrow(() -> new NoSuchElementException("No user with this id: " + userId));
+        List<GamePurchaseDto> gamePurchaseDtoList = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm").withZone(ZoneId.systemDefault());
+
+        if (user != null) {
+            List<GamePurchase> gamePurchaseList = gamePurchaseRepository.findByUserId(user.getId());
+            for (GamePurchase gamePurchase : gamePurchaseList) {
+                String purchaseFormattedDate = formatter.format(gamePurchase.getPurchaseDate());
+                GamePurchaseDto gamePurchaseDto = new GamePurchaseDto(gamePurchase.getUserId(), gamePurchase.getGameId(), gamePurchase.getItem(), purchaseFormattedDate, gamePurchase.getPrice());
+                gamePurchaseDtoList.add(gamePurchaseDto);
+            }
+            return gamePurchaseDtoList;
+
+        }
+        return null;
+    }
 }

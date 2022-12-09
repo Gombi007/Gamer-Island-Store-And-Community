@@ -37,8 +37,16 @@ public class GameController {
     public ResponseEntity<Object> getAllGameWithFilter(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "1") int size,
+            @RequestParam(name = "userId", required = false) String userId,
             @RequestBody GameSearchDto gameSearchDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGameWithFilter(page, size, gameSearchDto));
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGameWithFilter(page, size, gameSearchDto, userId));
+    }
+
+    @Operation(description = "Get all Genre")
+    @GetMapping("/genres-languages-categories")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> getGenres() {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getGenresAndLanguagesAndCategories());
     }
 
     @Operation(description = "Get game by ID")
@@ -81,6 +89,13 @@ public class GameController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> removeGameFromDbById(@PathVariable String gameId) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.removeGameFromDbById(gameId));
+    }
+
+    @Operation(description = "Remove a game from the DB")
+    @PutMapping("/change-game-adult-status/{gameId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> changeGameAdultStatus(@PathVariable String gameId, @RequestParam Boolean isAdult) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.changeGameAdultStatus(isAdult, gameId));
     }
 
 }

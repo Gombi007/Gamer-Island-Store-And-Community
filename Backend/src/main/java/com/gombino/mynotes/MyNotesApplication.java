@@ -1,12 +1,8 @@
 package com.gombino.mynotes;
 
-import com.gombino.mynotes.models.entities.Role;
-import com.gombino.mynotes.models.entities.User;
-import com.gombino.mynotes.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -41,21 +37,6 @@ public class MyNotesApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins(cors1, cors2, cors3).allowedMethods("GET", "POST", "PUT", "DELETE");
-            }
-        };
-    }
-
-    @Bean
-    CommandLineRunner run(UserService userService) {
-        return args -> {
-            if (userService.getRoles().isEmpty()) {
-                userService.saveRole(new Role(null, "ROLE_USER"));
-                userService.saveRole(new Role(null, "ROLE_ADMIN"));
-            }
-            User user = userService.getUser("admin");
-            if (user != null && user.getRoles().isEmpty()) {
-                userService.addRoleToUser("admin", "ROLE_USER");
-                userService.addRoleToUser("admin", "ROLE_ADMIN");
             }
         };
     }

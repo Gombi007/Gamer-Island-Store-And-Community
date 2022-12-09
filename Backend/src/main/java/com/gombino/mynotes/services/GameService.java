@@ -11,7 +11,7 @@ public interface GameService {
 
     Map<String, Object> findAllGame(PaginationSorterDto paginationSorterDto);
 
-    Map<String, Object> findAllGameWithFilter(Integer page, Integer size, GameSearchDto gameSearchDto);
+    Map<String, Object> findAllGameWithFilter(Integer page, Integer size, GameSearchDto gameSearchDto, String userId);
 
     GameDto findGameById(String gameId);
 
@@ -25,6 +25,10 @@ public interface GameService {
     String purchaseGames(List<String> gameIds, String userId);
 
     String removeGameFromDbById(String gameId);
+
+    Map<String, List<String>> getGenresAndLanguagesAndCategories();
+
+    String changeGameAdultStatus(Boolean isAdult, String gameId);
 
 
 }

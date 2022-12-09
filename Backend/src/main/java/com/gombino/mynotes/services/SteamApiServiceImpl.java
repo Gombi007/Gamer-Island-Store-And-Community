@@ -1,12 +1,8 @@
 package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.enums.StaticStings;
-import com.gombino.mynotes.models.entities.FilterAdult;
-import com.gombino.mynotes.models.entities.Game;
-import com.gombino.mynotes.models.entities.SteamProduct;
-import com.gombino.mynotes.repositories.FilterAdultRepository;
-import com.gombino.mynotes.repositories.GameRepository;
-import com.gombino.mynotes.repositories.SteamProductRepository;
+import com.gombino.mynotes.models.entities.*;
+import com.gombino.mynotes.repositories.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -32,9 +28,10 @@ import java.util.stream.Collectors;
 public class SteamApiServiceImpl implements SteamApiService {
     private final SteamProductRepository steamProductRepository;
     private final FilterAdultRepository adultRepository;
-
     private final GameRepository gameRepository;
-
+    private final GameGenreRepository gameGenreRepository;
+    private final GameCategoryRepository gameCategoryRepository;
+    private final GameLanguageRepository gameLanguageRepository;
     private Boolean isTooManyRequest = false;
 
     @Override
@@ -76,6 +73,9 @@ public class SteamApiServiceImpl implements SteamApiService {
             if (game != null) {
                 game.setIsAdult(isAdultGame(game));
                 Game savedGame = gameRepository.save(game);
+                saveNewGameGenresToTheDb(savedGame.getGenres());
+                saveNewGameLanguagesToTheDb(savedGame.getSupportedLanguages());
+                saveNewCategoryToTheDb(savedGame.getCategories());
                 savedGames.add(savedGame.getName());
             }
             if (!isTooManyRequest) {
@@ -431,9 +431,28 @@ public class SteamApiServiceImpl implements SteamApiService {
             log.error("Error during convert ID:{} game field BACKGROUND RAW{}", steamAppId, exception.getMessage());
         }
 
-        game.setIsAdult(false);
-        game.setUsers(new ArrayList<>());
-        game.setWishlistUsers(new ArrayList<>());
+        Boolean isExistingGameInTheDb = gameRepository.existsBySteamAppId(steamAppId);
+
+        if (isExistingGameInTheDb) {
+            Game originalGame = gameRepository.findBySteamAppId(steamAppId);
+
+            game.setId(originalGame.getId());
+            game.setIsAdult(originalGame.getIsAdult());
+            game.setCreated(originalGame.getCreated());
+            game.setLastModified(Instant.now());
+            game.setUsers(originalGame.getUsers());
+            game.setWishlistUsers(originalGame.getWishlistUsers());
+            log.warn("Original game was updated: {}", game.getName());
+        }
+
+        if (!isExistingGameInTheDb) {
+            game.setIsAdult(false);
+            game.setCreated(Instant.now());
+            game.setLastModified(null);
+            game.setUsers(new ArrayList<>());
+            game.setWishlistUsers(new ArrayList<>());
+        }
+
 
         return game;
     }
@@ -449,5 +468,45 @@ public class SteamApiServiceImpl implements SteamApiService {
             }
         }
         return false;
+    }
+
+    private void saveNewGameGenresToTheDb(List<String> newGenres) {
+        for (String genre : newGenres) {
+            Boolean isExist = gameGenreRepository.existsByGenre(genre);
+            if (!isExist) {
+                gameGenreRepository.save(new GameGenre(null, genre));
+                log.warn("New genre was saved to DB {}", genre);
+            }
+        }
+    }
+
+    private void saveNewGameLanguagesToTheDb(List<String> newLanguages) {
+        for (String language : newLanguages) {
+            if (language.contains("<")) {
+                language = language.split("<")[0];
+            }
+            if (language.contains("-")) {
+                language = language.split("-")[0];
+            }
+            if (language.contains("*")) {
+                language = language.split("\\*")[0];
+            }
+            Boolean isExist = gameLanguageRepository.existsByLanguage(language);
+            if (!isExist) {
+                gameLanguageRepository.save(new GameLanguage(null, language));
+                log.warn("New language was saved to DB {}", language);
+            }
+        }
+    }
+
+    private void saveNewCategoryToTheDb(List<Map<String, Object>> newCategory) {
+        for (Map<String, Object> categoryMap : newCategory) {
+            String category = categoryMap.get("description").toString();
+            Boolean isExist = gameCategoryRepository.existsByCategory(category);
+            if (!isExist) {
+                gameCategoryRepository.save(new GameCategory(null, category));
+                log.warn("New category was saved to DB {}", category);
+            }
+        }
     }
 }

@@ -23,4 +23,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handlePermissionProblem(PermissionDeniedException exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
     }
+
+    @ExceptionHandler()
+    public ResponseEntity<Object> handleBadRequest(BadRequestException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
 }

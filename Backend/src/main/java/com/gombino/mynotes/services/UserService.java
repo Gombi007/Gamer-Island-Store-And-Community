@@ -1,5 +1,6 @@
 package com.gombino.mynotes.services;
 
+import com.gombino.mynotes.models.dto.GamePurchaseDto;
 import com.gombino.mynotes.models.dto.RegistrationUserDto;
 import com.gombino.mynotes.models.dto.UserDto;
 import com.gombino.mynotes.models.dto.UserPasswordDto;
@@ -33,4 +34,6 @@ public interface UserService {
     UserDto updateUserProfile(String userId, UserDto userDto);
 
     void changeUserPassword(String userId, UserPasswordDto userPasswordDto);
+
+    List<GamePurchaseDto> getUserTransactionHistory(String userId);
 }
