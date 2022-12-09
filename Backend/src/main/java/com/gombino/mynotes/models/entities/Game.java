@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,8 @@ public class Game {
     private String background;
     private String backgroundRaw;
     private Boolean isAdult;
+    private Instant created;
+    private Instant lastModified;
     private List<String> users;
     private List<String> wishlistUsers;
 }
