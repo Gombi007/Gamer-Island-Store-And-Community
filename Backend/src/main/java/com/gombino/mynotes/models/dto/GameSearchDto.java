@@ -12,6 +12,8 @@ import java.util.List;
 public class GameSearchDto {
     private Integer price;
     private Boolean isHideFreeGames;
+    private Boolean isHideAdultGames;
+    private Boolean showOnlyAdultGames;
     private Boolean isHideMyOwnGames;
     private Boolean isHideMyWishlistGames;
     private Boolean isAscending;
@@ -19,4 +21,5 @@ public class GameSearchDto {
     private List<String> genres;
     private List<String> opSystems;
     private List<String> languages;
+    private List<String> categories;
 }
