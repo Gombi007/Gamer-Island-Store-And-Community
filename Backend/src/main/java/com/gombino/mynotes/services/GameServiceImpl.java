@@ -193,6 +193,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public String changeGameAdultStatus(Boolean isAdult, String gameId) {
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("No game with this id: " + gameId));
+        game.setIsAdult(isAdult);
+        gameRepository.save(game);
+        return "Game adult status was changed to: " + isAdult;
+    }
+
+    @Override
     public GameDto findGameById(String gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
         return convertToGameDto(game);

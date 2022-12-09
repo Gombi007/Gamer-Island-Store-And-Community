@@ -28,5 +28,7 @@ public interface GameService {
 
     Map<String, List<String>> getGenresAndLanguagesAndCategories();
 
+    String changeGameAdultStatus(Boolean isAdult, String gameId);
+
 
 }
