@@ -433,9 +433,28 @@ public class SteamApiServiceImpl implements SteamApiService {
             log.error("Error during convert ID:{} game field BACKGROUND RAW{}", steamAppId, exception.getMessage());
         }
 
-        game.setIsAdult(false);
-        game.setUsers(new ArrayList<>());
-        game.setWishlistUsers(new ArrayList<>());
+        Boolean isExistingGameInTheDb = gameRepository.existsBySteamAppId(steamAppId);
+
+        if (isExistingGameInTheDb) {
+            Game originalGame = gameRepository.findBySteamAppId(steamAppId);
+
+            game.setId(originalGame.getId());
+            game.setIsAdult(originalGame.getIsAdult());
+            game.setCreated(originalGame.getCreated());
+            game.setLastModified(Instant.now());
+            game.setUsers(originalGame.getUsers());
+            game.setWishlistUsers(originalGame.getWishlistUsers());
+            log.warn("Original game was updated: {}", game.getName());
+        }
+
+        if (!isExistingGameInTheDb) {
+            game.setIsAdult(false);
+            game.setCreated(Instant.now());
+            game.setLastModified(null);
+            game.setUsers(new ArrayList<>());
+            game.setWishlistUsers(new ArrayList<>());
+        }
+
 
         return game;
     }
