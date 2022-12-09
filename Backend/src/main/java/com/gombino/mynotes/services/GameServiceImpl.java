@@ -1,5 +1,6 @@
 package com.gombino.mynotes.services;
 
+import com.gombino.mynotes.exceptions.BadRequestException;
 import com.gombino.mynotes.models.dto.GameDto;
 import com.gombino.mynotes.models.dto.GameSearchDto;
 import com.gombino.mynotes.models.dto.PaginationInfo;
@@ -41,7 +42,7 @@ public class GameServiceImpl implements GameService {
         return getGameListAndPaginationInfo(gamePage);
     }
 
-    public Map<String, Object> findAllGameWithFilter(Integer page, Integer size, GameSearchDto gameSearchDto) {
+    public Map<String, Object> findAllGameWithFilter(Integer page, Integer size, GameSearchDto gameSearchDto, String userId) {
 
         //Set default sorting or user selected sorting by field name and desc/asc
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, "name");
@@ -85,15 +86,38 @@ public class GameServiceImpl implements GameService {
             criteriaList.add(opSystemsCriteria);
         }
 
+        List<Criteria> categoriesCriteriaList = new ArrayList<>();
+        if (!gameSearchDto.getCategories().isEmpty()) {
+            for (String category : gameSearchDto.getCategories()) {
+                categoriesCriteriaList.add(Criteria.where("categories.description").regex("\\b.*" + category + ".*\\b", "i"));
+            }
+            Criteria categoriesCriteria = new Criteria().orOperator(categoriesCriteriaList);
+            criteriaList.add(categoriesCriteria);
+        }
+
         if (!criteriaList.isEmpty()) {
             aggregatedCriteria.andOperator(criteriaList);
         }
 
-
+        //Show only free games
         if (gameSearchDto.getIsHideFreeGames()) {
             aggregatedCriteria = aggregatedCriteria.and("isFree").is(false);
         }
 
+        //Adult games option
+        if (gameSearchDto.getIsHideAdultGames() && gameSearchDto.getShowOnlyAdultGames()) {
+            throw new BadRequestException("You can select only one Adult option");
+        }
+
+        if (gameSearchDto.getIsHideAdultGames() && !gameSearchDto.getShowOnlyAdultGames()) {
+            aggregatedCriteria = aggregatedCriteria.and("isAdult").is(false);
+        }
+
+        if (gameSearchDto.getShowOnlyAdultGames() && !gameSearchDto.getIsHideAdultGames()) {
+            aggregatedCriteria = aggregatedCriteria.and("isAdult").is(true);
+        }
+
+        // Price filter
         if (gameSearchDto.getPrice() == 0) {
             aggregatedCriteria = aggregatedCriteria.and("price").is(0);
         }
@@ -102,33 +126,46 @@ public class GameServiceImpl implements GameService {
             aggregatedCriteria = aggregatedCriteria.and("price").lt(gameSearchDto.getPrice());
         }
 
+        // user hide or show own or wishlist or both games in the result
+        if (userId != null && gameSearchDto.getIsHideMyOwnGames() && gameSearchDto.getIsHideMyWishlistGames()) {
+            User user = userService.getUserById(userId);
+            List<String> ownAndWishlistGameIds = new ArrayList<>();
+            ownAndWishlistGameIds.addAll(user.getOwnedGames());
+            ownAndWishlistGameIds.addAll(user.getWishlistGames());
+            aggregatedCriteria.and("id").nin(ownAndWishlistGameIds);
+        }
+
+        if (userId != null && gameSearchDto.getIsHideMyOwnGames() && !gameSearchDto.getIsHideMyWishlistGames()) {
+            User user = userService.getUserById(userId);
+            aggregatedCriteria.and("id").nin(user.getOwnedGames());
+        }
+
+        if (userId != null && gameSearchDto.getIsHideMyWishlistGames() && !gameSearchDto.getIsHideMyOwnGames()) {
+            User user = userService.getUserById(userId);
+            aggregatedCriteria.and("id").nin(user.getWishlistGames());
+        }
+
         //Create the query
         Query query = new Query();
         Pageable paging = PageRequest.of(page, size, Sort.by(order));
         query.addCriteria(aggregatedCriteria).with(paging);
 
-        List<Game> gameList = mongoTemplate.find(query, Game.class, "games");
-        Page<Game> gamePage = PageableExecutionUtils.getPage(
-                gameList,
-                paging,
-                () -> mongoTemplate.count(query.skip(0).limit(0), Game.class));
-        return getGameListAndPaginationInfo(gamePage);
+        try {
+            List<Game> gameList = mongoTemplate.find(query, Game.class, "games");
+            Page<Game> gamePage = PageableExecutionUtils.getPage(
+                    gameList,
+                    paging,
+                    () -> mongoTemplate.count(query.skip(0).limit(0), Game.class));
+            return getGameListAndPaginationInfo(gamePage);
+        } catch (Exception exception) {
+            throw new BadRequestException("Bad request in the game filter: " + exception.getMessage());
+        }
     }
 
     private Map<String, Object> getGameListAndPaginationInfo(Page<Game> gamePage) {
-        List<Map<String, Object>> resultGameList = new ArrayList<>();
+        List<GameDto> resultGameList = new ArrayList<>();
         for (Game game : gamePage) {
-            //resultGameList.add(convertToGameDto(game));
-
-            Map<String, Object> test = new HashMap<>();
-            test.put("name", game.getName());
-            test.put("isFree", game.getIsFree());
-            test.put("price", game.getPrice());
-            test.put("genres", game.getGenres());
-            test.put("languages", game.getSupportedLanguages());
-            test.put("platform", game.getPlatforms());
-
-            resultGameList.add(test);
+            resultGameList.add(convertToGameDto(game));
         }
         PaginationInfo paginationInfo = new PaginationInfo(gamePage.getNumber(), gamePage.getTotalPages(), gamePage.getTotalElements());
         Map<String, Object> map = new HashMap<>();

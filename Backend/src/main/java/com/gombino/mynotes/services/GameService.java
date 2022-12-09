@@ -11,7 +11,7 @@ public interface GameService {
 
     Map<String, Object> findAllGame(PaginationSorterDto paginationSorterDto);
 
-    Map<String, Object> findAllGameWithFilter(Integer page, Integer size, GameSearchDto gameSearchDto);
+    Map<String, Object> findAllGameWithFilter(Integer page, Integer size, GameSearchDto gameSearchDto, String userId);
 
     GameDto findGameById(String gameId);
 
