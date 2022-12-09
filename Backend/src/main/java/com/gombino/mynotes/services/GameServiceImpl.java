@@ -5,8 +5,10 @@ import com.gombino.mynotes.models.dto.GameDto;
 import com.gombino.mynotes.models.dto.GameSearchDto;
 import com.gombino.mynotes.models.dto.PaginationInfo;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
-import com.gombino.mynotes.models.entities.Game;
-import com.gombino.mynotes.models.entities.User;
+import com.gombino.mynotes.models.entities.*;
+import com.gombino.mynotes.repositories.GameCategoryRepository;
+import com.gombino.mynotes.repositories.GameGenreRepository;
+import com.gombino.mynotes.repositories.GameLanguageRepository;
 import com.gombino.mynotes.repositories.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,9 +33,11 @@ import java.util.*;
 @Transactional
 public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
+    private final GameLanguageRepository gameLanguageRepository;
+    private final GameCategoryRepository gameCategoryRepository;
+    private final GameGenreRepository gameGenreRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
-
     private final MongoTemplate mongoTemplate;
 
     @Override
@@ -171,6 +176,19 @@ public class GameServiceImpl implements GameService {
         Map<String, Object> map = new HashMap<>();
         map.put("page", resultGameList);
         map.put("paginationInfo", paginationInfo);
+        return map;
+    }
+
+
+    @Override
+    public Map<String, List<String>> getGenresAndLanguagesAndCategories() {
+        Map<String, List<String>> map = new HashMap<>();
+        List<String> genreList = gameGenreRepository.findAll().stream().map(GameGenre::getGenre).collect(Collectors.toList());
+        List<String> languageList = gameLanguageRepository.findAll().stream().map(GameLanguage::getLanguage).collect(Collectors.toList());
+        List<String> categoryList = gameCategoryRepository.findAll().stream().map(GameCategory::getCategory).collect(Collectors.toList());
+        map.put("genres", genreList);
+        map.put("languages", languageList);
+        map.put("categories", categoryList);
         return map;
     }
 

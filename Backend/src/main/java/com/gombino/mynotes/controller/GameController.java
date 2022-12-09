@@ -42,6 +42,13 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.findAllGameWithFilter(page, size, gameSearchDto, userId));
     }
 
+    @Operation(description = "Get all Genre")
+    @GetMapping("/genres-languages-categories")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Object> getGenres() {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getGenresAndLanguagesAndCategories());
+    }
+
     @Operation(description = "Get game by ID")
     @GetMapping("/game/{gameId}")
     @PreAuthorize("hasRole('USER')")

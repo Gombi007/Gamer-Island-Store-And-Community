@@ -26,5 +26,7 @@ public interface GameService {
 
     String removeGameFromDbById(String gameId);
 
+    Map<String, List<String>> getGenresAndLanguagesAndCategories();
+
 
 }
