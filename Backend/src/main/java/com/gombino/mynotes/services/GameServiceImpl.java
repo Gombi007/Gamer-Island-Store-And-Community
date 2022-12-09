@@ -6,10 +6,7 @@ import com.gombino.mynotes.models.dto.GameSearchDto;
 import com.gombino.mynotes.models.dto.PaginationInfo;
 import com.gombino.mynotes.models.dto.PaginationSorterDto;
 import com.gombino.mynotes.models.entities.*;
-import com.gombino.mynotes.repositories.GameCategoryRepository;
-import com.gombino.mynotes.repositories.GameGenreRepository;
-import com.gombino.mynotes.repositories.GameLanguageRepository;
-import com.gombino.mynotes.repositories.GameRepository;
+import com.gombino.mynotes.repositories.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -37,6 +34,7 @@ public class GameServiceImpl implements GameService {
     private final GameLanguageRepository gameLanguageRepository;
     private final GameCategoryRepository gameCategoryRepository;
     private final GameGenreRepository gameGenreRepository;
+    private final GamePurchaseRepository gamePurchaseRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
     private final MongoTemplate mongoTemplate;
@@ -291,6 +289,8 @@ public class GameServiceImpl implements GameService {
                 user.setBalance(user.getBalance() - game.getPrice());
                 user.getWishlistGames().remove(game.getId());
                 userService.updateUser(user);
+                GamePurchase transaction = new GamePurchase(null, user.getId(), game.getId(), game.getName(), Instant.now(), game.getPrice());
+                gamePurchaseRepository.save(transaction);
             }
             return "Your purchase was successful, Thanks for the purchase";
         }
