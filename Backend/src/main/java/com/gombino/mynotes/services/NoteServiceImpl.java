@@ -190,8 +190,9 @@ public class NoteServiceImpl implements NoteService {
         Note originalNote = noteRepository.findById(noteId).orElseThrow(() -> new NoSuchElementException("There is no note with this ID"));
         if (user.getId().equals(originalNote.getCreatorId())) {
             originalNote.setVisibilityOnlyForMe(visibility);
+            originalNote.setLastModified(Instant.now());
             noteRepository.save(originalNote);
-        }else {
+        } else {
             throw new PermissionDeniedException("You can modify just your own notes");
         }
         // send a message to frontend, update the note list due to the list was modified
