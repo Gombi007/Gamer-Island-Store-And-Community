@@ -11,4 +11,8 @@ public interface GameRepository extends MongoRepository<Game, String> {
 
     Page<Game> findAll(Pageable pageable);
 
+    Game findBySteamAppId(Long steamAppId);
+
+    Boolean existsBySteamAppId(Long steamAppId);
+
 }
