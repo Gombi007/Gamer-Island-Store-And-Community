@@ -91,4 +91,11 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.removeGameFromDbById(gameId));
     }
 
+    @Operation(description = "Remove a game from the DB")
+    @GetMapping("/change-game-adult-status/{gameId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> changeGameAdultStatus(@PathVariable String gameId, @RequestParam Boolean isAdult) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.changeGameAdultStatus(isAdult, gameId));
+    }
+
 }
