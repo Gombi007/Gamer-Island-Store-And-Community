@@ -24,6 +24,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -196,6 +197,7 @@ public class GameServiceImpl implements GameService {
     public String changeGameAdultStatus(Boolean isAdult, String gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("No game with this id: " + gameId));
         game.setIsAdult(isAdult);
+        game.setLastModified(Instant.now());
         gameRepository.save(game);
         return "Game adult status was changed to: " + isAdult;
     }
@@ -226,6 +228,7 @@ public class GameServiceImpl implements GameService {
         Boolean isOwner = game.getUsers().contains(user.getId());
         if (!isOnWishlist && !isOwner) {
             game.getWishlistUsers().add(user.getId());
+            game.setLastModified(Instant.now());
             user.getWishlistGames().add(game.getId());
             gameRepository.save(game);
             userService.updateUser(user);
@@ -247,6 +250,7 @@ public class GameServiceImpl implements GameService {
         Boolean isOnWishlist = game.getWishlistUsers().contains(user.getId());
         if (isOnWishlist) {
             game.getWishlistUsers().remove(user.getId());
+            game.setLastModified(Instant.now());
             user.getWishlistGames().remove(game.getId());
             gameRepository.save(game);
             userService.updateUser(user);
@@ -282,6 +286,7 @@ public class GameServiceImpl implements GameService {
                 user.getOwnedGames().add(game.getId());
                 game.getUsers().add(user.getId());
                 game.getWishlistUsers().remove(user.getId());
+                game.setLastModified(Instant.now());
                 gameRepository.save(game);
                 user.setBalance(user.getBalance() - game.getPrice());
                 user.getWishlistGames().remove(game.getId());
