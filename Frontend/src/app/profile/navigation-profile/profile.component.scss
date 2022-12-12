@@ -8,6 +8,7 @@ img {
     border-radius: 50%;
     box-shadow: 0 0 6px 2px var(--color-disabled);
     object-fit: cover;
+    cursor: pointer;
 }
 
 .username {
@@ -17,8 +18,7 @@ img {
 ::ng-deep .menu-user {
     margin-top: 0.3rem;
     margin-left: -1rem;
-    background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
-    box-shadow: 3px 4px 8px 1px var(--content-shadow-color);
+    background-image: linear-gradient(var(--menu-bg-deg), var(--menu-bg-color-1), var(--menu-bg-color-2));
 }
 
 
