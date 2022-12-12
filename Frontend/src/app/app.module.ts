@@ -12,15 +12,21 @@ import { CreateNotesComponent } from './notes/create-notes/create-notes.componen
 import { NavigationMobileNotesComponent } from './notes/navigation-mobile-notes/navigation-mobile-notes.component';
 import { NavigationDesktopNotesComponent } from './notes/navigation-desktop-notes/navigation-desktop-notes.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PendingComponent } from './pending/pending.component';
+import { PendingComponent } from './user-indicators/pending/pending.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/navigation-profile/profile.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RxStompService } from './config/websocket/rx-stomp.service';
 import { rxStompServiceFactory } from './config/websocket/rx-stomp-service-factory';
-import { WarnDialogComponent } from './warn-dialog/warn-dialog.component';
-import { NotificationComponent } from './notification/notification.component';
+import { WarnDialogComponent } from './user-indicators/warn-dialog/warn-dialog.component';
+import { NotificationComponent } from './user-indicators/notification/notification.component';
+import { ShowStoreComponent } from './store/show-store/show-store.component';
+import { NavigationDesktopStoreComponent } from './store/navigation-desktop-store/navigation-desktop-store.component';
+import { FilterStoreComponent } from './store/filter-store/filter-store.component';
+import { WishlistStoreComponent } from './store/wishlist-store/wishlist-store.component';
+import { CartStoreComponent } from './store/cart-store/cart-store.component';
+import { NavigationMobileStoreComponent } from './store/navigation-mobile-store/navigation-mobile-store.component';
 
 
 
@@ -38,7 +44,13 @@ import { NotificationComponent } from './notification/notification.component';
     EditProfileComponent,
     SafePipe,
     WarnDialogComponent,
-    NotificationComponent
+    NotificationComponent,
+    ShowStoreComponent,
+    NavigationDesktopStoreComponent,
+    FilterStoreComponent,
+    WishlistStoreComponent,
+    CartStoreComponent,
+    NavigationMobileStoreComponent,
   ],
   imports: [
     BrowserModule,

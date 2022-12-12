@@ -12,6 +12,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
   isNotesRoute: boolean = false;
+  isStoreRoute: boolean = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -27,6 +28,7 @@ export class NavigationComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         let currentUrl = event.urlAfterRedirects;
         this.isNotesRoute = currentUrl.startsWith('/notes/');
+        this.isStoreRoute = currentUrl.startsWith('/store/');
       }
     });
   }

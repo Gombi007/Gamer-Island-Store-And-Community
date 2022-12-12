@@ -9,7 +9,7 @@ import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 import { RxStompService } from '../../config/websocket/rx-stomp.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { WarnDialogComponent } from 'src/app/warn-dialog/warn-dialog.component';
+import { WarnDialogComponent } from 'src/app/user-indicators/warn-dialog/warn-dialog.component';
 
 @Component({
   selector: 'app-show-notes',
@@ -64,12 +64,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     if (favOrMyNotes === '' || favOrMyNotes === 'community') {
       this.noteSub = this.noteService.getPublicNotes(page).subscribe({
         next: (data) => {
-          if (this.notes.length > 0) {
-            this.notes = this.notes.concat(data.page);
-          }
-          if (this.notes.length === 0) {
-            this.notes = data.page;
-          }
+          this.notes.length > 0 ? this.notes = this.notes.concat(data.page) : this.notes = data.page;
           this.pagInfo = data.paginationInfo;
           this.isPending = false;
         },
@@ -84,12 +79,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     if (favOrMyNotes === 'favorites') {
       this.noteSub = this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes, page).subscribe({
         next: (data) => {
-          if (this.notes.length > 0) {
-            this.notes = this.notes.concat(data.page);
-          }
-          if (this.notes.length === 0) {
-            this.notes = data.page;
-          }
+          this.notes.length > 0 ? this.notes = this.notes.concat(data.page) : this.notes = data.page;
           this.pagInfo = data.paginationInfo;
           this.isPending = false;
         },
@@ -104,12 +94,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     if (favOrMyNotes === 'my-notes') {
       this.noteSub = this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes, page).subscribe({
         next: (data) => {
-          if (this.notes.length > 0) {
-            this.notes = this.notes.concat(data.page);
-          }
-          if (this.notes.length === 0) {
-            this.notes = data.page;
-          }
+          this.notes.length > 0 ? this.notes = this.notes.concat(data.page) : this.notes = data.page;
           this.pagInfo = data.paginationInfo;
           this.isPending = false;
         },

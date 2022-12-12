@@ -151,6 +151,7 @@ public class GameServiceImpl implements GameService {
 
         //Create the query
         Query query = new Query();
+        query.fields().include("name", "price", "headerImage", "genres", "platforms","shortDescription");
         Pageable paging = PageRequest.of(page, size, Sort.by(order));
         query.addCriteria(aggregatedCriteria).with(paging);
 

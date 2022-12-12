@@ -36,4 +36,9 @@ $my-theme-dark: mat.define-dark-theme((color: (primary: $primary,
   --content-bg-color-2: rgb(32, 32, 32);
   --content-bg-deg: 90deg;
   --content-shadow-color: rgb(17, 17, 17);
+
+  //all menu colors
+  --menu-bg-color-1: rgb(0, 0, 0);
+  --menu-bg-color-2: rgb(75, 75, 75);
+  --menu-bg-deg: 0deg;
 }

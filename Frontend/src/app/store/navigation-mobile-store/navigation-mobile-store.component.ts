@@ -4,11 +4,12 @@ import { map, Observable, shareReplay } from 'rxjs';
 import { FIXED_SIZES } from 'src/app/config/strings.enum';
 
 @Component({
-  selector: 'app-navigation-mobile-notes',
-  templateUrl: './navigation-mobile-notes.component.html',
-  styleUrls: ['./navigation-mobile-notes.component.scss']
+  selector: 'app-navigation-mobile-store',
+  templateUrl: './navigation-mobile-store.component.html',
+  styleUrls: ['./navigation-mobile-store.component.scss']
 })
-export class NavigationMobileNotesComponent implements OnInit {
+export class NavigationMobileStoreComponent implements OnInit {
+
   deviceHeight = 0;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

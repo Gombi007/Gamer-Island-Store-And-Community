@@ -1,0 +1,19 @@
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+a {
+    margin: calc(3vw - 1rem);
+}
+
+p {
+    margin: -0.2rem 0 -0.4rem 0;
+    font-size: small;
+    color: var(--color-accent);
+}
+
+.active-link-icon p,
+.active-link-icon .mat-icon {
+    color: var(--color-success);
+}

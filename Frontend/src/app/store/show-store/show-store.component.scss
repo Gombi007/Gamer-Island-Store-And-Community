@@ -1,0 +1,125 @@
+.container {
+    width: 100%;
+    height: calc(100% - 64px);
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+}
+
+.flex-container {
+    height: max-content;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 60px;
+}
+
+.game {
+    width: min(97%, 350px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
+    box-shadow: 0 0 6px 5px var(--content-shadow-color);
+    color: var(--color-accent);
+}
+
+.details {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+
+}
+
+.name {
+    width: 100%;
+    padding: 0.5rem 0 0.5rem 0;
+    margin: 0;
+    font-weight: 500;
+    text-align: center;
+}
+
+.short-description {
+    width: 96%;
+    text-align: left;
+    margin: 0;
+}
+
+.game img {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.platforms {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem
+}
+
+.genres {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+}
+
+.genres p {
+    padding: 0;
+    margin: 0;
+    width: fit-content;
+    background-color: var(--color-disabled);
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.genres p:hover {
+    background-color: var(--color-accent);
+    color: var(--color-disabled);
+}
+
+.price {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.price h3 {
+    padding: 0 1rem 0 1rem;
+    border-radius: 3rem;
+    margin: 0 1rem 1rem 0;
+    box-shadow: 0 0 10px 1px var(--color-disabled) inset;
+}
+
+
+.prevent-select {
+    /* Safari */
+    -webkit-user-select: none;
+    /* IE 10 and IE 11 */
+    -ms-user-select: none;
+    /* Standard syntax */
+    user-select: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        -ms-overflow-style: none;
+        /* Internet Explorer 10+ */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .container::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
+    }
+}
