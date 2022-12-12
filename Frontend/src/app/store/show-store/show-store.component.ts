@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-store.component.scss']
 })
 export class ShowStoreComponent implements OnInit {
+  isPending = false;
 
   constructor() { }
 

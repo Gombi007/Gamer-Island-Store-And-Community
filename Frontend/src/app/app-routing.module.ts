@@ -5,7 +5,10 @@ import { LoginComponent } from './login/login.component';
 import { CreateNotesComponent } from './notes/create-notes/create-notes.component';
 import { ShowNotesComponent } from './notes/show-notes/show-notes.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { CartStoreComponent } from './store/cart-store/cart-store.component';
+import { FilterStoreComponent } from './store/filter-store/filter-store.component';
 import { ShowStoreComponent } from './store/show-store/show-store.component';
+import { WishlistStoreComponent } from './store/wishlist-store/wishlist-store.component';
 
 const routes: Routes = [
   {
@@ -48,6 +51,21 @@ const routes: Routes = [
       {
         path: 'store/show/all',
         component: ShowStoreComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'store/show/filter',
+        component: FilterStoreComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'store/show/wishlist',
+        component: WishlistStoreComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'store/show/cart',
+        component: CartStoreComponent,
         canActivate: [AuthGuard]
       },
       {

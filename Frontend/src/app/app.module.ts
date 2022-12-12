@@ -23,6 +23,10 @@ import { WarnDialogComponent } from './user-indicators/warn-dialog/warn-dialog.c
 import { NotificationComponent } from './user-indicators/notification/notification.component';
 import { ShowStoreComponent } from './store/show-store/show-store.component';
 import { NavigationDesktopStoreComponent } from './store/navigation-desktop-store/navigation-desktop-store.component';
+import { FilterStoreComponent } from './store/filter-store/filter-store.component';
+import { WishlistStoreComponent } from './store/wishlist-store/wishlist-store.component';
+import { CartStoreComponent } from './store/cart-store/cart-store.component';
+import { NavigationMobileStoreComponent } from './store/navigation-mobile-store/navigation-mobile-store.component';
 
 
 
@@ -42,7 +46,11 @@ import { NavigationDesktopStoreComponent } from './store/navigation-desktop-stor
     WarnDialogComponent,
     NotificationComponent,
     ShowStoreComponent,
-    NavigationDesktopStoreComponent
+    NavigationDesktopStoreComponent,
+    FilterStoreComponent,
+    WishlistStoreComponent,
+    CartStoreComponent,
+    NavigationMobileStoreComponent
   ],
   imports: [
     BrowserModule,
