@@ -14,4 +14,10 @@ export enum STRINGS {
 
     API_GAMES = "api/games/",
 
+
+}
+
+export enum FIXED_SIZES {
+    MOBILE_MENU_HEIGHT_FROM_BOTTOM = 60
+
 }
