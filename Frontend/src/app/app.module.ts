@@ -50,7 +50,7 @@ import { NavigationMobileStoreComponent } from './store/navigation-mobile-store/
     FilterStoreComponent,
     WishlistStoreComponent,
     CartStoreComponent,
-    NavigationMobileStoreComponent
+    NavigationMobileStoreComponent,
   ],
   imports: [
     BrowserModule,
