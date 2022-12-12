@@ -1,5 +1,5 @@
-<div class="container firefox-scrollbar" infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="3"
-    (scrolled)="onScrollDown($event)">
+<div class="container firefox-scrollbar prevent-select" infinite-scroll [scrollWindow]="false"
+    [infiniteScrollDistance]="3" (scrolled)="onScrollDown($event)">
 
     <div class="note" *ngFor="let note of notes; let i = index">
         <div class="creator-info">
