@@ -64,12 +64,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     if (favOrMyNotes === '' || favOrMyNotes === 'community') {
       this.noteSub = this.noteService.getPublicNotes(page).subscribe({
         next: (data) => {
-          if (this.notes.length > 0) {
-            this.notes = this.notes.concat(data.page);
-          }
-          if (this.notes.length === 0) {
-            this.notes = data.page;
-          }
+          this.notes.length > 0 ? this.notes = this.notes.concat(data.page) : this.notes = data.page;
           this.pagInfo = data.paginationInfo;
           this.isPending = false;
         },
@@ -84,12 +79,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     if (favOrMyNotes === 'favorites') {
       this.noteSub = this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes, page).subscribe({
         next: (data) => {
-          if (this.notes.length > 0) {
-            this.notes = this.notes.concat(data.page);
-          }
-          if (this.notes.length === 0) {
-            this.notes = data.page;
-          }
+          this.notes.length > 0 ? this.notes = this.notes.concat(data.page) : this.notes = data.page;
           this.pagInfo = data.paginationInfo;
           this.isPending = false;
         },
@@ -104,12 +94,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     if (favOrMyNotes === 'my-notes') {
       this.noteSub = this.noteService.getFavoriteNotesOrMyNotes(favOrMyNotes, page).subscribe({
         next: (data) => {
-          if (this.notes.length > 0) {
-            this.notes = this.notes.concat(data.page);
-          }
-          if (this.notes.length === 0) {
-            this.notes = data.page;
-          }
+          this.notes.length > 0 ? this.notes = this.notes.concat(data.page) : this.notes = data.page;
           this.pagInfo = data.paginationInfo;
           this.isPending = false;
         },
