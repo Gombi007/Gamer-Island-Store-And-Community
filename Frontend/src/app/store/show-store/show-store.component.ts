@@ -17,15 +17,15 @@ export class ShowStoreComponent implements OnInit {
   constructor(private storeService: StoreService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.getAllDefaultGames();
+    this.getAllDefaultGames(0);
   }
 
-  getAllDefaultGames() {
+  getAllDefaultGames(page: number) {
     this.isPending = true;
-    this.storeService.getAllDefaultGames(0).subscribe({
+    this.storeService.getAllDefaultGames(page).subscribe({
       next: (data) => {
-        this.defaultGames = data.page;
         this.pagInfo = data.paginationInfo;
+        this.defaultGames.length > 0 ? this.defaultGames = this.defaultGames.concat(data.page) : this.defaultGames = data.page;
         this.isPending = false;
       },
       error: (response) => {
@@ -34,6 +34,13 @@ export class ShowStoreComponent implements OnInit {
         this.isPending = false;
       }
     });
+  }
+
+  onScrollDown(event: any) {
+
+    if (this.pagInfo.totalPages - this.pagInfo.actualPage > 1) {
+      this.getAllDefaultGames(++this.pagInfo.actualPage);
+    }
   }
 
 }
