@@ -1,3 +1,27 @@
-<p>show-store works!</p>
+<div class="container firefox-scrollbar prevent-select">
+
+    <div class="game" *ngFor="let game of defaultGames; let i = index">
+        <img src="{{game.headerImage}}" alt="game-header-img">
+        <h3 class="name">{{game.name}}</h3>
+        <p class="short-description">{{game.shortDescription}}</p>
+        <div class="platforms">
+            <ng-container *ngFor="let platform of game.platforms">
+                <mat-icon *ngIf="platform ==='Windows'" svgIcon="windows"></mat-icon>
+                <mat-icon *ngIf="platform ==='Mac'" svgIcon="mac"></mat-icon>
+                <mat-icon *ngIf="platform ==='Linux'" svgIcon="linux"></mat-icon>
+            </ng-container>
+        </div>
+        <div class="genres">
+            <ng-container *ngFor="let genre of game.genres">
+                <p>{{genre}}</p>
+            </ng-container>
+        </div>
+        <div class="price">
+            <h3>{{game.price}} €</h3>
+        </div>
+    </div>
+    <div class="just-bottom-margin"></div>
+</div>
+
 <app-pending *ngIf="isPending"></app-pending>
 <app-navigation-mobile-store></app-navigation-mobile-store>

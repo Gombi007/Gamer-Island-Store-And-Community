@@ -1,0 +1,98 @@
+.container {
+    width: 100%;
+    height: calc(100% - 64px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+
+.game {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: min(96%, 680px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
+    box-shadow: 0 0 6px 5px var(--content-shadow-color);
+    color: var(--color-accent);
+    gap: 0.7rem;
+}
+
+.name {
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+}
+
+.short-description {
+    text-align: center;
+    margin: 0 0.3rem 0 0.3rem;
+}
+
+.game img {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.platforms {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.genres {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.genres p {
+    padding: 0;
+    margin: 0;
+    width: fit-content;
+    background-color: var(--color-disabled);
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.genres p:hover {
+    background-color: var(--color-accent);
+    color: var(--color-disabled);
+}
+
+.price {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.price h3 {
+    padding: 0 1rem 0 1rem;
+    border-radius: 3rem;
+    margin: 0 1rem 1rem 0;
+    box-shadow: 0 0 10px 1px var(--color-disabled) inset;
+}
+
+
+.prevent-select {
+    /* Safari */
+    -webkit-user-select: none;
+    /* IE 10 and IE 11 */
+    -ms-user-select: none;
+    /* Standard syntax */
+    user-select: none;
+}
+
+
+.just-bottom-margin {
+    margin-bottom: 4rem;
+}
