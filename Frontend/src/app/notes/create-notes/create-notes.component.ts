@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable, timer } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
-import { WarnDialogComponent } from 'src/app/warn-dialog/warn-dialog.component';
+import { WarnDialogComponent } from 'src/app/user-indicators/warn-dialog/warn-dialog.component';
 import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 

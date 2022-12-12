@@ -9,7 +9,7 @@ import { noteDto } from '../config/note.model';
 import { NoteService } from '../config/note.service';
 import { RxStompService } from '../../config/websocket/rx-stomp.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { WarnDialogComponent } from 'src/app/warn-dialog/warn-dialog.component';
+import { WarnDialogComponent } from 'src/app/user-indicators/warn-dialog/warn-dialog.component';
 
 @Component({
   selector: 'app-show-notes',
