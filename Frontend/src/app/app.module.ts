@@ -21,6 +21,7 @@ import { RxStompService } from './config/websocket/rx-stomp.service';
 import { rxStompServiceFactory } from './config/websocket/rx-stomp-service-factory';
 import { WarnDialogComponent } from './user-indicators/warn-dialog/warn-dialog.component';
 import { NotificationComponent } from './user-indicators/notification/notification.component';
+import { ShowStoreComponent } from './store/show-store/show-store.component';
 
 
 
@@ -38,7 +39,8 @@ import { NotificationComponent } from './user-indicators/notification/notificati
     EditProfileComponent,
     SafePipe,
     WarnDialogComponent,
-    NotificationComponent
+    NotificationComponent,
+    ShowStoreComponent
   ],
   imports: [
     BrowserModule,

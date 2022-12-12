@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { CreateNotesComponent } from './notes/create-notes/create-notes.component';
 import { ShowNotesComponent } from './notes/show-notes/show-notes.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { ShowStoreComponent } from './store/show-store/show-store.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
       {
         path: 'profile/edit-profile',
         component: EditProfileComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'store',
+        component: ShowStoreComponent,
         canActivate: [AuthGuard]
       },
       {

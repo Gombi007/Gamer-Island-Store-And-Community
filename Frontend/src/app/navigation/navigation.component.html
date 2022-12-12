@@ -6,6 +6,7 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/notes" (click)="drawer.toggle()" routerLinkActive="active-link">Community</a>
+      <a mat-list-item routerLink="/store" (click)="drawer.toggle()" routerLinkActive="active-link">Store</a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -28,6 +29,9 @@
           <div class="menu-main" [class.hidden]="isHandset$ | async">
             <a mat-button color="accent" routerLink="/notes" routerLinkActive="active-link">
               Community
+            </a>
+            <a mat-button color="accent" routerLink="/store" routerLinkActive="active-link">
+              Store
             </a>
           </div>
 
