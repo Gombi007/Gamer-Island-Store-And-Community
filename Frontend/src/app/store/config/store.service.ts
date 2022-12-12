@@ -12,7 +12,7 @@ import { storeGame } from "./store-game.model";
 export class StoreService {
 
     filter: storeFilter = new storeFilter();
-    defaultSize: number = 24;
+    defaultSize: number = 18;
 
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 
