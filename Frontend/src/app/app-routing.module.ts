@@ -42,6 +42,11 @@ const routes: Routes = [
       },
       {
         path: 'store',
+        redirectTo: 'store/show/all',
+        pathMatch: 'full',
+      },
+      {
+        path: 'store/show/all',
         component: ShowStoreComponent,
         canActivate: [AuthGuard]
       },
