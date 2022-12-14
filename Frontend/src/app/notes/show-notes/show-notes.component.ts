@@ -260,7 +260,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   }
 
   stopVideoWhenScrollStart() {
-    if (!this.player.paused) {
+    if (this.player !== undefined && !this.player.paused) {
       this.player.pause();
     }
   }
