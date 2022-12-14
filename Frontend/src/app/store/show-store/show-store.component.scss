@@ -18,7 +18,7 @@
 }
 
 .game {
-    width: min(97%, 350px);
+    width: min(96%, 350px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -112,6 +112,7 @@
 
 @media only screen and (max-width: 600px) {
     .container {
+        height: calc(100% - 56px);
         -ms-overflow-style: none;
         /* Internet Explorer 10+ */
         scrollbar-width: none;
@@ -121,5 +122,9 @@
     .container::-webkit-scrollbar {
         display: none;
         /* Safari and Chrome */
+    }
+
+    .game {
+        width: min(96%, 400px);
     }
 }
