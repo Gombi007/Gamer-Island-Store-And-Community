@@ -1,12 +1,11 @@
 <div class="container-small" *ngIf="!isShowFullFilter">
-    <h4>Filter result: 12333 Game</h4>
+    <h4>Filter result: {{allFilterResult}} Games</h4>
     <div class="open" (click)="changeCloseOrOpenFilterPanel()">
         <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_down"></mat-icon>
     </div>
 </div>
 <div class="container" *ngIf="isShowFullFilter">
     <form [formGroup]="filterForm">
-
         <div class="sort">
             <mat-form-field appearance="outline" color="accent" class="mat-field">
                 <mat-label>Sort by</mat-label>
@@ -20,12 +19,12 @@
                 <mat-label>Direction</mat-label>
                 <mat-select disableOptionCentering formControlName="isAscending">
                     <ng-container *ngIf="formControl['sortByField'].value === 'name'">
-                        <mat-option value="true">A-Z</mat-option>
-                        <mat-option value="false">Z-A</mat-option>
+                        <mat-option value=true>A-Z</mat-option>
+                        <mat-option value=false>Z-A</mat-option>
                     </ng-container>
                     <ng-container *ngIf="formControl['sortByField'].value === 'price'">
-                        <mat-option value="true">Lowest</mat-option>
-                        <mat-option value="false">Highest</mat-option>
+                        <mat-option value=true>Lowest</mat-option>
+                        <mat-option value=false>Highest</mat-option>
                     </ng-container>
                 </mat-select>
             </mat-form-field>
@@ -74,8 +73,12 @@
             <mat-checkbox formControlName="isHideMyWishlistGames">Hide My Wislhist Games</mat-checkbox>
         </div>
     </form>
-    <div class="close" (click)="changeCloseOrOpenFilterPanel()">
-        <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_up"></mat-icon>
+    <div class="container-small">
+        <h4>Filter result: {{allFilterResult}} Games</h4>
+        <div class="close" (click)="changeCloseOrOpenFilterPanel()">
+            <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_up"></mat-icon>
+        </div>
+
     </div>
 </div>
 <app-pending *ngIf="isPending"></app-pending>
