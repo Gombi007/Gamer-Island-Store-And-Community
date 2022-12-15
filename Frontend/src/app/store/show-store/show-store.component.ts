@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { GlobalService } from 'src/app/config/global.service';
 import { PagInfo } from 'src/app/config/pag-info.model';
 import { storeGame } from '../config/store-game.model';
@@ -13,10 +14,16 @@ export class ShowStoreComponent implements OnInit {
   isPending = false;
   defaultGames: storeGame[] = [];
   pagInfo: PagInfo = new PagInfo(0, 0, 0);
+  isFilterOn: boolean = false;
 
-  constructor(private storeService: StoreService, private globalService: GlobalService) { }
+  constructor(private storeService: StoreService, private globalService: GlobalService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(
+      (param: Params) => {
+        param['allOrFilter'] === 'filter' ? this.isFilterOn = true : this.isFilterOn = false;
+      }
+    );
     this.getAllDefaultGames(0);
   }
 
