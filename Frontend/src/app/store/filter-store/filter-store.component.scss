@@ -1,0 +1,24 @@
+.container {
+    width: 100%;
+    height: 150px;
+    background-color: rgb(41, 45, 65);
+    display: flex;
+    justify-content: center;
+
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.mat-field-sort {
+    width: 5rem;
+    padding: 0 !important;
+}
+
+.mat-field-direction {
+    width: 7.5rem;
+    padding: 0 !important;
+}

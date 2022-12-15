@@ -1,3 +1,30 @@
-<p>filter-store works!</p>
+<div class="container">
+    <form [formGroup]="filterForm">
+
+        <mat-form-field appearance="outline" color="accent" class="mat-field-sort">
+            <mat-label>Sort by</mat-label>
+            <mat-select disableOptionCentering formControlName="sortByField">
+                <mat-option value="name">Name</mat-option>
+                <mat-option value="price">Price</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="mat-field-direction">
+            <mat-label>Direction</mat-label>
+            <mat-select disableOptionCentering formControlName="isAscending">
+                <ng-container *ngIf="formControl['sortByField'].value === 'name'">
+                    <mat-option value="true">A-Z</mat-option>
+                    <mat-option value="false">Z-A</mat-option>
+                </ng-container>
+                <ng-container *ngIf="formControl['sortByField'].value === 'price'">
+                    <mat-option value="true">Lowest</mat-option>
+                    <mat-option value="false">Highest</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button type="button" (click)="collectFormData()">Filter</button>
+    </form>
+</div>
 <app-pending *ngIf="isPending"></app-pending>
 <app-navigation-mobile-store></app-navigation-mobile-store>
