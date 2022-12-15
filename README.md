@@ -2,9 +2,9 @@
 
 # Gamer Island: Store And Community
 
-**This is a mobile first  (working on desktop well too) gaming community and pc-gaming webshop. **
+**This is a mobile first  (working on desktop well too) gaming community and pc-gaming webshop.**
 
-**I would like to mix the biggest pc gaming store ([Steam](https://store.steampowered.com/)) and the biggest social media platform ([Facebook](https://www.facebook.com/)) best properties**
+**I would like to mix the biggest pc gaming store ([Steam](https://store.steampowered.com/)) and the biggest social media platform ([Facebook](https://www.facebook.com/)) best properties.**
 
 **This app was made due to improve my development skills only, you can not purchase real gaming key on this site.**
 
