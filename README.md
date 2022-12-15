@@ -70,9 +70,9 @@
 ​      ***Profile***
 
  <p align="center">  
-  <img width="20%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic005.JPG">
-  <img width="20%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic009.JPG"> 
-  <img width="20%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic008.JPG"> 
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic005.JPG">
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic009.jpg"> 
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic008.JPG"> 
   <p>
 
 ​         
