@@ -11,5 +11,9 @@ export class storeFilter {
     isHideMyOwnGames: boolean = false;
     isHideMyWishlistGames: boolean = false;
     price: number = 100;
+
+    public constructor(init?: Partial<storeFilter>) {
+        Object.assign(this, init);
+    }
 }
 

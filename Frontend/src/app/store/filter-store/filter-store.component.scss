@@ -1,0 +1,78 @@
+.container,
+.container-small {
+    width: 100%;
+    background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-small {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container-small h4 {
+    margin: 0.4rem;
+}
+
+.close,
+.open {
+    align-self: flex-end;
+    margin-right: 2rem;
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+form {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+.sort,
+.filter,
+.checkboxes {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 1rem;
+}
+
+.price label {
+    margin-left: 1rem;
+}
+
+
+
+// Mat-field style
+.mat-field {
+    width: 8rem;
+    padding: 0 !important;
+}
+
+::ng-deep .mat-slider {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/*
+::ng-deep .mat-form-field-wrapper {
+    padding-top: 0 !important;
+    padding-bottom: 0.2rem !important;
+    margin: 0.3rem !important;
+}
+
+::ng-deep .mat-form-field-label {
+    padding-top: -1.5rem !important;
+}
+
+
+::ng-deep .mat-form-field-infix {
+     margin: 1px !important;
+}
+*/

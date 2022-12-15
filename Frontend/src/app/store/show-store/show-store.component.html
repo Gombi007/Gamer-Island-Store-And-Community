@@ -1,3 +1,4 @@
+<app-filter-store *ngIf="isFilterOn"></app-filter-store>
 <div class="container firefox-scrollbar prevent-select" infinite-scroll [scrollWindow]="false"
     [infiniteScrollDistance]="3" (scrolled)="onScrollDown($event)">
     <div class="flex-container">

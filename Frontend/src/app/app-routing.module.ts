@@ -49,25 +49,28 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'store/show/all',
+        path: 'store/show/:allOrFilter',
         component: ShowStoreComponent,
         canActivate: [AuthGuard]
       },
       {
         path: 'store/show/filter',
-        component: FilterStoreComponent,
+        component: ShowStoreComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: 'store/show/wishlist',
+        path: 'store/wishlist',
         component: WishlistStoreComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: 'store/show/cart',
+        path: 'store/cart',
         component: CartStoreComponent,
         canActivate: [AuthGuard]
       },
+
+
+
       {
         path: '**',
         redirectTo: 'login'

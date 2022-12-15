@@ -53,6 +53,11 @@
   align-items: center;
 }
 
+.menu-logo img {
+  border-radius: 50%;
+  box-shadow: 0 0 6px 4px var(--color-primary);
+}
+
 .menu-right {
   width: 47%;
   display: flex;

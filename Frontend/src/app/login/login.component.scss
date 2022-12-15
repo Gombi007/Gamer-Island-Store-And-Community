@@ -7,8 +7,10 @@
 .logo {
     display: block;
     margin: 0 auto;
-    width: min(30%, 80px);
+    width: min(30%, 150px);
     margin-top: 20px;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 4px var(--color-primary);
 }
 
 form {

@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { Observable, Subscription } from 'rxjs';
+import { delay, from, Observable, Subscription } from 'rxjs';
 import { AuthorizationService } from 'src/app/config/authorization.service';
 import { GlobalService } from 'src/app/config/global.service';
 import { PagInfo } from 'src/app/config/pag-info.model';
@@ -26,6 +26,7 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
   noteSub: Subscription;
   noteSubscriptions: Subscription[] = [];
   private topicSubscription: Subscription;
+  player: HTMLVideoElement;
 
   constructor(private noteService: NoteService, private route: ActivatedRoute, private router: Router, private globalService: GlobalService, private authService: AuthorizationService, private rxStompService: RxStompService, private dialogRef: MatDialog) { }
 
@@ -240,15 +241,6 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
     }
   }
 
-  playVideo(event: any) {
-    let video = event.target;
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause()
-    }
-  }
-
   private openWarnDialog(warningText1: string, warningText2: string): Observable<any> {
     let dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -261,6 +253,16 @@ export class ShowNotesComponent implements OnInit, OnDestroy {
 
     let dialog = this.dialogRef.open(WarnDialogComponent, dialogConfig);
     return dialog.afterClosed();
+  }
+
+  changeVideoRef(event: any) {
+    this.player = event.target;
+  }
+
+  stopVideoWhenScrollStart() {
+    if (this.player !== undefined && !this.player.paused) {
+      this.player.pause();
+    }
   }
 
   ngOnDestroy(): void {
