@@ -45,8 +45,8 @@
   ***Login & Register***
 
  <p align="center">  
-  <img width="30%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic001.JPG">
-  <img width="30%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic002.JPG">
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic001.JPG">
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic002.JPG">
 </p> 
 
 
@@ -54,15 +54,15 @@
 ***Community***
 
  <p align="center">  
-  <img width="30%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic003.JPG">
-  <img width="30%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic004.JPG"> 
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic003.JPG">
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic004.JPG"> 
   <p>
 
 ​         ***Store***
 
  <p align="center">  
-  <img width="30%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic006.JPG">
-  <img width="30%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic007.JPG"> 
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic006.JPG">
+  <img width="33%" src="https://github.com/Gombi007/My-Notes/blob/main/Resources/pic007.JPG"> 
   <p>
 
 ​         
