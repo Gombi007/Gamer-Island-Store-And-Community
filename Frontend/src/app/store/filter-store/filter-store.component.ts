@@ -15,8 +15,7 @@ export class FilterStoreComponent implements OnInit {
   languages: string[] = ['English', 'Hungarian', 'German'];
   genres: string[] = ['Action', 'Indie', 'RPG'];
   categories: string[] = ['Steam Cloud', 'Full controller support', 'MMO'];
-  selectedPrice = 70;
-
+  isShowFullFilter = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -34,7 +33,7 @@ export class FilterStoreComponent implements OnInit {
       'isHideFreeGames': new FormControl(false),
       'isHideMyOwnGames': new FormControl(false),
       'isHideMyWishlistGames': new FormControl(false),
-      'price': new FormControl(70),
+      'price': new FormControl(75),
     });
   }
 
@@ -54,10 +53,14 @@ export class FilterStoreComponent implements OnInit {
     actualPrice === 0 ? resultText = 'Free' : '';
     actualPrice === 75 ? resultText = 'Any Price' : '';
     actualPrice > 0 && actualPrice < 75 ? resultText = 'Under ' + actualPrice + ' €' : '';
-
-
     return resultText;
   }
+
+  changeCloseOrOpenFilterPanel() {
+    this.isShowFullFilter = !this.isShowFullFilter;
+  }
+
+
 
 
 }

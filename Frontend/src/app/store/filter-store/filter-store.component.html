@@ -1,4 +1,10 @@
-<div class="container">
+<div class="container-small" *ngIf="!isShowFullFilter">
+    <h4>Filter result: 12333 Game</h4>
+    <div class="open" (click)="changeCloseOrOpenFilterPanel()">
+        <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_down"></mat-icon>
+    </div>
+</div>
+<div class="container" *ngIf="isShowFullFilter">
     <form [formGroup]="filterForm">
 
         <div class="sort">
@@ -67,8 +73,10 @@
             <mat-checkbox formControlName="isHideMyOwnGames">Hide My Games </mat-checkbox>
             <mat-checkbox formControlName="isHideMyWishlistGames">Hide My Wislhist Games</mat-checkbox>
         </div>
-        <button mat-raised-button type="button" (click)="collectFormData()">Filter</button>
     </form>
+    <div class="close" (click)="changeCloseOrOpenFilterPanel()">
+        <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_up"></mat-icon>
+    </div>
 </div>
 <app-pending *ngIf="isPending"></app-pending>
 <app-navigation-mobile-store></app-navigation-mobile-store>
