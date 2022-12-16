@@ -41,4 +41,8 @@ $my-theme-dark: mat.define-dark-theme((color: (primary: $primary,
   --menu-bg-color-1: rgb(0, 0, 0);
   --menu-bg-color-2: rgb(75, 75, 75);
   --menu-bg-deg: 0deg;
+
+  //Top menu height
+
+  --top-menu-height: 3rem;
 }
