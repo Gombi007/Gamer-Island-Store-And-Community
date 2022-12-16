@@ -28,6 +28,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  height: var(--top-menu-height);
 }
 
 //menu
@@ -56,6 +57,7 @@
 .menu-logo img {
   border-radius: 50%;
   box-shadow: 0 0 6px 4px var(--color-primary);
+  height: calc(var(--top-menu-height) - 0.2rem)
 }
 
 .menu-right {
