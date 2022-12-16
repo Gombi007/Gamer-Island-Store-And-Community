@@ -15,10 +15,16 @@ export class StoreService {
     defaultStoreFilter = new storeFilter();
     defaultSize: number = 18;
     allFilterResult = 0;
+    showFullFilterWindow: boolean = false;
 
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 
     getAllDefaultGames(page: number, storeFilter: storeFilter = this.defaultStoreFilter) {
         return this.http.post<{ 'page': storeGame[], 'paginationInfo': PagInfo }>(STRINGS.SERVER_URL + STRINGS.API_GAMES + '?page=' + page + '&size=' + this.defaultSize, storeFilter, this.authorServie.headerWithTokenForRequests());
     }
+
+    getGenresAndLanguagesAndCategories() {
+        return this.http.get<{ 'languages': string[], 'genres': string[], 'categories': string[] }>(STRINGS.SERVER_URL + STRINGS.API_GAMES + STRINGS.API_GAMES_LANGUAGES_GENRES_CATEGORIES, this.authorServie.headerWithTokenForRequests());
+    }
+
 }

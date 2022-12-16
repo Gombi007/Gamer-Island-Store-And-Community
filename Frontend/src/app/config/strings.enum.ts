@@ -13,11 +13,12 @@ export enum STRINGS {
     API_PROFILE_CHANGE_PASSWORD = "api/profile/change-password/",
 
     API_GAMES = "api/games/",
+    API_GAMES_LANGUAGES_GENRES_CATEGORIES = "genres-languages-categories",
 
 
 }
 
 export enum FIXED_SIZES {
-    MOBILE_MENU_HEIGHT_FROM_BOTTOM = 60
-
+    // The mobile menu height current is 3 rem (1rem == 16px)
+    MOBILE_MENU_HEIGHT_FROM_BOTTOM = 50
 }

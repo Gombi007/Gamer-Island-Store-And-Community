@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
-import { filter, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { GlobalService } from 'src/app/config/global.service';
 import { storeFilter } from '../config/store-filter.model';
 import { StoreService } from '../config/store.service';
 
@@ -16,12 +17,12 @@ export class FilterStoreComponent implements OnInit {
   languages: string[] = ['English', 'Hungarian', 'German'];
   genres: string[] = ['Action', 'Indie', 'RPG'];
   categories: string[] = ['Steam Cloud', 'Full controller support', 'MMO'];
-  isShowFullFilter = false;
   formValueChangeSub: Subscription;
 
-  constructor(private storeService: StoreService) { }
+  constructor(private storeService: StoreService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    this.getGenresAndLanguagesAndCategories();
     this.createFilterForm();
     this.formValueChangeSub = this.filterForm.valueChanges.subscribe((data) => {
       let filter: storeFilter = new storeFilter(data);
@@ -32,7 +33,7 @@ export class FilterStoreComponent implements OnInit {
   createFilterForm() {
     return this.filterForm = new FormGroup({
       'sortByField': new FormControl('name'),
-      'isAscending': new FormControl(true),
+      'isAscending': new FormControl('true'),
       'languages': new FormControl(['English']),
       'genres': new FormControl([]),
       'opSystems': new FormControl([]),
@@ -65,11 +66,29 @@ export class FilterStoreComponent implements OnInit {
     return this.storeService.allFilterResult;
   }
 
-  changeCloseOrOpenFilterPanel() {
-    this.isShowFullFilter = !this.isShowFullFilter;
+  get isShowFullFilterWindow(): boolean {
+    return this.storeService.showFullFilterWindow;
   }
 
+  changeCloseOrOpenFilterPanel() {
+    this.storeService.showFullFilterWindow = !this.isShowFullFilterWindow;
+  }
 
-
+  getGenresAndLanguagesAndCategories() {
+    this.isPending = true
+    this.storeService.getGenresAndLanguagesAndCategories().subscribe({
+      next: (data) => {
+        this.languages = data.languages;
+        this.genres = data.genres;
+        this.categories = data.categories;
+        this.isPending = false;
+      },
+      error: (response) => {
+        this.globalService.isExpiredToken(response);
+        console.log(response);
+        this.isPending = false;
+      }
+    });
+  }
 
 }

@@ -19,6 +19,7 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
   isFilterOn: boolean = false;
   subscriptions: Subscription[] = [];
   filterResult: storeFilter;
+  isShowFilter = false;
 
   constructor(private storeService: StoreService, private globalService: GlobalService, private route: ActivatedRoute) { }
 
@@ -60,7 +61,6 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
   }
 
   onScrollDown(event: any) {
-
     if (this.pagInfo.totalPages - this.pagInfo.actualPage > 1) {
       this.getAllDefaultGames(++this.pagInfo.actualPage, this.filterResult);
     }
