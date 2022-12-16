@@ -1,6 +1,6 @@
 export enum STRINGS {
-    SERVER_URL = "https://gombino.ddns.net:8443/",
-    WEB_SOCKET = "wss://gombino.ddns.net:8443/ws-server",
+    SERVER_URL = "http://localhost:8081/",
+    WEB_SOCKET = "ws://localhost:8081/ws-server",
 
     API_LOGIN = "api/login",
     API_REGISTRATION = "api/registration",
@@ -13,6 +13,7 @@ export enum STRINGS {
     API_PROFILE_CHANGE_PASSWORD = "api/profile/change-password/",
 
     API_GAMES = "api/games/",
+    API_GAMES_LANGUAGES_GENRES_CATEGORIES = "genres-languages-categories",
 
 
 }
