@@ -29,54 +29,97 @@
 }
 
 form {
-    max-width: 800px;
+    width: min(100%, 500px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 1rem;
 }
 
-.sort,
-.filter,
+.search-and-reset {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+
+.mat-mini-fab {
+    background-color: var(--color-primary);
+    color: var(--color-accent)
+}
+
+.filter-row-1,
+.filter-row-2 {
+    margin-top: 0.2rem;
+}
+
+.filter-row-1,
+.filter-row-2,
 .checkboxes {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 0 1rem;
+    justify-content: space-around;
 }
 
 .price label {
+    margin: 0;
+    padding: 0;
     margin-left: 1rem;
 }
 
-
-
 // Mat-field style
-.mat-field {
-    width: 8rem;
+.mat-form-field {
+    width: 7rem;
     padding: 0 !important;
 }
 
-::ng-deep .mat-slider {
+.price ::ng-deep .mat-slider {
     padding: 0 !important;
     margin: 0 !important;
 }
 
-/*
-::ng-deep .mat-form-field-wrapper {
-    padding-top: 0 !important;
-    padding-bottom: 0.2rem !important;
-    margin: 0.3rem !important;
+.filter-row-1 ::ng-deep .mat-form-field-infix {
+    top: -0.3rem !important;
+    padding: 0 !important;
+    padding-top: 1rem !important;
+    padding-bottom: 0rem !important;
+    border: none !important;
 }
 
-::ng-deep .mat-form-field-label {
-    padding-top: -1.5rem !important;
+.filter-row-2 ::ng-deep .mat-form-field-infix {
+    top: -0.3rem !important;
+    padding: 0 !important;
+    padding-top: 1rem !important;
+    padding-bottom: 0rem !important;
+    border: none !important;
 }
 
-
-::ng-deep .mat-form-field-infix {
-     margin: 1px !important;
+.filter-row-1 ::ng-deep .mat-form-field-label-wrapper {
+    top: -7px !important;
 }
-*/
+
+.filter-row-2 ::ng-deep .mat-form-field-label-wrapper {
+    top: -7px !important;
+}
+
+.search-and-reset ::ng-deep .mat-form-field-flex {
+    padding: 0 !important;
+}
+
+.search-and-reset .mat-form-field {
+    width: 13rem;
+    padding: 0 !important;
+}
+
+::ng-deep .mat-form-field-outline-start {
+    border-radius: 1rem 1rem 1rem 1rem !important;
+    min-width: 7rem !important;
+}
+
+::ng-deep .mat-form-field-outline-end {
+    border: 0 !important;
+}

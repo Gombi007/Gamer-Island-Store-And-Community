@@ -4,9 +4,20 @@
         <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_down"></mat-icon>
     </div>
 </div>
+
 <div class="container" *ngIf="!isPending && isShowFullFilterWindow">
     <form [formGroup]="filterForm">
-        <div class="sort">
+
+        <div class="search-and-reset">
+            <mat-form-field appearance="standard" color="accent">
+                <input matInput placeholder="Search">
+            </mat-form-field>
+            <button mat-mini-fab aria-label="Reset filter">
+                <mat-icon>filter_alt_off</mat-icon>
+            </button>
+        </div>
+
+        <div class="filter-row-1">
             <mat-form-field appearance="outline" color="accent" class="mat-field">
                 <mat-label>Sort by</mat-label>
                 <mat-select disableOptionCentering formControlName="sortByField">
@@ -28,6 +39,19 @@
                     </ng-container>
                 </mat-select>
             </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="mat-field">
+                <mat-label>Languages</mat-label>
+                <mat-select disableOptionCentering multiple formControlName="languages">
+                    <mat-option *ngFor="let language of languages" value="{{language}}">{{language}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="checkboxes">
+            <mat-checkbox formControlName="isHideFreeGames">Hide Free</mat-checkbox>
+            <mat-checkbox formControlName="isHideMyOwnGames">Hide My Own </mat-checkbox>
+            <mat-checkbox formControlName="isHideMyWishlistGames">Hide My Wislhist</mat-checkbox>
         </div>
 
         <div class="price">
@@ -37,13 +61,7 @@
             <label>{{priceWithText}}</label>
         </div>
 
-        <div class="filter">
-            <mat-form-field appearance="outline" color="accent" class="mat-field">
-                <mat-label>Languages</mat-label>
-                <mat-select disableOptionCentering multiple formControlName="languages">
-                    <mat-option *ngFor="let language of languages" value="{{language}}">{{language}}</mat-option>
-                </mat-select>
-            </mat-form-field>
+        <div class="filter-row-2">
 
             <mat-form-field appearance="outline" color="accent" class="mat-field">
                 <mat-label>Genres</mat-label>
@@ -67,11 +85,6 @@
             </mat-form-field>
         </div>
 
-        <div class="checkboxes">
-            <mat-checkbox formControlName="isHideFreeGames">Hide Free Games </mat-checkbox>
-            <mat-checkbox formControlName="isHideMyOwnGames">Hide My Games </mat-checkbox>
-            <mat-checkbox formControlName="isHideMyWishlistGames">Hide My Wislhist Games</mat-checkbox>
-        </div>
     </form>
     <div class="container-small" (click)="changeCloseOrOpenFilterPanel()">
         <h4>Filter result: {{allFilterResult}} Games</h4>
