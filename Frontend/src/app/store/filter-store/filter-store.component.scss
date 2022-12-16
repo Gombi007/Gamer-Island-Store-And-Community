@@ -1,19 +1,23 @@
 .container,
 .container-small {
     width: 100%;
-    background-image: linear-gradient(var(--content-bg-deg), var(--content-bg-color-1), var(--content-bg-color-2));
+    background-image: linear-gradient(var(--menu-bg-deg), var(--menu-bg-color-1), var(--menu-bg-color-2));
     display: flex;
     align-items: center;
     flex-direction: column;
+    border-radius: 0 0 1rem 1rem;
 }
 
 .container-small {
+    height: 2rem;
     flex-direction: row;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .container-small h4 {
-    margin: 0.4rem;
+    margin: 0;
+    margin-left: 2rem;
 }
 
 .close,

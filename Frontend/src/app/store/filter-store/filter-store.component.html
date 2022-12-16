@@ -1,6 +1,6 @@
-<div class="container-small" *ngIf="!isShowFullFilter">
+<div class="container-small" *ngIf="!isShowFullFilter" (click)="changeCloseOrOpenFilterPanel()">
     <h4>Filter result: {{allFilterResult}} Games</h4>
-    <div class="open" (click)="changeCloseOrOpenFilterPanel()">
+    <div class="open">
         <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_down"></mat-icon>
     </div>
 </div>
@@ -73,9 +73,9 @@
             <mat-checkbox formControlName="isHideMyWishlistGames">Hide My Wislhist Games</mat-checkbox>
         </div>
     </form>
-    <div class="container-small">
+    <div class="container-small" (click)="changeCloseOrOpenFilterPanel()">
         <h4>Filter result: {{allFilterResult}} Games</h4>
-        <div class="close" (click)="changeCloseOrOpenFilterPanel()">
+        <div class="close">
             <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_up"></mat-icon>
         </div>
 
