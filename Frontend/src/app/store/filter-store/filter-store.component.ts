@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { GlobalService } from 'src/app/config/global.service';
 import { storeFilter } from '../config/store-filter.model';
 import { StoreService } from '../config/store.service';
 
@@ -18,9 +19,10 @@ export class FilterStoreComponent implements OnInit {
   categories: string[] = ['Steam Cloud', 'Full controller support', 'MMO'];
   formValueChangeSub: Subscription;
 
-  constructor(private storeService: StoreService) { }
+  constructor(private storeService: StoreService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
+    this.getGenresAndLanguagesAndCategories();
     this.createFilterForm();
     this.formValueChangeSub = this.filterForm.valueChanges.subscribe((data) => {
       let filter: storeFilter = new storeFilter(data);
@@ -70,6 +72,23 @@ export class FilterStoreComponent implements OnInit {
 
   changeCloseOrOpenFilterPanel() {
     this.storeService.showFullFilterWindow = !this.isShowFullFilterWindow;
+  }
+
+  getGenresAndLanguagesAndCategories() {
+    this.isPending = true
+    this.storeService.getGenresAndLanguagesAndCategories().subscribe({
+      next: (data) => {
+        this.languages = data.languages;
+        this.genres = data.genres;
+        this.categories = data.categories;
+        this.isPending = false;
+      },
+      error: (response) => {
+        this.globalService.isExpiredToken(response);
+        console.log(response);
+        this.isPending = false;
+      }
+    });
   }
 
 }

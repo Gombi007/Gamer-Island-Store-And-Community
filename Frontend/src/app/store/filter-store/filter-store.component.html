@@ -1,10 +1,10 @@
-<div class="container-small" *ngIf="!isShowFullFilterWindow" (click)="changeCloseOrOpenFilterPanel()">
+<div class="container-small" *ngIf="!isPending && !isShowFullFilterWindow" (click)="changeCloseOrOpenFilterPanel()">
     <h4>Filter result: {{allFilterResult}} Games</h4>
     <div class="open">
         <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_down"></mat-icon>
     </div>
 </div>
-<div class="container" *ngIf="isShowFullFilterWindow">
+<div class="container" *ngIf="!isPending && isShowFullFilterWindow">
     <form [formGroup]="filterForm">
         <div class="sort">
             <mat-form-field appearance="outline" color="accent" class="mat-field">

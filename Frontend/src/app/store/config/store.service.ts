@@ -22,4 +22,9 @@ export class StoreService {
     getAllDefaultGames(page: number, storeFilter: storeFilter = this.defaultStoreFilter) {
         return this.http.post<{ 'page': storeGame[], 'paginationInfo': PagInfo }>(STRINGS.SERVER_URL + STRINGS.API_GAMES + '?page=' + page + '&size=' + this.defaultSize, storeFilter, this.authorServie.headerWithTokenForRequests());
     }
+
+    getGenresAndLanguagesAndCategories() {
+        return this.http.get<{ 'languages': string[], 'genres': string[], 'categories': string[] }>(STRINGS.SERVER_URL + STRINGS.API_GAMES + STRINGS.API_GAMES_LANGUAGES_GENRES_CATEGORIES, this.authorServie.headerWithTokenForRequests());
+    }
+
 }
