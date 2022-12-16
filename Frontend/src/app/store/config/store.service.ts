@@ -15,6 +15,7 @@ export class StoreService {
     defaultStoreFilter = new storeFilter();
     defaultSize: number = 18;
     allFilterResult = 0;
+    showFullFilterWindow: boolean = false;
 
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 

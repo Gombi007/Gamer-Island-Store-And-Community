@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
-import { filter, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { storeFilter } from '../config/store-filter.model';
 import { StoreService } from '../config/store.service';
 
@@ -16,7 +16,6 @@ export class FilterStoreComponent implements OnInit {
   languages: string[] = ['English', 'Hungarian', 'German'];
   genres: string[] = ['Action', 'Indie', 'RPG'];
   categories: string[] = ['Steam Cloud', 'Full controller support', 'MMO'];
-  isShowFullFilter = false;
   formValueChangeSub: Subscription;
 
   constructor(private storeService: StoreService) { }
@@ -65,11 +64,12 @@ export class FilterStoreComponent implements OnInit {
     return this.storeService.allFilterResult;
   }
 
-  changeCloseOrOpenFilterPanel() {
-    this.isShowFullFilter = !this.isShowFullFilter;
+  get isShowFullFilterWindow(): boolean {
+    return this.storeService.showFullFilterWindow;
   }
 
-
-
+  changeCloseOrOpenFilterPanel() {
+    this.storeService.showFullFilterWindow = !this.isShowFullFilterWindow;
+  }
 
 }

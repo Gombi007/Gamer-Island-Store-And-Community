@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
@@ -19,6 +19,7 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
   isFilterOn: boolean = false;
   subscriptions: Subscription[] = [];
   filterResult: storeFilter;
+  isShowFilter = false;
 
   constructor(private storeService: StoreService, private globalService: GlobalService, private route: ActivatedRoute) { }
 
@@ -60,9 +61,17 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
   }
 
   onScrollDown(event: any) {
-
     if (this.pagInfo.totalPages - this.pagInfo.actualPage > 1) {
       this.getAllDefaultGames(++this.pagInfo.actualPage, this.filterResult);
+    }
+  }
+
+  @HostListener('document:keydown.arrowdown', ['$event'])
+  @HostListener('document:keydown.arrowup', ['$event'])
+  @HostListener('wheel', ['$event.target'])
+  hideFilter() {
+    if (this.storeService.showFullFilterWindow) {
+      this.storeService.showFullFilterWindow = false;
     }
   }
 
