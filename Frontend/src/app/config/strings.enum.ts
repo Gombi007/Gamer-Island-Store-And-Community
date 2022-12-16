@@ -1,6 +1,6 @@
 export enum STRINGS {
-    SERVER_URL = "http://localhost:8081/",
-    WEB_SOCKET = "ws://localhost:8081/ws-server",
+    SERVER_URL = "https://gombino.ddns.net:8443/",
+    WEB_SOCKET = "wss://gombino.ddns.net:8443/ws-server",
 
     API_LOGIN = "api/login",
     API_REGISTRATION = "api/registration",
@@ -18,6 +18,6 @@ export enum STRINGS {
 }
 
 export enum FIXED_SIZES {
-    MOBILE_MENU_HEIGHT_FROM_BOTTOM = 60
-
+    // The mobile menu height current is 3 rem (1rem == 16px)
+    MOBILE_MENU_HEIGHT_FROM_BOTTOM = 50
 }
