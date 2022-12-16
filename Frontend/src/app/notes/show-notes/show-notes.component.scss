@@ -142,7 +142,6 @@ video {
 
 @media only screen and (max-width: 600px) {
     .container {
-        height: calc(100% - 56px);
         -ms-overflow-style: none;
         /* Internet Explorer 10+ */
         scrollbar-width: none;
