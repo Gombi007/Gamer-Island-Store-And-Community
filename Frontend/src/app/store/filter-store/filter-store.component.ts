@@ -32,7 +32,7 @@ export class FilterStoreComponent implements OnInit {
   createFilterForm() {
     return this.filterForm = new FormGroup({
       'sortByField': new FormControl('name'),
-      'isAscending': new FormControl(true),
+      'isAscending': new FormControl('true'),
       'languages': new FormControl(['English']),
       'genres': new FormControl([]),
       'opSystems': new FormControl([]),
