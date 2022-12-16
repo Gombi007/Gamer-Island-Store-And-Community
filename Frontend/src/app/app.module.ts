@@ -27,6 +27,7 @@ import { FilterStoreComponent } from './store/filter-store/filter-store.componen
 import { WishlistStoreComponent } from './store/wishlist-store/wishlist-store.component';
 import { CartStoreComponent } from './store/cart-store/cart-store.component';
 import { NavigationMobileStoreComponent } from './store/navigation-mobile-store/navigation-mobile-store.component';
+import { FoldTheFilterOnScrollingDirective } from './directives/fold-the-filter-on-scrolling.directive';
 
 
 
@@ -51,6 +52,7 @@ import { NavigationMobileStoreComponent } from './store/navigation-mobile-store/
     WishlistStoreComponent,
     CartStoreComponent,
     NavigationMobileStoreComponent,
+    FoldTheFilterOnScrollingDirective
   ],
   imports: [
     BrowserModule,
