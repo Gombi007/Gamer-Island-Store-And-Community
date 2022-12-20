@@ -32,19 +32,18 @@ export class FilterStoreComponent implements OnInit {
 
   createFilterForm() {
     return this.filterForm = new FormGroup({
-      'sortByField': new FormControl('name'),
-      'isAscending': new FormControl('true'),
-      'languages': new FormControl(['English']),
-      'genres': new FormControl([]),
-      'opSystems': new FormControl([]),
-      'categories': new FormControl([]),
-      'isHideFreeGames': new FormControl(false),
-      'isHideMyOwnGames': new FormControl(false),
-      'isHideMyWishlistGames': new FormControl(false),
-      'price': new FormControl(75),
-      'showOnlyAdultGames': new FormControl(false),
-      'isHideAdultGames': new FormControl(true)
-
+      'sortByField': new FormControl('name', { nonNullable: true }),
+      'isAscending': new FormControl('true', { nonNullable: true }),
+      'languages': new FormControl([], { nonNullable: true }),
+      'genres': new FormControl([], { nonNullable: true }),
+      'opSystems': new FormControl([], { nonNullable: true }),
+      'categories': new FormControl([], { nonNullable: true }),
+      'isHideFreeGames': new FormControl(false, { nonNullable: true }),
+      'isHideMyOwnGames': new FormControl(false, { nonNullable: true }),
+      'isHideMyWishlistGames': new FormControl(false, { nonNullable: true }),
+      'price': new FormControl(75, { nonNullable: true }),
+      'showOnlyAdultGames': new FormControl(false, { nonNullable: true }),
+      'isHideAdultGames': new FormControl(true, { nonNullable: true })
     });
   }
 
@@ -89,6 +88,10 @@ export class FilterStoreComponent implements OnInit {
         this.isPending = false;
       }
     });
+  }
+
+  resetFilter() {
+    this.filterForm.reset();
   }
 
 }
