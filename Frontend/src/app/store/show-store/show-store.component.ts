@@ -24,11 +24,6 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
   constructor(private storeService: StoreService, private globalService: GlobalService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    let paramSub = this.route.params.subscribe(
-      (param: Params) => {
-        param['allOrFilter'] === 'filter' ? this.isFilterOn = true : this.isFilterOn = false;
-      }
-    );
 
     let storeFilterSub = this.storeService.storeFilter.subscribe((storeFilter: storeFilter) => {
       if (storeFilter !== null) {
@@ -40,7 +35,6 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
 
     this.getAllDefaultGames(0, this.filterResult);
     this.subscriptions.push(storeFilterSub);
-    this.subscriptions.push(paramSub);
   }
 
   getAllDefaultGames(page: number, filterResult: storeFilter) {
