@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { map, Subscription } from 'rxjs';
 import { ProfileService } from '../config/profile.service';
 
 @Component({
@@ -6,32 +7,43 @@ import { ProfileService } from '../config/profile.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   isPending = false;
+  profileData: { username: string, avatar: string };
+  subs: Subscription;
+  isShowAdminMenu: boolean = false;
 
   constructor(private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.getProfileData();
+    this.subs = this.profileService.updateProfile.subscribe((data: any) => {
+      this.profileData = data;
+    })
   }
-
-  get profileData() {
-    return this.profileService.userProfileDataGetter;
-  }
-
 
   getProfileData() {
     this.isPending = true;
     this.profileService.getProfileData().subscribe({
       next: (data) => {
-        this.profileService.userProfileDataSetter = data;
+        this.profileData = data;
         this.isPending = false
       },
       error: () => {
         this.isPending = false
       }
     });
-
   }
 
+  hasAdminRole() {
+    this.profileService.hasRoleAdmin().subscribe((data: boolean) => {
+      this.isShowAdminMenu = data;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subs !== null && this.subs !== undefined) {
+      this.subs.unsubscribe();
+    }
+  }
 }
