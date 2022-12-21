@@ -36,4 +36,6 @@ public interface UserService {
     void changeUserPassword(String userId, UserPasswordDto userPasswordDto);
 
     List<GamePurchaseDto> getUserTransactionHistory(String userId);
+
+    Boolean hasAdminRole(String userId);
 }

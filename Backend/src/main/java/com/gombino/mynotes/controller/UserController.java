@@ -35,6 +35,12 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
+    @Operation(description = "Has user role admin or not")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/roles/has-role-admin/{userId}")
+    public ResponseEntity<Boolean> hasRoleAdmin(@PathVariable String userId) {
+        return ResponseEntity.ok().body(userService.hasAdminRole(userId));
+    }
     @Operation(description = "Get all role from the DB")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/roles")
