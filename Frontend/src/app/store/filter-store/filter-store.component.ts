@@ -12,12 +12,14 @@ import { StoreService } from '../config/store.service';
 })
 export class FilterStoreComponent implements OnInit {
   isPending = false;
-  filterForm: FormGroup
+  filterForm: FormGroup = this.createFilterForm();
+  filterFormInit: FormGroup = this.createFilterForm();
   opSystems: string[] = ['Windows', 'Mac', 'Linux'];
   languages: string[] = ['English', 'Hungarian', 'German'];
   genres: string[] = ['Action', 'Indie', 'RPG'];
   categories: string[] = ['Steam Cloud', 'Full controller support', 'MMO'];
   formValueChangeSub: Subscription;
+  isFilterOn = false;
 
   constructor(private storeService: StoreService, private globalService: GlobalService) { }
 
@@ -25,13 +27,15 @@ export class FilterStoreComponent implements OnInit {
     this.getGenresAndLanguagesAndCategories();
     this.createFilterForm();
     this.formValueChangeSub = this.filterForm.valueChanges.subscribe((data) => {
+      this.isDefaultFilter();
       let filter: storeFilter = new storeFilter(data);
       this.storeService.storeFilter.next(filter);
     });
   }
 
   createFilterForm() {
-    return this.filterForm = new FormGroup({
+    return new FormGroup({
+      'searchText': new FormControl('', { nonNullable: true }),
       'sortByField': new FormControl('name', { nonNullable: true }),
       'isAscending': new FormControl('true', { nonNullable: true }),
       'languages': new FormControl([], { nonNullable: true }),
@@ -45,6 +49,21 @@ export class FilterStoreComponent implements OnInit {
       'showOnlyAdultGames': new FormControl(false, { nonNullable: true }),
       'isHideAdultGames': new FormControl(true, { nonNullable: true })
     });
+
+  }
+
+  isDefaultFilter() {
+    // Check every form update that the form is in the init status or not
+    // If not, we set the filter status to ON 
+    this.isFilterOn = false;
+
+    for (const key in this.filterForm.controls) {
+      if (Array.isArray(this.filterForm.controls[key].value)) {
+        this.filterForm.controls[key].value.length === 0 ? '' : this.isFilterOn = true;
+      } else {
+        this.filterForm.get(key)?.value === this.filterFormInit.get(key)?.value ? '' : this.isFilterOn = true;
+      }
+    }
   }
 
   //convenience getter for easy access to form fields
@@ -93,5 +112,6 @@ export class FilterStoreComponent implements OnInit {
   resetFilter() {
     this.filterForm.reset();
   }
+
 
 }
