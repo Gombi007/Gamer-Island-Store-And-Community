@@ -16,7 +16,7 @@ export enum STRINGS {
     API_GAMES = "api/games/",
     API_GAMES_LANGUAGES_GENRES_CATEGORIES = "genres-languages-categories",
 
-
+    API_ADMIN_SAVE_GAMES = "api/steam/save-games"
 }
 
 export enum FIXED_SIZES {

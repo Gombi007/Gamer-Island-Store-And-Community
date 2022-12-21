@@ -1,4 +1,16 @@
-<div class="conatiner">
-    <p>Hello Admin!
-    </p>
+<div class="container">
+    <div class="add-games">
+        <h3>Save new games from steam api to database</h3>
+        <p>Maximum {{maximumSavingCircle}} circle at the same time. Current: {{actualSavingCircle}}</p>
+        <button mat-raised-button type="button" (click)="doSaving()">
+            <span *ngIf="!isSavingInProgress">Start</span>
+            <span *ngIf="isSavingInProgress">Stop</span>
+        </button>
+        <mat-spinner *ngIf="isSavingInProgress" class="spinner" diameter="50" color="accent"></mat-spinner>
+    </div>
+    <div class="saved-games" *ngIf="savedGames.length>0">
+        <ng-container *ngFor="let row of savedGames; let i = index">
+            <p>{{row}}</p>
+        </ng-container>
+    </div>
 </div>
