@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
 import { storeFilter } from '../config/store-filter.model';
 import { StoreService } from '../config/store.service';
@@ -26,12 +26,16 @@ export class FilterStoreComponent implements OnInit {
   ngOnInit(): void {
     this.getGenresAndLanguagesAndCategories();
     this.createFilterForm();
-    this.formValueChangeSub = this.filterForm.valueChanges.subscribe((data) => {
-      this.isDefaultFilter();
-      let filter: storeFilter = new storeFilter(data);
-      this.storeService.storeFilter.next(filter);
-    });
+    this.formValueChangeSub = this.filterForm.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe((data) => {
+        this.isDefaultFilter();
+        let filter: storeFilter = new storeFilter(data);
+        this.storeService.storeFilter.next(filter);
+      });
   }
+
+
 
   createFilterForm() {
     return new FormGroup({
