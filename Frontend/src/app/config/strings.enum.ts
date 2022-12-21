@@ -4,7 +4,7 @@ export enum STRINGS {
 
     API_LOGIN = "api/login",
     API_REGISTRATION = "api/registration",
-    API_HAS_ROLE_ADMIN = "api/roles/has-role-admin",
+    API_HAS_ROLE_ADMIN = "api/roles/has-role-admin/",
 
     API_NOTES = "api/notes/",
     API_ADD_OR_REMOVE_NOTE_TO_USER_FAV_LIST = "api/notes/change-favorite-state/",

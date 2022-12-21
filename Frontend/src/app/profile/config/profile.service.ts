@@ -25,7 +25,7 @@ export class ProfileService {
     }
 
     hasRoleAdmin() {
-        return this.http.get<boolean>(STRINGS.SERVER_URL + STRINGS.API_HAS_ROLE_ADMIN, this.authorServie.headerWithTokenForRequests());
+        return this.http.get<boolean>(STRINGS.SERVER_URL + STRINGS.API_HAS_ROLE_ADMIN + this.authorServie.getUserID(), this.authorServie.headerWithTokenForRequests());
     }
 
 }
