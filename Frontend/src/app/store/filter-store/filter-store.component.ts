@@ -27,15 +27,13 @@ export class FilterStoreComponent implements OnInit {
     this.getGenresAndLanguagesAndCategories();
     this.createFilterForm();
     this.formValueChangeSub = this.filterForm.valueChanges
-      .pipe(debounceTime(500))
+      .pipe(debounceTime(700))
       .subscribe((data) => {
         this.isDefaultFilter();
         let filter: storeFilter = new storeFilter(data);
         this.storeService.storeFilter.next(filter);
       });
   }
-
-
 
   createFilterForm() {
     return new FormGroup({
