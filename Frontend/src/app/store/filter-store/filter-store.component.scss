@@ -52,13 +52,13 @@ form {
 }
 
 .search-and-reset {
-    width: 100%;
+    width: 95%;
     height: fit-content;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.3rem;
+    margin-bottom: 1rem;
 }
 
 .mat-mini-fab {
@@ -67,17 +67,12 @@ form {
 }
 
 .filter-row-1,
-.filter-row-2 {
-    margin-top: 0.2rem;
-}
-
-.filter-row-1,
 .filter-row-2,
 .checkboxes {
-    width: 100%;
+    width: 95%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .price label {
