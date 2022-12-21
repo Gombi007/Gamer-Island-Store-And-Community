@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
-import { AuthGuard } from './config/auth-guard.service';
+import { AuthGuard, AuthGuardAdmin } from './config/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { CreateNotesComponent } from './notes/create-notes/create-notes.component';
 import { ShowNotesComponent } from './notes/show-notes/show-notes.component';
@@ -67,7 +67,7 @@ const routes: Routes = [
       {
         path: 'admin',
         component: AdminComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard, AuthGuardAdmin]
       },
       {
         path: '**',
