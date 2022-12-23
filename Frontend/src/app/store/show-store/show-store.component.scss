@@ -98,13 +98,27 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    gap: 1rem;
 }
 
-.price h3 {
+.price h3,
+.admin-control {
     padding: 0 1rem 0 1rem;
     border-radius: 3rem;
     margin: 0 1rem 1rem 0;
     box-shadow: 0 0 10px 1px var(--color-disabled) inset;
+}
+
+.admin-control {
+    display: flex;
+    gap: 1rem;
+}
+
+.admin-control div {
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 

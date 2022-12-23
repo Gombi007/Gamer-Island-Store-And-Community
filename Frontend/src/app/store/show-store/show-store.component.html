@@ -20,6 +20,14 @@
                     </ng-container>
                 </div>
                 <div class="price">
+                    <div class="admin-control" *ngIf="hasAdminRole">
+                        <div (click)="adminRemoveGame(game.id)">
+                            <mat-icon aria-hidden="false" fontIcon="delete_forever" color="accent"></mat-icon>
+                        </div>
+                        <div (click)="adminMarkAsAdultGame(game.id)">
+                            <mat-icon aria-hidden="false" fontIcon="report" color="accent"></mat-icon>
+                        </div>
+                    </div>
                     <h3 *ngIf="game.price !== 0">{{game.price}} €</h3>
                     <h3 *ngIf="game.price === 0">Free</h3>
                 </div>
