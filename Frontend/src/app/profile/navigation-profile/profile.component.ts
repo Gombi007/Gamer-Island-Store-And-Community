@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Subscription } from 'rxjs';
+import { AuthenticateService } from 'src/app/config/authenticate.service';
+import { AuthorizationService } from 'src/app/config/authorization.service';
 import { ProfileService } from '../config/profile.service';
 
 @Component({
@@ -13,7 +15,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subs: Subscription;
   isShowAdminMenu: boolean = false;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private authorServie: AuthorizationService) { }
 
   ngOnInit(): void {
     this.getProfileData();
@@ -36,7 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   hasAdminRole() {
-    this.profileService.hasRoleAdmin().subscribe((data: boolean) => {
+    this.authorServie.hasRoleAdmin().subscribe((data: boolean) => {
       this.isShowAdminMenu = data;
     });
   }

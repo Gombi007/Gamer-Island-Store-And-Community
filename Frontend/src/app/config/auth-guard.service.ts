@@ -27,10 +27,10 @@ export class AuthGuard implements CanActivate {
     providedIn: 'root'
 })
 export class AuthGuardAdmin implements CanActivate {
-    constructor(private profileService: ProfileService) { }
+    constructor(private authorServie: AuthorizationService) { }
 
     canActivate() {
-        return this.profileService.hasRoleAdmin().pipe(
+        return this.authorServie.hasRoleAdmin().pipe(
             map((data: any) => {
                 return data;
             }));

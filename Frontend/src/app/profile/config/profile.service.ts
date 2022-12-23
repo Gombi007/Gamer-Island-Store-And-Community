@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { map, Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { AuthorizationService } from "src/app/config/authorization.service";
 import { STRINGS } from "src/app/config/strings.enum";
 @Injectable({
@@ -10,6 +10,7 @@ import { STRINGS } from "src/app/config/strings.enum";
 export class ProfileService {
 
     updateProfile = new Subject();
+
     constructor(private http: HttpClient, private authorServie: AuthorizationService) { }
 
     getProfileData() {
@@ -22,10 +23,6 @@ export class ProfileService {
 
     changePassword(changePasswordForm: FormGroup) {
         return this.http.put<any>(STRINGS.SERVER_URL + STRINGS.API_PROFILE_CHANGE_PASSWORD + this.authorServie.getUserID(), changePasswordForm.value, this.authorServie.headerWithTokenForRequests());
-    }
-
-    hasRoleAdmin() {
-        return this.http.get<boolean>(STRINGS.SERVER_URL + STRINGS.API_HAS_ROLE_ADMIN + this.authorServie.getUserID(), this.authorServie.headerWithTokenForRequests());
     }
 
 }
