@@ -15,7 +15,7 @@ export class AdminComponent implements OnDestroy {
   subSaveGamesInterval: Subscription;
   subsSaveGame: Subscription[] = [];
   actualSavingCircle: number = 0;
-  maximumSavingCircle: number = 3;
+  maximumSavingCircle: number = 20;
 
   constructor(private adminService: AdminService, private globalService: GlobalService) { }
 
