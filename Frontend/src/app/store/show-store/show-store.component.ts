@@ -66,7 +66,7 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
     }
   }
 
-  adminRemoveGame(gameId: string, gameName: string) {
+  adminRemoveGame(index: number, gameId: string, gameName: string) {
     let warningText1 = 'ADMIN REMOVE';
     let warningText2 = 'Are you sure to remove this?<br><b>' + gameName + '</b><br>This game will not be recoverable!'
 
@@ -75,6 +75,7 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
         this.isPending = true;
         this.storeService.adminRemoveGame(gameId).subscribe({
           next: () => {
+            this.defaultGames.splice(index, 1);
             this.isPending = false;
           },
           error: (response: any) => {
@@ -87,7 +88,7 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
     });
   }
 
-  adminMarkAsAdultGame(gameId: string, gameName: string) {
+  adminMarkAsAdultGame(index: number, gameId: string, gameName: string) {
     let warningText1 = 'ADMIN MARK AS ADULT CONTENT';
     let warningText2 = 'Are you sure to mark this:<br><b>' + gameName + '</b><br> to adult content?'
 
@@ -96,6 +97,7 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
         this.isPending = true;
         this.storeService.adminMarkAsAdult(gameId).subscribe({
           next: () => {
+            this.defaultGames.splice(index, 1);
             this.isPending = false;
           },
           error: (response: any) => {

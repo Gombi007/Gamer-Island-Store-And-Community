@@ -32,7 +32,7 @@ export class StoreService {
     }
     adminMarkAsAdult(gameId: string) {
         let isAdult = true;
-        return this.http.put(STRINGS.SERVER_URL + STRINGS.API_ADMIN_MARK_AS_ADULT_GAME + gameId + 'isAdult=' + isAdult, this.authorServie.headerWithTokenForRequests());
+        return this.http.put(STRINGS.SERVER_URL + STRINGS.API_ADMIN_MARK_AS_ADULT_GAME + gameId + '?isAdult=' + isAdult, '', this.authorServie.headerWithTokenForRequests());
     }
 
 }
