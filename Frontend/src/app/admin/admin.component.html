@@ -1,7 +1,9 @@
 <div class="container">
     <div class="add-games">
         <h3>Save new games from steam api to database</h3>
-        <p>Maximum {{maximumSavingCircle}} circle at the same time. Current: {{actualSavingCircle}}</p>
+        <p>Maximum {{maximumSavingCircle}} circle at the same time.
+            <span *ngIf="isSavingInProgress"> Current: {{actualSavingCircle}}</span>
+        </p>
         <button mat-raised-button type="button" (click)="doSaving()">
             <span *ngIf="!isSavingInProgress">Start</span>
             <span *ngIf="isSavingInProgress">Stop</span>

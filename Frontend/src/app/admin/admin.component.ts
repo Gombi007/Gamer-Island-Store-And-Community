@@ -15,12 +15,13 @@ export class AdminComponent implements OnDestroy {
   subSaveGamesInterval: Subscription;
   subsSaveGame: Subscription[] = [];
   actualSavingCircle: number = 0;
-  maximumSavingCircle: number = 10;
+  maximumSavingCircle: number = 3;
 
   constructor(private adminService: AdminService, private globalService: GlobalService) { }
 
   doSaving() {
     if (this.subSaveGamesInterval === undefined || this.subSaveGamesInterval.closed) {
+      this.isSavingInProgress = true;
       this.actualSavingCircle++;
       this.saveGamesFromSteamToDb();
       this.subSaveGamesInterval = this.repeatGameSaveQuerryTime
@@ -42,14 +43,17 @@ export class AdminComponent implements OnDestroy {
   }
 
   saveGamesFromSteamToDb() {
-    this.isSavingInProgress = true;
     this.subsSaveGame.push(this.adminService.saveNewGamesFromSteamToDb().subscribe({
       next: (data: any) => {
         this.savedGames = data;
-        this.isSavingInProgress = false;
+        if (this.actualSavingCircle === this.maximumSavingCircle) {
+          this.isSavingInProgress = false;
+          this.actualSavingCircle = 0
+        }
       },
       error: (response) => {
         this.isSavingInProgress = false;
+        this.actualSavingCircle = 0
         this.globalService.isExpiredToken(response);
       }
     }));
