@@ -66,9 +66,9 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
     }
   }
 
-  adminRemoveGame(gameId: string) {
+  adminRemoveGame(gameId: string, gameName: string) {
     let warningText1 = 'ADMIN REMOVE';
-    let warningText2 = 'Are you sure to remove this game?<br>This game will not be recoverable!'
+    let warningText2 = 'Are you sure to remove this?<br><b>' + gameName + '</b><br>This game will not be recoverable!'
 
     this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm: boolean) => {
       if (userConfirm) {
@@ -87,9 +87,9 @@ export class ShowStoreComponent implements OnInit, OnDestroy {
     });
   }
 
-  adminMarkAsAdultGame(gameId: string) {
+  adminMarkAsAdultGame(gameId: string, gameName: string) {
     let warningText1 = 'ADMIN MARK AS ADULT CONTENT';
-    let warningText2 = 'Are you sure to mark this game to adult content?'
+    let warningText2 = 'Are you sure to mark this:<br><b>' + gameName + '</b><br> to adult content?'
 
     this.openWarnDialog(warningText1, warningText2).subscribe((userConfirm: boolean) => {
       if (userConfirm) {

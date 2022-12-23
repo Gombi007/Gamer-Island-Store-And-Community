@@ -21,10 +21,10 @@
                 </div>
                 <div class="price">
                     <div class="admin-control" *ngIf="hasAdminRole">
-                        <div (click)="adminRemoveGame(game.id)">
+                        <div (click)="adminRemoveGame(game.id,game.name)">
                             <mat-icon aria-hidden="false" fontIcon="delete_forever" color="accent"></mat-icon>
                         </div>
-                        <div (click)="adminMarkAsAdultGame(game.id)">
+                        <div (click)="adminMarkAsAdultGame(game.id,game.name)">
                             <mat-icon aria-hidden="false" fontIcon="report" color="accent"></mat-icon>
                         </div>
                     </div>
