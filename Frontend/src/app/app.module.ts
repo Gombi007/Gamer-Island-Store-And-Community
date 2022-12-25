@@ -29,6 +29,8 @@ import { CartStoreComponent } from './store/cart-store/cart-store.component';
 import { NavigationMobileStoreComponent } from './store/navigation-mobile-store/navigation-mobile-store.component';
 import { FoldTheFilterOnScrollingDirective } from './directives/fold-the-filter-on-scrolling.directive';
 import { AdminComponent } from './admin/admin.component';
+import { AdminAddGamesComponent } from './admin/admin-add-games/admin-add-games.component';
+import { AdminHandleRolesComponent } from './admin/admin-handle-roles/admin-handle-roles.component';
 
 
 
@@ -54,7 +56,9 @@ import { AdminComponent } from './admin/admin.component';
     CartStoreComponent,
     NavigationMobileStoreComponent,
     FoldTheFilterOnScrollingDirective,
-    AdminComponent
+    AdminComponent,
+    AdminAddGamesComponent,
+    AdminHandleRolesComponent
   ],
   imports: [
     BrowserModule,

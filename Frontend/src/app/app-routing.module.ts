@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminAddGamesComponent } from './admin/admin-add-games/admin-add-games.component';
+import { AdminHandleRolesComponent } from './admin/admin-handle-roles/admin-handle-roles.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard, AuthGuardAdmin } from './config/auth-guard.service';
 import { LoginComponent } from './login/login.component';
@@ -67,7 +69,11 @@ const routes: Routes = [
       {
         path: 'admin',
         component: AdminComponent,
-        canActivate: [AuthGuard, AuthGuardAdmin]
+        canActivate: [AuthGuard, AuthGuardAdmin],
+        children: [
+          { path: 'add-games', component: AdminAddGamesComponent, outlet: 'admin' },
+          { path: 'handle-roles', component: AdminHandleRolesComponent, outlet: 'admin' }
+        ]
       },
       {
         path: '**',
