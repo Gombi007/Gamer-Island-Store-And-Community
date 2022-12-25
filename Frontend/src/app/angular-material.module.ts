@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -40,7 +41,8 @@ const MaterialComponents = [
     MatMenuModule,
     MatDialogModule,
     MatSelectModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTableModule
 ];
 
 @NgModule({
