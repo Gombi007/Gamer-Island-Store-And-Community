@@ -1,11 +1,13 @@
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    padding-bottom: 1rem;
+
 }
 
-form {
+form,
+.user-details {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,4 +18,22 @@ form {
     box-shadow: 0 0 6px 5px var(--content-shadow-color);
     border-radius: 0.5rem;
     gap: 1rem;
+}
+
+.roles {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.role-toast {
+    background-color: var(--color-disabled);
+    margin: 0;
+    padding: 0.3rem 0.7rem 0.3rem 0.7rem;
+    border-radius: 1rem;
+}
+
+.role-toast p {
+    margin: 0;
+    padding: 0;
 }

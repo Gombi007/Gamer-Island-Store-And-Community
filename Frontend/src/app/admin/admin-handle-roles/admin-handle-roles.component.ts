@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
 import { AdminService } from '../config/admin.service';
 import { UserModifyByAdminDto } from '../config/user-modify-by-admin.model';
@@ -9,17 +10,22 @@ import { UserModifyByAdminDto } from '../config/user-modify-by-admin.model';
   templateUrl: './admin-handle-roles.component.html',
   styleUrls: ['./admin-handle-roles.component.scss']
 })
-export class AdminHandleRolesComponent implements OnInit {
+export class AdminHandleRolesComponent implements OnInit, OnDestroy {
   manageRoles: FormGroup = this.createManageForm();
   users: UserModifyByAdminDto[] = [];
   roles: string[] = [];
   operations: string[] = ['Add', 'Remove'];
+  selectedUser: UserModifyByAdminDto | undefined = undefined;
+  sub: Subscription;
 
   constructor(private adminService: AdminService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.getRoles();
     this.getUsers();
+    this.sub = this.manageRoles.valueChanges.subscribe(value => {
+      this.selectedUser = this.users.find(user => user.username === value.username);
+    });
   }
 
   createManageForm() {
@@ -51,6 +57,11 @@ export class AdminHandleRolesComponent implements OnInit {
         this.globalService.isExpiredToken(response);
       }
     });
+  }
+  ngOnDestroy(): void {
+    if (this.sub !== null && this.sub !== undefined) {
+      this.sub.unsubscribe();
+    }
   }
 
 }
