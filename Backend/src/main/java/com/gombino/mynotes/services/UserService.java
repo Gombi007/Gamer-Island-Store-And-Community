@@ -1,9 +1,6 @@
 package com.gombino.mynotes.services;
 
-import com.gombino.mynotes.models.dto.GamePurchaseDto;
-import com.gombino.mynotes.models.dto.RegistrationUserDto;
-import com.gombino.mynotes.models.dto.UserDto;
-import com.gombino.mynotes.models.dto.UserPasswordDto;
+import com.gombino.mynotes.models.dto.*;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
 
@@ -28,6 +25,8 @@ public interface UserService {
     List<Role> getRoles();
 
     List<User> getUsers();
+
+    List<UserModifyByAdminDto> getUsersToAdminModify();
 
     UserDto getProfileData(String userId);
 

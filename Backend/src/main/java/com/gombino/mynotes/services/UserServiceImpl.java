@@ -2,10 +2,7 @@ package com.gombino.mynotes.services;
 
 import com.gombino.mynotes.exceptions.PermissionDeniedException;
 import com.gombino.mynotes.exceptions.ResourceAlreadyExistsException;
-import com.gombino.mynotes.models.dto.GamePurchaseDto;
-import com.gombino.mynotes.models.dto.RegistrationUserDto;
-import com.gombino.mynotes.models.dto.UserDto;
-import com.gombino.mynotes.models.dto.UserPasswordDto;
+import com.gombino.mynotes.models.dto.*;
 import com.gombino.mynotes.models.entities.GamePurchase;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
@@ -29,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -147,11 +145,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return roleRepository.findAll();
     }
 
-
     @Override
     public List<User> getUsers() {
         log.warn("Fetching all user");
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<UserModifyByAdminDto> getUsersToAdminModify() {
+        log.warn("Fetching all user");
+        return userRepository.findAll().stream().map(this::convertToUserModifyByAdminDto).collect(Collectors.toList());
     }
 
     @Override
@@ -196,6 +199,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return modelMapper.map(userDto, User.class);
     }
 
+    private UserModifyByAdminDto convertToUserModifyByAdminDto(User user) {
+        return modelMapper.map(user, UserModifyByAdminDto.class);
+    }
+
     @Override
     public List<GamePurchaseDto> getUserTransactionHistory(String userId) {
         User user = userRepository.findUserById(userId).orElseThrow(() -> new NoSuchElementException("No user with this id: " + userId));
@@ -217,12 +224,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Boolean hasAdminRole(String userId) {
-       User user = getUserById(userId);
-       Boolean hasAdminRole = false;
-        for (Role role : user.getRoles() ) {
-           if (role.getRoleName().equals("ROLE_ADMIN")){
-               hasAdminRole = true;
-           }
+        User user = getUserById(userId);
+        Boolean hasAdminRole = false;
+        for (Role role : user.getRoles()) {
+            if (role.getRoleName().equals("ROLE_ADMIN")) {
+                hasAdminRole = true;
+            }
         }
         return hasAdminRole;
     }

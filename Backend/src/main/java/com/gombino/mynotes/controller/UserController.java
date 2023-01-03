@@ -31,8 +31,8 @@ public class UserController {
     @Operation(description = "Get all user")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers() {
-        return ResponseEntity.ok().body(userService.getUsers());
+    public ResponseEntity<List<UserModifyByAdminDto>> getUsers() {
+        return ResponseEntity.ok().body(userService.getUsersToAdminModify());
     }
 
     @Operation(description = "Has user role admin or not")
