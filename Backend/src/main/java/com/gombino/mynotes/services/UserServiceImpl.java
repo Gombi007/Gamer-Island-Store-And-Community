@@ -158,6 +158,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public UserModifyByAdminDto updateUserByAdmin(UserModifyByAdminDto userModifyByAdminDto) {
+        User user = getUserById(userModifyByAdminDto.getId());
+
+        user.setIsDisabled(userModifyByAdminDto.getIsDisabled());
+        user.setEmail(userModifyByAdminDto.getEmail());
+        user.setAvatar(userModifyByAdminDto.getAvatar());
+        updateUser(user);
+
+        return convertToUserModifyByAdminDto(user);
+    }
+
+    @Override
     public UserDto getProfileData(String userId) {
         User user = getUserById(userId);
         return convertToUserDto(user);

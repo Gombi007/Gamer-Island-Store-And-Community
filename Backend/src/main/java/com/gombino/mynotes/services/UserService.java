@@ -26,6 +26,8 @@ public interface UserService {
 
     List<User> getUsers();
 
+    UserModifyByAdminDto updateUserByAdmin(UserModifyByAdminDto userModifyByAdminDto);
+
     List<UserModifyByAdminDto> getUsersToAdminModify();
 
     UserDto getProfileData(String userId);

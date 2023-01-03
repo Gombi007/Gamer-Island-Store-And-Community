@@ -1,5 +1,6 @@
 package com.gombino.mynotes.controller;
 
+import com.gombino.mynotes.exceptions.BadRequestException;
 import com.gombino.mynotes.models.dto.*;
 import com.gombino.mynotes.models.entities.Role;
 import com.gombino.mynotes.models.entities.User;
@@ -28,11 +29,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(description = "Get all user")
+    @Operation(description = "Get all user by admin")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
-    public ResponseEntity<List<UserModifyByAdminDto>> getUsers() {
+    public ResponseEntity<List<UserModifyByAdminDto>> getUsersByAdmin() {
         return ResponseEntity.ok().body(userService.getUsersToAdminModify());
+    }
+
+    @Operation(description = "Update a user by admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/users")
+    public ResponseEntity<UserModifyByAdminDto> updateUserByAdmin(@RequestBody UserModifyByAdminDto user) {
+        return ResponseEntity.ok().body(userService.updateUserByAdmin(user));
     }
 
     @Operation(description = "Has user role admin or not")
