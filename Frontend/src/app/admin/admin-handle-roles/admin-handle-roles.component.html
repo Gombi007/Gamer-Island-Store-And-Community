@@ -1,23 +1,23 @@
 <div class="container">
 
-    <form [formGroup]="manageRoles">
+    <form [formGroup]="manageRoles" *ngIf="users.length>0 && roles.length>0">
         <p>Select a user and add or remove a role</p>
 
-        <mat-form-field appearance="outline" color="accent" class="mat-field">
+        <mat-form-field appearance="outline" color="accent">
             <mat-label>Username</mat-label>
             <mat-select disableOptionCentering formControlName="username">
                 <mat-option *ngFor="let user of users" value="{{user.username}}">{{user.username}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" color="accent" class="mat-field">
+        <mat-form-field appearance="outline" color="accent">
             <mat-label>Role</mat-label>
             <mat-select disableOptionCentering multiple formControlName="role">
                 <mat-option *ngFor="let role of roles" value="{{role}}">{{role}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" color="accent" class="mat-field">
+        <mat-form-field appearance="outline" color="accent">
             <mat-label>Operation</mat-label>
             <mat-select disableOptionCentering formControlName="operation">
                 <mat-option *ngFor="let operation of operations" value="{{operation}}">{{operation}}</mat-option>
@@ -34,10 +34,12 @@
 
     <div class="user-details" *ngIf="selectedUser !== undefined">
         <h4>Username: {{selectedUser.username}}</h4>
+        <h4>Last Login: {{selectedUser.lastLogin}}</h4>
+        <h4>Created: {{selectedUser.created}}</h4>
         <h4>Actual Roles:</h4>
         <div class="roles">
             <div class="role-toast" *ngFor="let role of selectedUser.roles">
-                <p>hello</p>
+                <p>{{role.roleName}}</p>
             </div>
         </div>
     </div>

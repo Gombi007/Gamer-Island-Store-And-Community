@@ -6,7 +6,7 @@ export class UserModifyByAdminDto {
     lastLogin: String = "";
     created: String = "";
     isDisabled: boolean = false;
-    roles: string[] = [];
+    roles: { id: string, roleName: string }[] = [];
     noteIds: string[] = [];
     favoriteNotesIds: string[] = [];
     wishlistGames: string[] = [];
