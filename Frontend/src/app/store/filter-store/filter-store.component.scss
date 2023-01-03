@@ -125,11 +125,11 @@ form {
     padding: 0 !important;
 }
 
-::ng-deep .mat-form-field-outline-start {
+.mat-field ::ng-deep .mat-form-field-outline-start {
     border-radius: 1rem 1rem 1rem 1rem !important;
     min-width: 7rem !important;
 }
 
-::ng-deep .mat-form-field-outline-end {
+.mat-field ::ng-deep .mat-form-field-outline-end {
     border: 0 !important;
 }
