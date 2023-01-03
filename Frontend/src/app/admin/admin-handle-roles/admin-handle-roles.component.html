@@ -6,7 +6,7 @@
         <mat-form-field appearance="outline" color="accent" class="mat-field">
             <mat-label>Username</mat-label>
             <mat-select disableOptionCentering multiple formControlName="username">
-                <mat-option *ngFor="let username of users" value="{{username}}">{{username}}</mat-option>
+                <mat-option *ngFor="let user of users" value="{{user.username}}">{{user.username}}</mat-option>
             </mat-select>
         </mat-form-field>
 

@@ -1,33 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { GlobalService } from 'src/app/config/global.service';
+import { AdminService } from '../config/admin.service';
+import { UserModifyByAdminDto } from '../config/user-modify-by-admin.model';
 
 @Component({
   selector: 'app-admin-handle-roles',
   templateUrl: './admin-handle-roles.component.html',
   styleUrls: ['./admin-handle-roles.component.scss']
 })
-export class AdminHandleRolesComponent {
+export class AdminHandleRolesComponent implements OnInit {
   manageRoles: FormGroup = this.createManageForm();
-  users: string[] = [];
+  users: UserModifyByAdminDto[] = [];
   roles: string[] = [];
   operations: string[] = ['Add', 'Remove'];
 
-  user = {
-    id: 'KSD4353MFMK',
-    username: 'János',
-    email: 'test@gmail.com',
-    avatar: 'https://pic.pic.com/1234',
-    balance: 435,
-    isDisabled: false,
-    created: '2022-12-01',
-    lastLogin: '2022-12-22',
-    roles: [
-      { roleName: 'ROLE_USER' },
-      { roleName: 'ROLE_ADMIN' },
-    ],
-  }
+  constructor(private adminService: AdminService, private globalService: GlobalService) { }
 
-  constructor() { }
+  ngOnInit(): void {
+    this.getRoles();
+    this.getUsers();
+  }
 
   createManageForm() {
     return new FormGroup({
@@ -36,10 +29,28 @@ export class AdminHandleRolesComponent {
       'operation': new FormControl('Add'),
     });
   }
-  
+
   //convenience getter for easy access to form fields
   get formControl(): { [key: string]: AbstractControl; } {
     return this.manageRoles.controls;
+  }
+
+  getRoles() {
+    this.adminService.getRoles().subscribe({
+      next: (roles) => { roles.forEach(role => this.roles.push(role.roleName)) },
+      error: (response) => {
+        this.globalService.isExpiredToken(response);
+      }
+    });
+  }
+
+  getUsers() {
+    this.adminService.getUsers().subscribe({
+      next: (users) => { this.users = users },
+      error: (response) => {
+        this.globalService.isExpiredToken(response);
+      }
+    });
   }
 
 }
