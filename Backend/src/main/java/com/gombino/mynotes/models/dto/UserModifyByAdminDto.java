@@ -16,8 +16,8 @@ public class UserModifyByAdminDto {
     private String username;
     private String email;
     private String avatar;
-    private Instant lastLogin;
-    private Instant created;
+    private String lastLogin;
+    private String created;
     private Boolean isDisabled;
     private List<Role> roles;
     private List<String> noteIds;

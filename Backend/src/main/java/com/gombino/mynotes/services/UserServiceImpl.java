@@ -11,7 +11,10 @@ import com.gombino.mynotes.repositories.RoleRepository;
 import com.gombino.mynotes.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -212,8 +215,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private UserModifyByAdminDto convertToUserModifyByAdminDto(User user) {
+        modelMapper.addConverter(stringDateFormat);
         return modelMapper.map(user, UserModifyByAdminDto.class);
     }
+
+    Converter<Instant, String> stringDateFormat = new AbstractConverter<Instant, String>() {
+        @Override
+        protected String convert(Instant source) {
+            if (source != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss").withZone(ZoneId.systemDefault());
+                return formatter.format(source);
+            }
+            return "";
+        }
+    };
 
     @Override
     public List<GamePurchaseDto> getUserTransactionHistory(String userId) {
