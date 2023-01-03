@@ -26,9 +26,6 @@ export class AdminHandleRolesComponent {
       { roleName: 'ROLE_ADMIN' },
     ],
   }
-  userss = [this.user, this.user];
-  displayedColumns: string[] = ['id', 'username', 'email', 'avatar', 'balance', 'isDisabled', 'created', 'lastLogin'];
-  //displayedColumns: string[] = ['id', 'username', 'email'];
 
   constructor() { }
 
@@ -39,7 +36,7 @@ export class AdminHandleRolesComponent {
       'operation': new FormControl('Add'),
     });
   }
-
+  
   //convenience getter for easy access to form fields
   get formControl(): { [key: string]: AbstractControl; } {
     return this.manageRoles.controls;
