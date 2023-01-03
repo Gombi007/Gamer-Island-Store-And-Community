@@ -19,6 +19,8 @@ export enum STRINGS {
     API_ADMIN_SAVE_GAMES = "api/steam/save-games",
     API_ADMIN_REMOVE_GAME = "api/games/remove-game/",
     API_ADMIN_MARK_AS_ADULT_GAME = "api/games/change-game-adult-status/",
+    API_ADMIN_GET_USERS = "api/users/",
+    API_ADMIN_GET_ROLES = "api/roles/",
 }
 
 export enum FIXED_SIZES {
