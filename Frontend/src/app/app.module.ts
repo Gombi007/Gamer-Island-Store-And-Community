@@ -28,6 +28,9 @@ import { WishlistStoreComponent } from './store/wishlist-store/wishlist-store.co
 import { CartStoreComponent } from './store/cart-store/cart-store.component';
 import { NavigationMobileStoreComponent } from './store/navigation-mobile-store/navigation-mobile-store.component';
 import { FoldTheFilterOnScrollingDirective } from './directives/fold-the-filter-on-scrolling.directive';
+import { AdminComponent } from './admin/admin.component';
+import { AdminAddGamesComponent } from './admin/admin-add-games/admin-add-games.component';
+import { AdminHandleRolesComponent } from './admin/admin-handle-roles/admin-handle-roles.component';
 
 
 
@@ -52,7 +55,10 @@ import { FoldTheFilterOnScrollingDirective } from './directives/fold-the-filter-
     WishlistStoreComponent,
     CartStoreComponent,
     NavigationMobileStoreComponent,
-    FoldTheFilterOnScrollingDirective
+    FoldTheFilterOnScrollingDirective,
+    AdminComponent,
+    AdminAddGamesComponent,
+    AdminHandleRolesComponent
   ],
   imports: [
     BrowserModule,

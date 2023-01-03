@@ -24,11 +24,11 @@ public interface GameService {
 
     String purchaseGames(List<String> gameIds, String userId);
 
-    String removeGameFromDbById(String gameId);
+    Map<String, String>  removeGameFromDbById(String gameId);
 
     Map<String, List<String>> getGenresAndLanguagesAndCategories();
 
-    String changeGameAdultStatus(Boolean isAdult, String gameId);
+    Map<String, String>  changeGameAdultStatus(Boolean isAdult, String gameId);
 
 
 }

@@ -27,4 +27,12 @@ export class StoreService {
         return this.http.get<{ 'languages': string[], 'genres': string[], 'categories': string[] }>(STRINGS.SERVER_URL + STRINGS.API_GAMES + STRINGS.API_GAMES_LANGUAGES_GENRES_CATEGORIES, this.authorServie.headerWithTokenForRequests());
     }
 
+    adminRemoveGame(gameId: string) {
+        return this.http.delete(STRINGS.SERVER_URL + STRINGS.API_ADMIN_REMOVE_GAME + gameId, this.authorServie.headerWithTokenForRequests());
+    }
+    adminMarkAsAdult(gameId: string) {
+        let isAdult = true;
+        return this.http.put(STRINGS.SERVER_URL + STRINGS.API_ADMIN_MARK_AS_ADULT_GAME + gameId + '?isAdult=' + isAdult, '', this.authorServie.headerWithTokenForRequests());
+    }
+
 }

@@ -198,12 +198,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public String changeGameAdultStatus(Boolean isAdult, String gameId) {
+    public Map<String, String> changeGameAdultStatus(Boolean isAdult, String gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("No game with this id: " + gameId));
         game.setIsAdult(isAdult);
         game.setLastModified(Instant.now());
         gameRepository.save(game);
-        return "Game adult status was changed to: " + isAdult;
+        Map<String,String> result = new HashMap<>();
+        result.put(game.getId(),"Game adult status was changed to: " + isAdult);
+        return result;
     }
 
     @Override
@@ -304,7 +306,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public String removeGameFromDbById(String gameId) {
+    public Map<String, String>  removeGameFromDbById(String gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new NoSuchElementException("There is no game with this ID"));
         List<String> wishlistUsers = game.getWishlistUsers();
         List<String> ownerUsers = game.getUsers();
@@ -321,8 +323,9 @@ public class GameServiceImpl implements GameService {
             userService.updateUser(user);
         }
         gameRepository.delete(game);
-
-        return "Game was removed";
+        Map<String,String> result = new HashMap<>();
+        result.put(game.getId(),"Game was removed");
+        return result;
     }
 
     private GameDto convertToGameDto(Game game) {

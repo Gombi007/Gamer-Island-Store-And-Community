@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './config/auth-guard.service';
+import { AdminAddGamesComponent } from './admin/admin-add-games/admin-add-games.component';
+import { AdminHandleRolesComponent } from './admin/admin-handle-roles/admin-handle-roles.component';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard, AuthGuardAdmin } from './config/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { CreateNotesComponent } from './notes/create-notes/create-notes.component';
 import { ShowNotesComponent } from './notes/show-notes/show-notes.component';
@@ -62,6 +65,15 @@ const routes: Routes = [
         path: 'store/cart',
         component: CartStoreComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [AuthGuard, AuthGuardAdmin],
+        children: [
+          { path: 'add-games', component: AdminAddGamesComponent, outlet: 'admin' },
+          { path: 'handle-roles', component: AdminHandleRolesComponent, outlet: 'admin' }
+        ]
       },
       {
         path: '**',

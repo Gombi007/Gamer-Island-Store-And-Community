@@ -214,4 +214,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         return null;
     }
+
+    @Override
+    public Boolean hasAdminRole(String userId) {
+       User user = getUserById(userId);
+       Boolean hasAdminRole = false;
+        for (Role role : user.getRoles() ) {
+           if (role.getRoleName().equals("ROLE_ADMIN")){
+               hasAdminRole = true;
+           }
+        }
+        return hasAdminRole;
+    }
 }

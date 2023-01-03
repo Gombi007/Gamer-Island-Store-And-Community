@@ -15,6 +15,7 @@ export class EditProfileComponent implements OnInit {
   errorResponse = '';
   updateSuccess = '';
   isPending = false;
+  profileData: { username: string, avatar: string } = { username: '', avatar: '' }
 
   constructor(private profileService: ProfileService, private globalService: GlobalService) { }
 
@@ -49,16 +50,12 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  get profileData() {
-    return this.profileService.userProfileDataGetter;
-  }
-
   getProfileData() {
     this.isPending = true;
     this.profileService.getProfileData().subscribe({
       next: (data) => {
         this.profileForm.setValue(data);
-        this.profileService.userProfileDataSetter = data;
+        this.profileData = data;
         this.isPending = false;
       },
       error: (response) => {
@@ -76,7 +73,8 @@ export class EditProfileComponent implements OnInit {
       this.profileService.updateProfileData(this.profileForm).subscribe({
         next: (data) => {
           this.profileForm.setValue(data);
-          this.profileService.userProfileDataSetter = data;
+          this.profileData = data;
+          this.profileService.updateProfile.next(this.profileData);
           this.isPending = false;
           this.updateSuccess = "Profile was saved successfully"
           this.removeMessegasFromUI();

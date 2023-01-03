@@ -1,12 +1,13 @@
-import { HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { STRINGS } from "./strings.enum";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthorizationService {
 
-    constructor() { }
+    constructor(private http: HttpClient) { }
 
     headerWithTokenForRequests() {
         let auth_token = sessionStorage.getItem('token');
@@ -24,5 +25,9 @@ export class AuthorizationService {
 
     getUserID() {
         return sessionStorage.getItem('user_id');
+    }
+
+    hasRoleAdmin() {
+        return this.http.get<boolean>(STRINGS.SERVER_URL + STRINGS.API_HAS_ROLE_ADMIN + this.getUserID(), this.headerWithTokenForRequests());
     }
 }
