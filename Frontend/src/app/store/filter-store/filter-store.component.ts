@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/config/global.service';
 import { storeFilter } from '../config/store-filter.model';
 import { StoreService } from '../config/store.service';
@@ -12,40 +12,60 @@ import { StoreService } from '../config/store.service';
 })
 export class FilterStoreComponent implements OnInit {
   isPending = false;
-  filterForm: FormGroup
+  filterForm: FormGroup = this.createFilterForm();
+  filterFormInit: FormGroup = this.createFilterForm();
   opSystems: string[] = ['Windows', 'Mac', 'Linux'];
   languages: string[] = ['English', 'Hungarian', 'German'];
   genres: string[] = ['Action', 'Indie', 'RPG'];
   categories: string[] = ['Steam Cloud', 'Full controller support', 'MMO'];
   formValueChangeSub: Subscription;
+  isFilterOn = false;
 
   constructor(private storeService: StoreService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.getGenresAndLanguagesAndCategories();
     this.createFilterForm();
-    this.formValueChangeSub = this.filterForm.valueChanges.subscribe((data) => {
-      let filter: storeFilter = new storeFilter(data);
-      this.storeService.storeFilter.next(filter);
-    });
+    this.formValueChangeSub = this.filterForm.valueChanges
+      .pipe(debounceTime(700))
+      .subscribe((data) => {
+        this.isDefaultFilter();
+        let filter: storeFilter = new storeFilter(data);
+        this.storeService.storeFilter.next(filter);
+      });
   }
 
   createFilterForm() {
-    return this.filterForm = new FormGroup({
-      'sortByField': new FormControl('name'),
-      'isAscending': new FormControl('true'),
-      'languages': new FormControl(['English']),
-      'genres': new FormControl([]),
-      'opSystems': new FormControl([]),
-      'categories': new FormControl([]),
-      'isHideFreeGames': new FormControl(false),
-      'isHideMyOwnGames': new FormControl(false),
-      'isHideMyWishlistGames': new FormControl(false),
-      'price': new FormControl(75),
-      'showOnlyAdultGames': new FormControl(false),
-      'isHideAdultGames': new FormControl(true)
-
+    return new FormGroup({
+      'searchText': new FormControl('', { nonNullable: true }),
+      'sortByField': new FormControl('name', { nonNullable: true }),
+      'isAscending': new FormControl('true', { nonNullable: true }),
+      'languages': new FormControl([], { nonNullable: true }),
+      'genres': new FormControl([], { nonNullable: true }),
+      'opSystems': new FormControl([], { nonNullable: true }),
+      'categories': new FormControl([], { nonNullable: true }),
+      'isHideFreeGames': new FormControl(false, { nonNullable: true }),
+      'isHideMyOwnGames': new FormControl(false, { nonNullable: true }),
+      'isHideMyWishlistGames': new FormControl(false, { nonNullable: true }),
+      'price': new FormControl(75, { nonNullable: true }),
+      'showOnlyAdultGames': new FormControl(false, { nonNullable: true }),
+      'isHideAdultGames': new FormControl(true, { nonNullable: true })
     });
+
+  }
+
+  isDefaultFilter() {
+    // Check every form update that the form is in the init status or not
+    // If not, we set the filter status to ON 
+    this.isFilterOn = false;
+
+    for (const key in this.filterForm.controls) {
+      if (Array.isArray(this.filterForm.controls[key].value)) {
+        this.filterForm.controls[key].value.length === 0 ? '' : this.isFilterOn = true;
+      } else {
+        this.filterForm.get(key)?.value === this.filterFormInit.get(key)?.value ? '' : this.isFilterOn = true;
+      }
+    }
   }
 
   //convenience getter for easy access to form fields
@@ -90,5 +110,10 @@ export class FilterStoreComponent implements OnInit {
       }
     });
   }
+
+  resetFilter() {
+    this.filterForm.reset();
+  }
+
 
 }

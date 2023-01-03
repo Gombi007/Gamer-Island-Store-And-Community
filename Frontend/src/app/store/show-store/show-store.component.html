@@ -1,6 +1,6 @@
 <div class="container firefox-scrollbar prevent-select" infinite-scroll [scrollWindow]="false"
     [infiniteScrollDistance]="3" (scrolled)="onScrollDown($event)">
-    <app-filter-store *ngIf="isFilterOn" class="filter"></app-filter-store>
+    <app-filter-store class="filter"></app-filter-store>
     <div class="flex-container" appFoldTheFilterOnScrolling>
         <div class="game" *ngFor="let game of defaultGames; let i = index">
             <img src="{{game.headerImage}}" alt="game-header-img">

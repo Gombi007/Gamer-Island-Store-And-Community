@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameSearchDto {
+    private String searchText;
     private String sortByField;
     private Boolean isAscending;
     private List<String> languages;

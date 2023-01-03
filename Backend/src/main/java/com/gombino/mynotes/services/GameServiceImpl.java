@@ -103,6 +103,11 @@ public class GameServiceImpl implements GameService {
             aggregatedCriteria.andOperator(criteriaList);
         }
 
+         // Search in name
+        if (!gameSearchDto.getSearchText().isEmpty()){
+            aggregatedCriteria = aggregatedCriteria.and("name").regex("\\b.*" + gameSearchDto.getSearchText() + ".*\\b", "i");
+        }
+
         //Show only free games
         if (gameSearchDto.getIsHideFreeGames()) {
             aggregatedCriteria = aggregatedCriteria.and("isFree").is(false);

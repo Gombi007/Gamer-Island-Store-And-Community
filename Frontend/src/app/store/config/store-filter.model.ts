@@ -1,4 +1,5 @@
 export class storeFilter {
+    searchText: string = "";
     sortByField: string = "";
     isAscending: boolean = true;
     languages: string[] = [];

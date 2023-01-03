@@ -1,5 +1,12 @@
 <div class="container-small" *ngIf="!isPending && !isShowFullFilterWindow" (click)="changeCloseOrOpenFilterPanel()">
-    <h4>Filter result: {{allFilterResult}} Games</h4>
+    <h4 class="filter-text">
+        <div>
+            <span>Filter: </span>
+            <span *ngIf="isFilterOn">ON</span>
+            <span *ngIf="!isFilterOn">OFF</span>
+        </div>
+        <span>Result: {{allFilterResult}} Games</span>
+    </h4>
     <div class="open">
         <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_down"></mat-icon>
     </div>
@@ -10,9 +17,9 @@
 
         <div class="search-and-reset">
             <mat-form-field appearance="standard" color="accent">
-                <input matInput placeholder="Search">
+                <input matInput placeholder="Search Game" formControlName="searchText">
             </mat-form-field>
-            <button mat-mini-fab aria-label="Reset filter">
+            <button mat-mini-fab aria-label="Reset filter" (click)="resetFilter()">
                 <mat-icon>filter_alt_off</mat-icon>
             </button>
         </div>
@@ -87,7 +94,14 @@
 
     </form>
     <div class="container-small" (click)="changeCloseOrOpenFilterPanel()">
-        <h4>Filter result: {{allFilterResult}} Games</h4>
+        <h4 class="filter-text">
+            <div>
+                <span>Filter: </span>
+                <span *ngIf="isFilterOn">ON</span>
+                <span *ngIf="!isFilterOn">OFF</span>
+            </div>
+            <span>Result: {{allFilterResult}} Games</span>
+        </h4>
         <div class="close">
             <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_up"></mat-icon>
         </div>

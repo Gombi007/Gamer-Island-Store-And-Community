@@ -45,16 +45,11 @@ const routes: Routes = [
       },
       {
         path: 'store',
-        redirectTo: 'store/show/all',
+        redirectTo: 'store/show',
         pathMatch: 'full',
       },
       {
-        path: 'store/show/:allOrFilter',
-        component: ShowStoreComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'store/show/filter',
+        path: 'store/show',
         component: ShowStoreComponent,
         canActivate: [AuthGuard]
       },
@@ -68,9 +63,6 @@ const routes: Routes = [
         component: CartStoreComponent,
         canActivate: [AuthGuard]
       },
-
-
-
       {
         path: '**',
         redirectTo: 'login'
